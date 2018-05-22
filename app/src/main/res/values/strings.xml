@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">EnglishApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="toast_missdata">請勿輸入空值</string>
+    <string name="email_error_title">信箱錯誤</string>
+    <string name="email_error">非常抱歉！\n本App目前僅開放朝陽學生使用，\n如有疑慮請聯絡粉絲團。</string>
+    <string name="email_error2">不好意思麻煩你輸入一下信箱帳號(例如：s10414102)</string>
+    <string name="email_error3">請輸入s+學號即可(例如：s10414102)</string>
+    <string name="phone_error_title">手機錯誤</string>
+    <string name="phone_error">請檢查手機是否有誤。</string>
+    <string name="idcard_error_title">身分證字號錯誤</string>
+    <string name="idcard_error">請檢查身分證是否有誤。</string>
+    <string name="re_error_title">輸入的密碼有誤</string>
+    <string name="re_error">請再輸入一次密碼</string>
+    <string name="pwd_short_title">密碼過短</string>
+    <string name="pwd_short">您設定的密碼太短，超過六個字元即可</string>
+    <string name="signup_ok">註冊成功，請至註冊信箱收取驗證信。</string>
+    <string name="signup_error">此帳號可能已被註冊，如有疑慮請聯絡粉絲團</string>
+    <string name="signup_error_title">註冊失敗</string>
+    <string name="field_error_title">欄位錯誤</string>
+    <string name="field_error">請檢查是否所有蘭位皆填妥。</string>
+    <string name="f_pswd_title">注意事項</string>
+    <string name="f_pswd_message">請先在帳號欄輸入您的帳號。</string>
+    <string name="f_pswd_pbutton">已經輸入</string>
+    <string name="f_pswd_nbutton">回去輸入</string>
+    <string name="sendsuccess">發送成功</string>
+    <string name="sendsuccess_msg">重設密碼之郵件已成功發送，\n請到您的信箱收信更改密碼。</string>
+    <string name="senderror">發送失敗</string>
+    <string name="senderror_msg">請確認您的信箱是否輸入正確，\n如果疑慮請聯絡粉絲團。</string>
+    <string name="login_error_title">登入錯誤</string>
+    <string name="login_error">如有疑慮請聯絡粉絲團。</string>
+    <string name="login_error2">無此帳號，是否要以此組帳號與密碼註冊？</string>
+    <string name="EmailVerified">此信箱尚未通過驗證，請至驗證信箱收信</string>
+    <string name="signup">註冊</string>
+    <string name="cancel">取消</string>
+    <string name="title_activity_msg">Msg</string>
+
+    <string name="choose">Choose Image</string>
+    <string name="upload">Upload</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="notification_fail">Image failed to upload...</string>
+    <string name="notification_share_link">Share link</string>
+    <string name="notifaction_success">Successfully uploaded</string>
+    <string name="notification_progress">Uploading image...</string>
+    <string name="title_activity_use_state">UseState</string>
+</resources>
