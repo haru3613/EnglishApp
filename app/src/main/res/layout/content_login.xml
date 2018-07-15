@@ -17,9 +17,8 @@
         android:layout_alignParentStart="true">
 
 
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
@@ -32,18 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="帳號"
-                app:met_floatingLabel="normal"
-                android:inputType="textEmailAddress" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="\@gm.cyut.edu.tw"
-                android:textColor=" @android:color/black"
-                android:textSize="24sp"
-                android:typeface="normal" />
+                android:hint="Username"
+                android:inputType="textEmailAddress"
+                app:met_floatingLabel="normal" />
 
         </LinearLayout>
 
@@ -62,9 +52,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="密碼"
-                app:met_floatingLabel="normal"
-                android:inputType="textPassword" />
+                android:hint="Password"
+                android:inputType="textPassword"
+                app:met_floatingLabel="normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="登入"
+                android:text="Login"
                 android:textSize="18sp" />
 
             <Button
@@ -88,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="註冊"
+                android:text="Register"
                 android:textSize="18sp" />
 
         </LinearLayout>

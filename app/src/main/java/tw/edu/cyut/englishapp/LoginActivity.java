@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             // 是否要退出
             if(!isExit ) {
                 isExit = true; //記錄下一次要退出
-                Toast.makeText(this, "再按一次Back退出APP"
+                Toast.makeText(this, "Press Back again to exit the app."
                         , Toast.LENGTH_SHORT).show();
                 // 如果超過兩秒則恢復預設值
                 if(!hasTask) {
@@ -62,6 +62,16 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //判斷使用者是否第一次登入
+
+        SharedPreferences sharedPreferences = getSharedPreferences(KEY, MODE_PRIVATE);
+        Boolean FirstLogin=sharedPreferences.getBoolean("Status",false);
+        Log.d("FirstLogin?",FirstLogin.toString());
+        if (FirstLogin){
+            Intent toMainActivity=new Intent(LoginActivity.this,MainActivity.class);
+            LoginActivity.this.startActivity(toMainActivity);
+            finish();
+        }
 
         final Button Login=(Button)findViewById(R.id.Login);
 
@@ -84,20 +94,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        //判斷使用者是否第一次登入
 
-        SharedPreferences sharedPreferences = getSharedPreferences(KEY, MODE_PRIVATE);
-        Boolean FirstLogin=sharedPreferences.getBoolean("Status",false);
-        Log.d("FirstLogin?",FirstLogin.toString());
-        if (FirstLogin){
-            Intent toMainActivity=new Intent(LoginActivity.this,MainActivity.class);
-            LoginActivity.this.startActivity(toMainActivity);
-            finish();
-        }
     }
-
-    //login按鈕
-
 
 
     //Login帳號偵錯
@@ -105,25 +103,18 @@ public class LoginActivity extends AppCompatActivity {
         email = ((EditText) findViewById(R.id.email)).getText().toString();
         pwd = ((EditText) findViewById(R.id.password)).getText().toString();
         Log.d("AUTH", email + "/" + pwd);
-        if (pwd.length() > 5) {
+        if (email.equals("")||pwd.equals("")||pwd.length() < 8) {
                 String type = "login";
                 Backgorundwork backgorundwork = new Backgorundwork(this);
                 backgorundwork.execute(type,email,pwd);
 
             } else {
-                nullAlertDialog(getResources().getString(R.string.pwd_short_title), getResources().getString(R.string.pwd_short), "OK");
+            Toast.makeText(LoginActivity.this,"Incorrect username or password.",Toast.LENGTH_SHORT).show();
             }
     }
 
 
-    //呼叫回傳值為null的AlertDialog
-    public void nullAlertDialog(String T, String M, String PB) {
-        new AlertDialog.Builder(LoginActivity.this)
-                .setTitle(T)
-                .setMessage(M)
-                .setPositiveButton(PB, null)
-                .show();
-    }
+
 
 
 }
