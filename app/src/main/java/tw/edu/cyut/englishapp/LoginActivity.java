@@ -104,13 +104,12 @@ public class LoginActivity extends AppCompatActivity {
         pwd = ((EditText) findViewById(R.id.password)).getText().toString();
         Log.d("AUTH", email + "/" + pwd);
         if (email.equals("")||pwd.equals("")||pwd.length() < 8) {
-                String type = "login";
-                Backgorundwork backgorundwork = new Backgorundwork(this);
-                backgorundwork.execute(type,email,pwd);
-
-            } else {
             Toast.makeText(LoginActivity.this,"Incorrect username or password.",Toast.LENGTH_SHORT).show();
-            }
+        } else {
+            String type = "login";
+            Backgorundwork backgorundwork = new Backgorundwork(this);
+            backgorundwork.execute(type,email,pwd);
+        }
     }
 
 

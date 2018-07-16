@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
                 mail = ((EditText) findViewById(R.id.mailText)).getText().toString();
                 username=((EditText) findViewById(R.id.username)).getText().toString();
 
-                if (name.equals("") || name.equals("")|| pwd.equals("")|| re_pwd.equals("")|| username.equals("")|| mail.equals("") || !pwd.equals(re_pwd) ||username.contains("'")||pwd.contains("'")||pwd.length()<8) {
+                if ( name.equals("")|| pwd.equals("")|| re_pwd.equals("")|| username.equals("")|| mail.equals("") || !pwd.equals(re_pwd) ||username.contains("'")||pwd.contains("'")||pwd.length()<8 || !MailCheck(mail)) {
                      Toast.makeText(SignUpActivity.this,"There were problems creating your account.",Toast.LENGTH_SHORT).show();
 
                 } else{
@@ -71,6 +71,13 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
+    private boolean MailCheck(String mail){
+        if (mail.contains("@")){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 
 

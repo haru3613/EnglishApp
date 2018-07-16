@@ -148,7 +148,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         } else if (result.contains("login success")) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(KEY , MODE_PRIVATE);
             sharedPreferences.edit().putBoolean("Status" , true).apply();
-            sharedPreferences.edit().putString("Mail" , Username).apply();
+            sharedPreferences.edit().putString("Username" , Username).apply();
             sharedPreferences.edit().putString("Password" ,Password ).apply();
             Intent toMainActivity=new Intent(context,MainActivity.class);
             context.startActivity(toMainActivity);
@@ -177,7 +177,6 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }
         else
         {
-            alertDialog.show();
             Log.d("Result", "onPostExecute: "+result);
         }
 
