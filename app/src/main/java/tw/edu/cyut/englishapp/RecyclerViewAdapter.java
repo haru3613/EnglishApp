@@ -32,11 +32,14 @@ import java.util.List;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
+import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
     public List<Item> itemList;
     private Context context;
 
+    String Status;
 
     String message;
 
@@ -63,14 +66,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         holder.Time.setText(itemList.get(position).getUntil_at());
 
         holder.Type.setText(itemList.get(position).getType());
-
+        final String type=itemList.get(position).getType();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: "+itemList.get(position).getTitle());
                 //OPEN DETAIL
-                normalDialogEvent(itemList.get(position).getTitle(),itemList.get(position).getContent());
+                SharedPreferences sharedPreferences = context.getSharedPreferences(KEY, MODE_PRIVATE);
+                String username=sharedPreferences.getString("Username",null);
+                LoadExams(username,itemList.get(position).getEid());
+
+                normalDialogEvent(itemList.get(position).getTitle(),itemList.get(position).getContent(),Status,type);
             }
         });
 
@@ -98,7 +105,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     }
 
 
-    public void normalDialogEvent(final String Title,final String Content) {
+    public void normalDialogEvent(final String Title,final String Content,final String Status,final String type) {
         MaterialDialog.Builder dialog = new MaterialDialog.Builder(context);
         dialog.title(Title);
         dialog.content(Content);
@@ -107,6 +114,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
             @Override
             public void onClick(MaterialDialog dialog, DialogAction which) {
                 Log.d(TAG, "onClick: "+"Yes");
+                if (Status.equals("完成考試")){
+                    Toast.makeText(context,"You have finished this exam.",Toast.LENGTH_SHORT).show();
+                }else{
+                    switch (type){
+                        case "Listen":
+                            //TODO 聽力的部分
+                            break;
+                        case "Speak":
+                            //TODO 口說的部份
+
+                            break;
+                    }
+                }
+
+
             }
         });
 
@@ -115,8 +137,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
 
 
-    public void LoadUser(final String mail){
-        String url ="http://163.17.5.182/loaduser.php";
+    public void LoadExams(final String username,final String exam_id){
+        String url ="http://163.17.5.182/englishExamCase/App/Exam_Status.php";//TODO
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -129,10 +151,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                             Log.d(TAG, "Response " + response);
                             GsonBuilder builder = new GsonBuilder();
                             Gson mGson = builder.create();
-                            List<Item> posts = new ArrayList<Item>();
-                            posts = Arrays.asList(mGson.fromJson(response, Item[].class));
-                            List<Item> itemList=posts;
-                            uid= itemList.get(0).getUid();
+                            List<ItemStatus> posts = new ArrayList<ItemStatus>();
+                            posts = Arrays.asList(mGson.fromJson(response, ItemStatus[].class));
+                            Status=posts.get(0).getStatus();
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
@@ -148,11 +170,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("mail",mail+"@gm.cyut.edu.tw");
+                params.put("username",username);
+                params.put("exam_id",exam_id);
+
                 return params;
             }
 
         };
+
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
