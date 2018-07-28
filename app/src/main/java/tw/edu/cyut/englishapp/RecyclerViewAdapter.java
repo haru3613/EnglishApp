@@ -75,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 //OPEN DETAIL
                 SharedPreferences sharedPreferences = context.getSharedPreferences(KEY, MODE_PRIVATE);
                 String username=sharedPreferences.getString("Username",null);
-                LoadExams(username,itemList.get(position).getEid());
+                LoadExamsStatus(username,itemList.get(position).getEid());
 
                 normalDialogEvent(itemList.get(position).getTitle(),itemList.get(position).getContent(),Status,type);
             }
@@ -97,12 +97,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     }
 
 
-    private void customDialog(final String count, final String title, final String data, final String message,final String time,final String until,final String pid,final String cid,final String uid){
-
-
-
-
-    }
 
 
     public void normalDialogEvent(final String Title,final String Content,final String Status,final String type) {
@@ -137,8 +131,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
 
 
-    public void LoadExams(final String username,final String exam_id){
-        String url ="http://163.17.5.182/englishExamCase/App/Exam_Status.php";//TODO
+    public void LoadExamsStatus(final String username,final String exam_id){
+        String url ="http://163.17.5.182/englishExamCase/App/Exam_Status.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
