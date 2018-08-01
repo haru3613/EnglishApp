@@ -4,10 +4,11 @@
         <item name="android:windowBackground">?android:attr/colorBackground</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:colorForeground">@color/colorBackground</item>
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="android:textColorSecondaryInverse">@color/primaryTextColor</item>
-        <item name="android:textColorPrimaryInverse">@color/primaryTextColor</item>
-        <item name="android:textColorSecondary">@color/primaryTextColor</item>
+        <item name="android:textColorPrimary">@color/colorBackground</item>
+        <item name="android:textColorSecondaryInverse">@color/secondaryTextColor</item>
+        <item name="android:textColorPrimaryInverse">@color/primaryDarkColor</item>
+        <item name="android:textColorSecondary">@color/secondaryDarkColor</item>
+        <item name="colorButtonNormal">@color/primaryDarkColor</item>
 
     </style>
 

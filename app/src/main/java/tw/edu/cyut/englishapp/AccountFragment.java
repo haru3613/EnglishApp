@@ -45,7 +45,7 @@ import static tw.edu.cyut.englishapp.RecyclerViewAdapter.KEY;
  */
 public class AccountFragment extends Fragment {
 
-
+    String thisURL="http://140.122.63.99";
     public AccountFragment() {
         // Required empty public constructor
     }
@@ -67,7 +67,7 @@ public class AccountFragment extends Fragment {
         return v;
     }
     public void LoadUser(final String username){
-        String url ="http://163.17.5.182/englishExamCase/App/LoadUserData.php";
+        String url =thisURL+"/App/LoadUserData.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

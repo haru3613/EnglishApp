@@ -32,6 +32,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     Context context;
     MaterialDialog.Builder alertDialog;
     public static final String KEY = "STATUS";
+    String thisURL="http://140.122.63.99";
     private static final String ACTIVITY_TAG ="Logwrite";
     String Username;
     String Password;
@@ -42,7 +43,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         Log.d(Backgorundwork.ACTIVITY_TAG,"Let's run~~~~");
         String type =params[0];
-        String login_url ="http://163.17.5.182/englishExamCase/ajax_login.php";
+        String login_url =thisURL+"/ajax_login.php";
         if(type.equals("login")){
             Log.d(Backgorundwork.ACTIVITY_TAG,"login if run");
             try {
@@ -91,7 +92,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             String mail=params[4];
 
 
-            String sign_url ="http://163.17.5.182/englishExamCase/ajax_register.php";
+            String sign_url =thisURL+"/ajax_register.php";
             try {
 
                 URL url = new URL(sign_url);

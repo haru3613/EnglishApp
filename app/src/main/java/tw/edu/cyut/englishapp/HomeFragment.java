@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private RecyclerViewAdapter adapter;
-
+    String thisURL="http://140.122.63.99";
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
 
     private void LoadExams(final View v){
         RequestQueue queue = Volley.newRequestQueue(v.getContext());
-        String url ="http://163.17.5.182/englishExamCase/App/SelectExam.php";
+        String url =thisURL+"/App/SelectExam.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

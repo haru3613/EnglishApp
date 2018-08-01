@@ -37,7 +37,7 @@ import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    String thisURL="http://140.122.63.99";
     String Username,Password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void LoadUser(final String username){
-        String url ="http://163.17.5.182/englishExamCase/App/LoadUserData.php";
+        String url =thisURL+"/App/LoadUserData.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

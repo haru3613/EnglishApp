@@ -38,7 +38,7 @@ import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
     public List<Item> itemList;
     private Context context;
-
+    String thisURL="http://140.122.63.99";
     String Status;
 
     String message;
@@ -132,7 +132,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
 
     public void LoadExamsStatus(final String username,final String exam_id){
-        String url ="http://163.17.5.182/englishExamCase/App/Exam_Status.php";
+
+        String url =thisURL+"/App/Exam_Status.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
