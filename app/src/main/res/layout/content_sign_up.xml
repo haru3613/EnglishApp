@@ -116,6 +116,31 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Learning Method"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/LearningMethod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginBottom="20dp"
@@ -128,7 +153,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Gender"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="18sp" />
 
                 <Spinner
@@ -160,6 +185,49 @@
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Birthday"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/years"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:textSize="18sp"/>
+
+                    <Spinner
+                        android:id="@+id/month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:textSize="18sp"/>
+
+                    <Spinner
+                        android:id="@+id/day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/education"
                 android:layout_width="match_parent"
@@ -172,46 +240,57 @@
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/name11"
+                android:id="@+id/background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="教師背景"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/name10"
+                android:id="@+id/Learninghours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="每周平均學習時數"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/name9"
+                android:id="@+id/testseries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="測驗級數"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/name8"
+                android:id="@+id/testname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="測驗名稱"
+                android:inputType="textPersonName"
+                app:met_floatingLabel="normal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/certification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="通過的華語文認證"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
@@ -221,7 +300,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:onClick="signUpp"
                 android:text="Register"
                 android:textSize="20sp"
                 app:rd_enable="true" />

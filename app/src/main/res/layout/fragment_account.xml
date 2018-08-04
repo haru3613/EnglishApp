@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.cyut.toolbox.toolbox.InforFragment">
+    tools:context=".AccountFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,24 +15,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/side_nav_bar"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp" />
-            </LinearLayout>
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +37,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="10dp"
                     android:text="Username"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="22sp" />
 
 
@@ -60,7 +48,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -80,7 +68,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="10dp"
                     android:text="Password"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="22sp" />
 
 
@@ -91,7 +79,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
 
@@ -112,7 +100,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="10dp"
                     android:text="Name"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="22sp" />
 
 
@@ -123,7 +111,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
 
@@ -144,7 +132,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="10dp"
                     android:text="E-mail"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="22sp" />
 
 
@@ -155,7 +143,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
 

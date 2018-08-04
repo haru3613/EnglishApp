@@ -90,7 +90,21 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             String pwd=params[2];
             String name=params[3];
             String mail=params[4];
-
+            String tbackground=params[5];
+            String Learninghours=params[6];
+            String testseries=params[7];
+            String testname=params[8];
+            String certification=params[9];
+            String sex=params[10];
+            String year=params[11];
+            String month=params[12];
+            String day=params[13];
+            String country=params[14];
+            String native_language=params[15];
+            String learningyears=params[16];
+            String o_language=params[17];
+            String education=params[18];
+            String learingmethod=params[19];
 
             String sign_url =thisURL+"/ajax_register.php";
             try {
@@ -103,12 +117,28 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
 
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("u_mail","UTF-8")+"="+URLEncoder.encode(mail,"UTF-8")+"&"+
-                        URLEncoder.encode("u_pwd","UTF-8")+"="+URLEncoder.encode(pwd,"UTF-8")+"&"+
-                        URLEncoder.encode("u_name","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"+
-                        URLEncoder.encode("u_nickname","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
+                String post_data = URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(mail,"UTF-8")+"&"+
+                        URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(pwd,"UTF-8")+"&"+
+                        URLEncoder.encode("names","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"+
+                        URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"+
+                        URLEncoder.encode("education","UTF-8")+"="+URLEncoder.encode(education,"UTF-8")+"&"+
+                        URLEncoder.encode("background","UTF-8")+"="+URLEncoder.encode(tbackground,"UTF-8")+"&"+
+                        URLEncoder.encode("average_learning","UTF-8")+"="+URLEncoder.encode(Learninghours,"UTF-8")+"&"+
+                        URLEncoder.encode("level_certification","UTF-8")+"="+URLEncoder.encode(testseries,"UTF-8")+"&"+
+                        URLEncoder.encode("name_certification","UTF-8")+"="+URLEncoder.encode(testname,"UTF-8")+"&"+
+                        URLEncoder.encode("certification","UTF-8")+"="+URLEncoder.encode(certification,"UTF-8")+"&"+
+                        URLEncoder.encode("sex","UTF-8")+"="+URLEncoder.encode(sex,"UTF-8")+"&"+
+                        URLEncoder.encode("birthyear","UTF-8")+"="+URLEncoder.encode(year,"UTF-8")+"&"+
+                        URLEncoder.encode("birthmonth","UTF-8")+"="+URLEncoder.encode(month,"UTF-8")+"&"+
+                        URLEncoder.encode("birthday","UTF-8")+"="+URLEncoder.encode(day,"UTF-8")+"&"+
+                        URLEncoder.encode("country","UTF-8")+"="+URLEncoder.encode(country,"UTF-8")+"&"+
+                        URLEncoder.encode("language","UTF-8")+"="+URLEncoder.encode(native_language,"UTF-8")+"&"+
+                        URLEncoder.encode("y_learning","UTF-8")+"="+URLEncoder.encode(learningyears,"UTF-8")+"&"+
+                        URLEncoder.encode("o_language","UTF-8")+"="+URLEncoder.encode(o_language,"UTF-8")+"&"+
+                        URLEncoder.encode("method_learning","UTF-8")+"="+URLEncoder.encode(learingmethod,"UTF-8");
 
                         Log.d("POST_DATA", "doInBackground: "+post_data);
+
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();

@@ -25,9 +25,11 @@ import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +37,7 @@ import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    String username, mail, pwd, name, re_pwd;
+    String username, mail, pwd, name, re_pwd,country,tbackground,Learninghours,testseries,testname,certification,sex,year,month,day,native_language,learningyears,o_language,education,learingmethod;
 
 
 
@@ -43,6 +45,32 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        final Spinner sp_sex = (Spinner)findViewById(R.id.gender);
+        final Spinner sp_years = (Spinner)findViewById(R.id.years);
+        final Spinner sp_month = (Spinner)findViewById(R.id.month);
+        final Spinner sp_day = (Spinner)findViewById(R.id.day);
+        final Spinner sp_learing_method = (Spinner)findViewById(R.id.LearningMethod);
+        ArrayAdapter<CharSequence> SexList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.sex,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_sex.setAdapter(SexList);
+        ArrayAdapter<CharSequence> YearList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.years,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_years.setAdapter(YearList);
+        ArrayAdapter<CharSequence> MonthList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.month,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_month.setAdapter(MonthList);
+        ArrayAdapter<CharSequence> DayList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.day,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_day.setAdapter(DayList);
+        ArrayAdapter<CharSequence> learingList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.learing,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_learing_method.setAdapter(learingList);
 
 
 
@@ -56,13 +84,28 @@ public class SignUpActivity extends AppCompatActivity {
                 name = ((EditText) findViewById(R.id.name)).getText().toString();
                 mail = ((EditText) findViewById(R.id.mailText)).getText().toString();
                 username=((EditText) findViewById(R.id.username)).getText().toString();
+                tbackground=((EditText) findViewById(R.id.background)).getText().toString();
+                Learninghours=((EditText) findViewById(R.id.Learninghours)).getText().toString();
+                testseries=((EditText) findViewById(R.id.testseries)).getText().toString();
+                testname=((EditText) findViewById(R.id.testname)).getText().toString();
+                certification=((EditText) findViewById(R.id.certification)).getText().toString();
+                country=((EditText) findViewById(R.id.country)).getText().toString();
+                native_language=((EditText) findViewById(R.id.native_language)).getText().toString();
+                learningyears=((EditText) findViewById(R.id.learing_years)).getText().toString();
+                o_language=((EditText) findViewById(R.id.other_language)).getText().toString();
+                education=((EditText) findViewById(R.id.education)).getText().toString();
+                year=sp_years.getSelectedItem().toString();
+                sex=sp_sex.getSelectedItem().toString();
+                month=sp_month.getSelectedItem().toString();
+                day=sp_day.getSelectedItem().toString();
+                learingmethod=sp_learing_method.getSelectedItem().toString();
 
-                if ( name.equals("")|| pwd.equals("")|| re_pwd.equals("")|| username.equals("")|| mail.equals("") || !pwd.equals(re_pwd) ||username.contains("'")||pwd.contains("'")||pwd.length()<8 || !MailCheck(mail)) {
+                if ( name.equals("")|| pwd.equals("")|| re_pwd.equals("")|| username.equals("")|| tbackground.equals("")|| testseries.equals("")|| sex.equals("")||country.equals("")||year.equals("")||month.equals("")||day.equals("")||certification.equals("")|| testname.equals("")|| Learninghours.equals("")|| mail.equals("") || !pwd.equals(re_pwd) ||username.contains("'")||pwd.contains("'")||pwd.length()<8 || !MailCheck(mail)) {
                      Toast.makeText(SignUpActivity.this,"There were problems creating your account.",Toast.LENGTH_SHORT).show();
 
                 } else{
                     Backgorundwork backgorundwork = new Backgorundwork(SignUpActivity.this);
-                    backgorundwork.execute("register",username,pwd,name,mail);
+                    backgorundwork.execute("register",username,pwd,name,mail,tbackground,Learninghours,testseries,testname,certification,sex,year,month,day,country,native_language,learningyears,o_language,education,learingmethod);
                 }
 
             }
