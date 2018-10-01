@@ -52,8 +52,8 @@
 
 
     <string-array name="sex">
-        <item>男</item>
-        <item>女</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 
     <string-array name="years">

@@ -100,7 +100,10 @@ public class SignUpActivity extends AppCompatActivity {
                 day=sp_day.getSelectedItem().toString();
                 learingmethod=sp_learing_method.getSelectedItem().toString();
 
-                if ( name.equals("")|| pwd.equals("")|| re_pwd.equals("")|| username.equals("")|| tbackground.equals("")|| testseries.equals("")|| sex.equals("")||country.equals("")||year.equals("")||month.equals("")||day.equals("")||certification.equals("")|| testname.equals("")|| Learninghours.equals("")|| mail.equals("") || !pwd.equals(re_pwd) ||username.contains("'")||pwd.contains("'")||pwd.length()<8 || !MailCheck(mail)) {
+                if ( name.equals("")|| pwd.equals("")|| re_pwd.equals("")|| username.equals("")|| tbackground.equals("")|| testseries.equals("")||
+                        sex.equals("")||country.equals("")||year.equals("")||month.equals("")||day.equals("")||certification.equals("")|| testname.equals("")||
+                        Learninghours.equals("")|| mail.equals("") || learingmethod.equals("")||native_language.equals("")||o_language.equals("")||learningyears.equals("")||
+                        education.equals("")|| !pwd.equals(re_pwd) ||username.contains("'")||pwd.contains("'")||pwd.length()<8 || !MailCheck(mail)) {
                      Toast.makeText(SignUpActivity.this,"There were problems creating your account.",Toast.LENGTH_SHORT).show();
 
                 } else{
@@ -121,11 +124,6 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         }
     }
-
-
-
-
-
 
 }
 

@@ -157,9 +157,6 @@ public class AccountFragment extends Fragment {
 
                 }else{
 
-
-
-
                     Toast.makeText(getActivity(),"編輯成功",Toast.LENGTH_SHORT).show();
                 }
             }

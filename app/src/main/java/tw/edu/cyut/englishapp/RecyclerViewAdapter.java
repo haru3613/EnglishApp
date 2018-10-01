@@ -57,16 +57,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         return rcv;
     }
     @Override
-    public void onBindViewHolder(RecyclerViewHolders holder, final int position) {
+    public void onBindViewHolder(final RecyclerViewHolders holder, final int position) {
 
 
 
         holder.Title.setText(itemList.get(position).getTitle());
 
-        holder.Time.setText(itemList.get(position).getUntil_at());
+
 
         holder.Type.setText(itemList.get(position).getType());
         final String type=itemList.get(position).getType();
+
+
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                 //OPEN DETAIL
                 SharedPreferences sharedPreferences = context.getSharedPreferences(KEY, MODE_PRIVATE);
                 String username=sharedPreferences.getString("Username",null);
-                LoadExamsStatus(username,itemList.get(position).getEid());
+                LoadExamsStatus(username,itemList.get(position).getEid(),holder);
 
                 normalDialogEvent(itemList.get(position).getTitle(),itemList.get(position).getContent(),Status,type);
             }
@@ -119,6 +123,96 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                             //TODO 口說的部份
 
                             break;
+                        case "AExam":
+
+
+                            break;
+                        case "BExam":
+
+
+                            break;
+                        case "CExam":
+
+
+                            break;
+                        case "DExam":
+
+
+                            break;
+                        case "EExam":
+
+
+                            break;
+                        case "FExam":
+
+
+                            break;
+                        case "GExam":
+
+
+                            break;
+                        case "HExam":
+
+
+                            break;
+                        case "IExam":
+
+
+                            break;
+                        case "JExam":
+
+
+                            break;
+                        case "KExam":
+
+
+                            break;
+                        case "LExam":
+
+
+                            break;
+                        case "MExam":
+
+
+                            break;
+                        case "NExam":
+
+
+                            break;
+                        case "OExam":
+
+
+                            break;
+                        case "PExam":
+
+
+                            break;
+                        case "QExam":
+
+
+                            break;
+                        case "RExam":
+
+
+                            break;
+                        case "SExam":
+
+
+                            break;
+                        case "TExam":
+
+
+                            break;
+                        case "UExam":
+
+
+                            break;
+                        case "VExam":
+
+
+                            break;
+
+
                     }
                 }
 
@@ -131,7 +225,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
 
 
-    public void LoadExamsStatus(final String username,final String exam_id){
+    public void LoadExamsStatus(final String username,final String exam_id,final RecyclerViewHolders holder){
 
         String url =thisURL+"/App/Exam_Status.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -149,7 +243,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
                             List<ItemStatus> posts = new ArrayList<ItemStatus>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemStatus[].class));
                             Status=posts.get(0).getStatus();
-
+                            holder.Status.setText(Status);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 

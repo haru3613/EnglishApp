@@ -2,6 +2,7 @@ package tw.edu.cyut.englishapp;
 
 import com.google.gson.annotations.SerializedName;
 
+//user
 public class ItemAccount {
     @SerializedName("uid")
     private String uid;
