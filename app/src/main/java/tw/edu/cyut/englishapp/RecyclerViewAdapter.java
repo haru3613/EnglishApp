@@ -1,15 +1,12 @@
 package tw.edu.cyut.englishapp;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -22,7 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -31,9 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tw.edu.cyut.englishapp.model.Item;
+import tw.edu.cyut.englishapp.model.ItemStatus;
+
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
-import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
     public List<Item> itemList;

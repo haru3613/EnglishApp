@@ -147,6 +147,14 @@
         <item>Self study</item>
     </string-array>
 
+    <string-array name="choice_class">
+        <item>實驗組</item>
+        <item>控制組</item>
+        <item>示範音檢核</item>
+        <item>聽音人檢核</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_test_group">TestGroupActivity</string>
 </resources>

@@ -6,21 +6,41 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
     private static Boolean isExit = false;
     private static Boolean hasTask = false;
     private static final String ACTIVITY_TAG ="Logwrite";
     public static final String KEY = "STATUS";
+    private Button SignUp,Login;
     String email;
     String pwd;
     Timer timerExit = new Timer();
@@ -62,18 +82,20 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //判斷使用者是否第一次登入
+        initLoginActivity();
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(KEY, MODE_PRIVATE);
         Boolean FirstLogin=sharedPreferences.getBoolean("Status",false);
         Log.d("FirstLogin?",FirstLogin.toString());
+
         if (FirstLogin){
             Intent toMainActivity=new Intent(LoginActivity.this,MainActivity.class);
             LoginActivity.this.startActivity(toMainActivity);
             finish();
         }
 
-        final Button Login=(Button)findViewById(R.id.Login);
+
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +104,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         );
-
-        final Button SignUp=(Button)findViewById(R.id.SignUp);
 
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +115,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    }
+    private void initLoginActivity(){
+        SignUp=(Button)findViewById(R.id.SignUp);
+        Login=(Button)findViewById(R.id.Login);
     }
 
 
@@ -109,9 +133,10 @@ public class LoginActivity extends AppCompatActivity {
             String type = "login";
             Backgorundwork backgorundwork = new Backgorundwork(this);
             backgorundwork.execute(type,email,pwd);
+
+
         }
     }
-
 
 
 

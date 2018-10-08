@@ -1,4 +1,4 @@
-package tw.edu.cyut.englishapp;
+package tw.edu.cyut.englishapp.model;
 
 import com.google.gson.annotations.SerializedName;
 

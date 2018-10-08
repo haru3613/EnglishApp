@@ -22,6 +22,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import tw.edu.cyut.englishapp.Group.ControlGroupActivity;
+import tw.edu.cyut.englishapp.Group.TeacherGroupActivity;
+import tw.edu.cyut.englishapp.Group.TestGroupActivity;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -181,26 +185,28 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             sharedPreferences.edit().putBoolean("Status" , true).apply();
             sharedPreferences.edit().putString("Username" , Username).apply();
             sharedPreferences.edit().putString("Password" ,Password ).apply();
-            Intent toMainActivity=new Intent(context,MainActivity.class);
-            context.startActivity(toMainActivity);
+
             ((Activity)context).finish();
-        }else if (result.contains("Password is not match.")){
-            Toast.makeText(context, "Password is not match.", Toast.LENGTH_SHORT).show();
+            if (result.contains("control")){
+                //in control
+                Intent ToControl=new Intent(context,ControlGroupActivity.class);
+                context.startActivity(ToControl);
+            }else if (result.contains("test")){
+                //in test
+                Intent ToTest=new Intent(context,TestGroupActivity.class);
+                context.startActivity(ToTest);
+            }else if(result.contains("teacher")){
+                //in teacher
+                Intent ToTeacher=new Intent(context,TeacherGroupActivity.class);
+                context.startActivity(ToTeacher);
+            }
+        }else if (result.contains("this is null")){
+            Toast.makeText(context, "Not yet open for answer.", Toast.LENGTH_SHORT).show();
         }
         else if (result.contains("register success")){
             Intent toLogin=new Intent(context,LoginActivity.class);
             context.startActivity(toLogin);
             ((Activity)context).finish();
-        }else if (result.contains("Insert Error, please notify managers or try again.")){
-            Toast.makeText(context, "Insert Error, please notify managers or try again.", Toast.LENGTH_SHORT).show();
-        }else if (result.contains("This account has already been registered")){
-            Toast.makeText(context, "This account has already been registered", Toast.LENGTH_SHORT).show();
-        }else if (result.contains("This account has been banned from use.")){
-            Toast.makeText(context, "This account has been banned from use.", Toast.LENGTH_SHORT).show();
-        }else if (result.contains("This account has not been registered.")){
-            Toast.makeText(context, "This account has not been registered.", Toast.LENGTH_SHORT).show();
-        }else if(result.contains("接案成功")){
-            Toast.makeText(context, "接案成功", Toast.LENGTH_SHORT).show();
         }
         else if (result.contains("DOCTYPE")){
             Log.d("Result", "onPostExecute: "+result);
@@ -208,7 +214,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }
         else
         {
-            Log.d("Result", "onPostExecute: "+result);
+            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         }
 
     }
