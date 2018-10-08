@@ -3,15 +3,15 @@ package tw.edu.cyut.englishapp.model;
 import com.google.gson.annotations.SerializedName;
 
 //Topic_speak
-public class ItemSpeak {
+public class ItemTopicSpeak {
     @SerializedName("tid")
     private String tid;
-    @SerializedName("eid")
-    private String eid;
     @SerializedName("uid")
     private String uid;
-    @SerializedName("topic_num")
-    private String topic_num;
+    @SerializedName("topic_day")
+    private String topic_day;
+    @SerializedName("topic_index")
+    private String topic_index;
     @SerializedName("title")
     private String title;
     @SerializedName("created_at")
@@ -19,11 +19,11 @@ public class ItemSpeak {
     @SerializedName("updated_at")
     private String updated_at;
 
-    public ItemSpeak(String tid,String uid ,String eid,String topic_num,String title,String created_at,String updated_at){
+    public ItemTopicSpeak(String tid, String uid , String topic_day, String topic_index, String title, String created_at, String updated_at){
         this.tid=tid;
         this.uid=uid;
-        this.eid=eid;
-        this.topic_num=topic_num;
+        this.topic_day=topic_day;
+        this.topic_index=topic_index;
         this.title=title;
         this.created_at=created_at;
         this.updated_at=updated_at;
@@ -33,17 +33,11 @@ public class ItemSpeak {
         return tid;
     }
 
-    public String getEid() {
-        return eid;
-    }
 
     public String getUid() {
         return uid;
     }
 
-    public String getTopic_num() {
-        return topic_num;
-    }
 
     public String getTitle() {
         return title;
@@ -55,5 +49,13 @@ public class ItemSpeak {
 
     public String getUpdated_at() {
         return updated_at;
+    }
+
+    public String getTopic_day() {
+        return topic_day;
+    }
+
+    public String getTopic_index() {
+        return topic_index;
     }
 }

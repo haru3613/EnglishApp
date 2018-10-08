@@ -40,21 +40,21 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     private static final String ACTIVITY_TAG ="Logwrite";
     String Username;
     String Password;
-    Backgorundwork(Context ctx){
+    public Backgorundwork(Context ctx){
         context = ctx;
     }
     @Override
     protected String doInBackground(String... params) {
-        Log.d(Backgorundwork.ACTIVITY_TAG,"Let's run~~~~");
+
         String type =params[0];
-        String login_url =thisURL+"/ajax_login.php";
+
         if(type.equals("login")){
-            Log.d(Backgorundwork.ACTIVITY_TAG,"login if run");
             try {
                 String username = params[1];
                 Username=username;
                 String pwd = params[2];
                 Password=pwd;
+                String login_url =thisURL+"/app/ajax_login.php";
                 URL url = new URL(login_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -110,7 +110,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             String education=params[18];
             String learingmethod=params[19];
 
-            String sign_url =thisURL+"/ajax_register.php";
+            String sign_url =thisURL+"/app/ajax_register.php";
             try {
 
                 URL url = new URL(sign_url);
@@ -142,6 +142,43 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                         URLEncoder.encode("method_learning","UTF-8")+"="+URLEncoder.encode(learingmethod,"UTF-8");
 
                         Log.d("POST_DATA", "doInBackground: "+post_data);
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+                String result="";
+                String line=null;
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if (type.equals("BuildTestData")){
+            try {
+                String uid = params[1];
+                String connection_url =thisURL+"/app/buildtestdata.php";
+                URL url = new URL(connection_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8");
+                Log.d("POST_DATA", "doInBackground: "+post_data);
+
+
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
