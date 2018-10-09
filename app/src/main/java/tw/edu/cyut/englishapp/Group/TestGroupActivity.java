@@ -1,6 +1,7 @@
 package tw.edu.cyut.englishapp.Group;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
@@ -22,15 +23,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.model.ItemAccount;
 import tw.edu.cyut.englishapp.model.ItemTestSpeak;
+import tw.edu.cyut.englishapp.model.ItemTopic;
+import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 
 import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
 
 public class TestGroupActivity extends Activity {
-    String time_examing,day,uid;
+    String time_examing,day,uid,index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +53,21 @@ public class TestGroupActivity extends Activity {
             String type = "BuildTestData";
             Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
             backgorundwork.execute(type,uid);
+            OpenAnswerActivity(index);
         }else{
             //uid 搜尋資料
             LoadTestData(uid);
             //load test_speak
+            OpenAnswerActivity(index);
         }
     }
 
+    private void OpenAnswerActivity(String t_index){
+        Intent ToAnswer=new Intent(TestGroupActivity.this,AnswerActivity.class);
+        ToAnswer.putExtra("index", t_index);
+        startActivity(ToAnswer);
+        finish();
+    }
     public void LoadUser(final String uid){
         String url = "http://140.122.63.99/app/loaduser.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -99,7 +111,7 @@ public class TestGroupActivity extends Activity {
         requestQueue.add(stringRequest);
     }
     public void LoadTestData(final String uid){
-        String url = "http://140.122.63.99/app/load_test_date.php";
+        String url = "http://140.122.63.99/app/load_topic_day.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -112,9 +124,10 @@ public class TestGroupActivity extends Activity {
                             Log.d(ContentValues.TAG, "Response " + response);
                             GsonBuilder builder = new GsonBuilder();
                             Gson mGson = builder.create();
-                            List<ItemTestSpeak> posts = new ArrayList<ItemTestSpeak>();
-                            posts = Arrays.asList(mGson.fromJson(response, ItemTestSpeak[].class));
+                            List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
+                            posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             //處理陣列
+                            index=posts.get(0).getTopic_index();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 

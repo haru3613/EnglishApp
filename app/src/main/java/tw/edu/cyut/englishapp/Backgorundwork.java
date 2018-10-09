@@ -228,14 +228,17 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 //in control
                 Intent ToControl=new Intent(context,ControlGroupActivity.class);
                 context.startActivity(ToControl);
+                ((Activity) context).finish();
             }else if (result.contains("test")){
                 //in test
                 Intent ToTest=new Intent(context,TestGroupActivity.class);
                 context.startActivity(ToTest);
+                ((Activity) context).finish();
             }else if(result.contains("teacher")){
                 //in teacher
                 Intent ToTeacher=new Intent(context,TeacherGroupActivity.class);
                 context.startActivity(ToTeacher);
+                ((Activity) context).finish();
             }
         }else if (result.contains("this is null")){
             Toast.makeText(context, "Not yet open for answer.", Toast.LENGTH_SHORT).show();
