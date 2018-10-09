@@ -46,6 +46,8 @@ public class TestGroupActivity extends Activity {
 
         //check user
         LoadUser(uid);
+        LoadTopicDay(uid);
+
         Log.d("Debug", "data check:"+time_examing);
         Log.d("Debug", "data check:"+day);
         if (time_examing==null){
@@ -56,7 +58,7 @@ public class TestGroupActivity extends Activity {
             OpenAnswerActivity(index);
         }else{
             //uid 搜尋資料
-            LoadTestData(uid);
+
             //load test_speak
             OpenAnswerActivity(index);
         }
@@ -110,7 +112,7 @@ public class TestGroupActivity extends Activity {
         RequestQueue requestQueue = Volley.newRequestQueue(TestGroupActivity.this);
         requestQueue.add(stringRequest);
     }
-    public void LoadTestData(final String uid){
+    public void LoadTopicDay(final String uid){
         String url = "http://140.122.63.99/app/load_topic_day.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
