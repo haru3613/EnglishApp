@@ -79,21 +79,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         initLoginActivity();
-
-
-        SharedPreferences sharedPreferences = getSharedPreferences(KEY, MODE_PRIVATE);
-        Boolean FirstLogin=sharedPreferences.getBoolean("Status",false);
-        Log.d("FirstLogin?",FirstLogin.toString());
-
-        if (FirstLogin){
-            Intent toMainActivity=new Intent(LoginActivity.this,MainActivity.class);
-            LoginActivity.this.startActivity(toMainActivity);
-            finish();
-        }
 
 
 

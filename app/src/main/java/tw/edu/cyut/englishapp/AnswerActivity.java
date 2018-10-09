@@ -136,7 +136,6 @@ public class AnswerActivity extends Activity {
             public void onClick(View view) {
                 if (!choice_ans.equals("")){
                     String type = "InsertAns";
-                    //TODO test eid?
                     Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
                     backgorundwork.execute(type,uid,t_index,choice_ans);
                     //開啟自己並讓index+1
