@@ -34,7 +34,10 @@
             android:label="@string/title_activity_test_group" />
         <activity
             android:name=".AnswerActivity"
-            android:label="@string/title_activity_answer"></activity>
+            android:label="@string/title_activity_answer" />
+        <activity
+            android:name=".PreTestActivity"
+            android:label="@string/title_activity_pre_test"></activity>
     </application>
 
 </manifest>

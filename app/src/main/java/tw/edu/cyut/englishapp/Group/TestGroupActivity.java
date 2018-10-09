@@ -25,6 +25,7 @@ import java.util.Map;
 
 import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
+import tw.edu.cyut.englishapp.PreTestActivity;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.model.ItemAccount;
 import tw.edu.cyut.englishapp.model.ItemTestSpeak;
@@ -34,7 +35,7 @@ import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
 
 public class TestGroupActivity extends Activity {
-    String time_examing,day,uid,index;
+    String day,uid,index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +47,24 @@ public class TestGroupActivity extends Activity {
 
         //check user
         LoadUser(uid);
-        LoadTopicDay(uid);
 
-        Log.d("Debug", "data check:"+time_examing);
+
+
+
         Log.d("Debug", "data check:"+day);
-        if (time_examing==null){
-            //建立資料
+        if (day.equals("0")){
+            //insert to topic speak
             String type = "BuildTestData";
             Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
             backgorundwork.execute(type,uid);
-            OpenAnswerActivity(index);
+            //pre-test
+            Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
+            startActivity(ToPreTest);
+            finish();
         }else{
-            //uid 搜尋資料
-
-            //load test_speak
+            //get index
+            LoadTopicSpeak(uid);
+            //start ans questions
             OpenAnswerActivity(index);
         }
     }
@@ -86,8 +91,7 @@ public class TestGroupActivity extends Activity {
                             Gson mGson = builder.create();
                             List<ItemAccount> posts = new ArrayList<ItemAccount>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemAccount[].class));
-                            day=posts.get(0).getDay();
-                            time_examing=posts.get(0).getTime_examing();
+                            day=String.valueOf(posts.get(0).getDay());
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
@@ -112,8 +116,9 @@ public class TestGroupActivity extends Activity {
         RequestQueue requestQueue = Volley.newRequestQueue(TestGroupActivity.this);
         requestQueue.add(stringRequest);
     }
-    public void LoadTopicDay(final String uid){
-        String url = "http://140.122.63.99/app/load_topic_day.php";
+
+    public void LoadTopicSpeak(final String uid){
+        String url = "http://140.122.63.99/app/load_topic_speak.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
