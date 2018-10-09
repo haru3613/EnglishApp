@@ -203,7 +203,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }else if (type.equals("InsertAns")){
             try {
                 String uid = params[1];
-                String tid = params[2];
+                String tindex = params[2];
                 String ans = params[3];
                 String connection_url =thisURL+"/app/insert_ans.php";
                 URL url = new URL(connection_url);
@@ -215,7 +215,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
-                        URLEncoder.encode("tid","UTF-8")+"="+URLEncoder.encode(tid,"UTF-8")+"&"+
+                        URLEncoder.encode("t_index","UTF-8")+"="+URLEncoder.encode(tindex,"UTF-8")+"&"+
                         URLEncoder.encode("ans","UTF-8")+"="+URLEncoder.encode(ans,"UTF-8");
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
