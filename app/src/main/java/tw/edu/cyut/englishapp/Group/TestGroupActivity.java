@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,10 +48,11 @@ public class TestGroupActivity extends Activity {
         SharedPreferences sharedPreferences = TestGroupActivity.this.getSharedPreferences(KEY, MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
 
-        //check user
+        AlertDialog("Instructions","You are about to start the Chinese tones training section.\n" +
+                "Please make sure your earphones are functioning properly and carefully follow the instructions listed below: \n");
+
+        //check user test day
         LoadUser(uid);
-
-
 
 
         Log.d("Debug", "data check:"+day);
@@ -160,4 +164,17 @@ public class TestGroupActivity extends Activity {
         requestQueue.add(stringRequest);
     }
 
+    private void AlertDialog(String title,String content){
+        boolean wrapInScrollView = true;
+        MaterialDialog dialog=new MaterialDialog.Builder(TestGroupActivity.this)
+                .title(title)
+                .customView(R.layout.alert_dialog, wrapInScrollView)
+                .backgroundColorRes(R.color.colorBackground)
+                .positiveText("OK")
+                .build();
+        final View item = dialog.getCustomView();
+        TextView content_txt=item.findViewById(R.id.dialog_content);
+        content_txt.setText(content);
+        dialog.show();
+    }
 }
