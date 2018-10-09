@@ -2,6 +2,7 @@ package tw.edu.cyut.englishapp;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
@@ -32,10 +34,12 @@ import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.model.ItemAccount;
 import tw.edu.cyut.englishapp.model.ItemTopic;
 
+import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
+
 public class AnswerActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String correct_ans;
+    private String correct_ans,uid, choice_ans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +47,27 @@ public class AnswerActivity extends Activity {
 
         initAnswerActivity();
 
+        uid="";
+        SharedPreferences sharedPreferences = AnswerActivity.this.getSharedPreferences(KEY, MODE_PRIVATE);
+        uid=sharedPreferences.getString("uid",null);
+
+
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
 
         //Load exam data
         LoadExamData(t_index);
 
+        choice_ans="";
 
         ans1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO update test table and show correct ans
+                choice_ans="1";
                 ans2.setEnabled(false);
                 ans3.setEnabled(false);
                 ans4.setEnabled(false);
-                if (correct_ans.equals("1")){
+                if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -69,10 +79,11 @@ public class AnswerActivity extends Activity {
         ans2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                choice_ans="2";
                 ans1.setEnabled(false);
                 ans3.setEnabled(false);
                 ans4.setEnabled(false);
-                if (correct_ans.equals("2")){
+                if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -84,10 +95,11 @@ public class AnswerActivity extends Activity {
         ans3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                choice_ans="3";
                 ans1.setEnabled(false);
                 ans2.setEnabled(false);
                 ans4.setEnabled(false);
-                if (correct_ans.equals("3")){
+                if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -99,10 +111,11 @@ public class AnswerActivity extends Activity {
         ans4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                choice_ans="4";
                 ans2.setEnabled(false);
                 ans3.setEnabled(false);
                 ans1.setEnabled(false);
-                if (correct_ans.equals("4")){
+                if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -121,8 +134,16 @@ public class AnswerActivity extends Activity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //開啟自己並讓index+1
-                OpenAnswerActivity(String.valueOf(Integer.parseInt(t_index)+1));
+                if (!choice_ans.equals("")){
+                    String type = "InsertAns";
+                    //TODO test eid?
+                    Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
+                    backgorundwork.execute(type,uid,t_index,choice_ans);
+                    //開啟自己並讓index+1
+                    OpenAnswerActivity(String.valueOf(Integer.parseInt(t_index)+1));
+                }else{
+                    Toast.makeText(AnswerActivity.this,"Choose your answer",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
