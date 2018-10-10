@@ -24,7 +24,6 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:support-fragment:24.2.0'
     implementation 'com.github.rey5137:material:1.2.3.1-SNAPSHOT'
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'com.google.code.gson:gson:2.8.0'
@@ -38,4 +37,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

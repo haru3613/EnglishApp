@@ -1,5 +1,7 @@
 package tw.edu.cyut.englishapp;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,16 +32,23 @@ import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import tw.edu.cyut.englishapp.Group.TestGroupActivity;
+import tw.edu.cyut.englishapp.model.ItemAccount;
+
 import static android.content.ContentValues.TAG;
+
 
 public class LoginActivity extends AppCompatActivity {
     private static Boolean isExit = false;
     private static Boolean hasTask = false;
-    private static final String ACTIVITY_TAG ="Logwrite";
-    public static final String KEY = "STATUS";
+    public static final String KEY = "com.cyut.englishapp";
     private Button SignUp,Login;
     String email;
     String pwd;
@@ -118,15 +127,63 @@ public class LoginActivity extends AppCompatActivity {
         if (email.equals("")||pwd.equals("")||pwd.length() < 8) {
             Toast.makeText(LoginActivity.this,"Incorrect username or password.",Toast.LENGTH_SHORT).show();
         } else {
+            LoadUser(email);
             String type = "login";
             Backgorundwork backgorundwork = new Backgorundwork(this);
             backgorundwork.execute(type,email,pwd);
-
-
         }
     }
 
+    public void LoadUser(final String username){
+        String url = "http://140.122.63.99/app/load_user_uid.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response:",response);
+                        try {
+                            byte[] u = response.getBytes(
+                                    "UTF-8");
+                            response = new String(u, "UTF-8");
+                            Log.d(ContentValues.TAG, "Response " + response);
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson mGson = builder.create();
+                            List<ItemAccount> posts = new ArrayList<ItemAccount>();
+                            posts = Arrays.asList(mGson.fromJson(response, ItemAccount[].class));
+                            String uid=posts.get(0).getUid();
+                            String day=posts.get(0).getDay();
+                            String level=posts.get(0).getLevel();
+                            Log.d(TAG, "onResponse uid: "+uid);
+                            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("uid",uid);
+                            editor.putString("day",day);
+                            editor.putString("level",level);
+                            editor.apply();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
 
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //do stuffs with response erroe
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("username",username);
+
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+        requestQueue.add(stringRequest);
+    }
 
 
 }
