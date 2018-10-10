@@ -24,8 +24,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +50,8 @@ public class AnswerActivity extends Activity {
 
         initAnswerActivity();
 
+        final String origin_time=getDateNow();
+
         uid="";
         SharedPreferences sharedPreferences = AnswerActivity.this.getSharedPreferences(KEY, MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
@@ -55,9 +60,7 @@ public class AnswerActivity extends Activity {
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
 
-        if (t_index.equals("145")){
-            //TODO update user day+1
-        }
+
         //Load exam data
         LoadExamData(t_index);
 
@@ -137,15 +140,21 @@ public class AnswerActivity extends Activity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!choice_ans.equals("")){
-                    String type = "InsertAns";
-                    Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
-                    backgorundwork.execute(type,uid,t_index,choice_ans);
-                    //開啟自己並讓index+1
-                    OpenAnswerActivity(String.valueOf(Integer.parseInt(t_index)+1));
+                if (date_count(origin_time,getDateNow())){
+                    //如果等於true則大於三分鐘
+                    finish();
                 }else{
-                    Toast.makeText(AnswerActivity.this,"Choose your answer",Toast.LENGTH_SHORT).show();
+                    if (!choice_ans.equals("")){
+                        String type = "InsertAns";
+                        Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
+                        backgorundwork.execute(type,uid,t_index,choice_ans);
+                        //開啟自己並讓index+1
+                        OpenAnswerActivity(String.valueOf(Integer.parseInt(t_index)+1));
+                    }else{
+                        Toast.makeText(AnswerActivity.this,"Choose your answer",Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
 
@@ -153,10 +162,15 @@ public class AnswerActivity extends Activity {
     }
 
     private void OpenAnswerActivity(String t_index){
-        Intent ToAnswer=new Intent(AnswerActivity.this,AnswerActivity.class);
-        ToAnswer.putExtra("index", t_index);
-        startActivity(ToAnswer);
-        finish();
+        if (t_index.equals("題目總數")){
+            //TODO update user day+1
+            finish();
+        }else{
+            Intent ToAnswer=new Intent(AnswerActivity.this,AnswerActivity.class);
+            ToAnswer.putExtra("index", t_index);
+            startActivity(ToAnswer);
+            finish();
+        }
     }
 
     private void initAnswerActivity(){
@@ -226,5 +240,30 @@ public class AnswerActivity extends Activity {
                 .load(ContextCompat.getDrawable(item.getContext(),draw ))
                 .into(gif);
         dialog.show();
+    }
+
+    private String getDateNow(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
+        return formatter.format(curDate);
+    }
+
+
+    private boolean date_count(String origin ,String now){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try {
+            Date dt1 =sdf.parse(origin);
+            Date dt2 =sdf.parse(now);
+            Long ut1=dt1.getTime();
+            Long ut2=dt2.getTime();
+            Long timeP=ut2-ut1;
+            Long min=timeP/1000*60;
+            if (min>3){
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       return false;
     }
 }
