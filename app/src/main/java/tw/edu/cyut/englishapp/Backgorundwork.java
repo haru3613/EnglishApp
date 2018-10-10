@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,6 +13,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,7 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import tw.edu.cyut.englishapp.Group.ControlGroupActivity;
+import tw.edu.cyut.englishapp.Group.group_control;
 import tw.edu.cyut.englishapp.Group.TeacherGroupActivity;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 
@@ -241,6 +246,85 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if (type.equals("Upload_record")) {
+            int serverResponseCode = 0;
+            String result = null;
+            //final String SERVER_PATH = "http://163.17.5.182/englishCase/record_mp3/file_upload.php";
+            final String SERVER_PATH = "http://140.122.63.99/record_mp3/file_upload.php";
+            final String selectedPath = params[1];
+            HttpURLConnection conn = null;
+            DataOutputStream dos = null;
+            DataInputStream inStream = null;
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+            int bytesRead, bytesAvailable, bufferSize;
+            byte[] buffer;
+            int maxBufferSize = 1 * 1024 * 1024;
+            File sourceFile = new File(selectedPath);
+            if (sourceFile.isFile()) {
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(new File(selectedPath));
+                    // open a URL connection to the Servlet
+                    URL url = new URL(SERVER_PATH);
+                    // Open a HTTP connection to the URL
+                    conn = (HttpURLConnection) url.openConnection();
+                    // Allow Inputs
+                    conn.setDoInput(true);
+                    // Allow Outputs
+                    conn.setDoOutput(true);
+                    // Don't use a cached copy.
+                    conn.setUseCaches(false);
+                    // Use a post method.
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Connection", "Keep-Alive");
+                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                    dos = new DataOutputStream(conn.getOutputStream());
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + selectedPath + "\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    // create a buffer of maximum size
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    buffer = new byte[bufferSize];
+                    // read file and write it into form...
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    while (bytesRead > 0) {
+
+                        dos.write(buffer, 0, bufferSize);
+                        bytesAvailable = fileInputStream.available();
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    }
+
+                    // send multipart form data necesssary after file data...
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                    // close streams
+                    fileInputStream.close();
+                    dos.flush();
+                    dos.close();
+                    InputStream inputStream = conn.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String u_result = "";
+                    String line = null;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        u_result += line;
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    conn.disconnect();
+                    Log.e("Check_result", "result------>" + u_result);
+                    return u_result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
         }
         return null;
 
@@ -267,7 +351,10 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             ((Activity)context).finish();
             if (result.contains("control")){
                 //in control
-                Intent ToControl=new Intent(context,ControlGroupActivity.class);
+                Intent ToControl=new Intent(context,group_control.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Username", Username);
+                ToControl.putExtras(bundle);
                 context.startActivity(ToControl);
                 ((Activity) context).finish();
             }else if (result.contains("test")){
@@ -292,6 +379,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         else if (result.contains("DOCTYPE")){
             Log.d("Result", "onPostExecute: "+result);
             Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+        }
+        else if (result.contains("Upload_Success")){
+            Toast.makeText(context, "Upload Success", Toast.LENGTH_SHORT).show();
+        }
+        else if (result.contains("Upload_Fail")){
+            Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
         }
         else
         {
