@@ -40,7 +40,9 @@
             android:label="@string/title_activity_answer" />
         <activity
             android:name=".PreTestActivity"
-            android:label="@string/title_activity_pre_test"></activity>
+            android:label="@string/title_activity_pre_test" />
+        <activity android:name=".Group.controldetail" />
+        <activity android:name=".Group.group_control"></activity>
     </application>
 
 </manifest>
