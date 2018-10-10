@@ -38,7 +38,7 @@ import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
 
 public class TestGroupActivity extends Activity {
-    String day,uid,index;
+    String day,uid,index,level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,21 +56,24 @@ public class TestGroupActivity extends Activity {
 
 
         Log.d("Debug", "data check:"+day);
-        if (day.equals("0")){
-            //insert to topic speak
-            String type = "BuildTestData";
-            Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
-            backgorundwork.execute(type,uid);
-            //pre-test
-            Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
-            startActivity(ToPreTest);
-            finish();
-        }else{
-            //get index
-            LoadTopicSpeak(uid);
-            //start ans questions
-            OpenAnswerActivity(index);
+        if (!level.equals("Teacher")){
+            if (day.equals("0")){
+                //insert to topic speak
+                String type = "BuildTestData";
+                Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
+                backgorundwork.execute(type,uid);
+                //pre-test
+                Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
+                startActivity(ToPreTest);
+                finish();
+            }else{
+                //get index
+                LoadTopicSpeak(uid);
+                //start ans questions
+                OpenAnswerActivity(index);
+            }
         }
+
     }
 
     private void OpenAnswerActivity(String t_index){
@@ -96,6 +99,7 @@ public class TestGroupActivity extends Activity {
                             List<ItemAccount> posts = new ArrayList<ItemAccount>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemAccount[].class));
                             day=String.valueOf(posts.get(0).getDay());
+                            level=posts.get(0).getLevel();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
