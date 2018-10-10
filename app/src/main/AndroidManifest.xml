@@ -33,9 +33,6 @@
             android:name=".Group.TeacherGroupActivity"
             android:label="@string/title_activity_test_group" />
         <activity
-            android:name=".Group.ControlGroupActivity"
-            android:label="@string/title_activity_test_group" />
-        <activity
             android:name=".AnswerActivity"
             android:label="@string/title_activity_answer" />
         <activity

@@ -1,7 +1,9 @@
 package tw.edu.cyut.englishapp.Group;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
+import tw.edu.cyut.englishapp.LoginActivity;
 import tw.edu.cyut.englishapp.PreTestActivity;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.model.ItemAccount;
@@ -35,27 +38,30 @@ import tw.edu.cyut.englishapp.model.ItemTestSpeak;
 import tw.edu.cyut.englishapp.model.ItemTopic;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 
-import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
+import static com.android.volley.VolleyLog.TAG;
+import static tw.edu.cyut.englishapp.LoginActivity.KEY;
+
 
 public class TestGroupActivity extends Activity {
-    String day,uid,index,level;
+    private String day,index,level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_group);
-        uid="";
-        SharedPreferences sharedPreferences = TestGroupActivity.this.getSharedPreferences(KEY, MODE_PRIVATE);
-        uid=sharedPreferences.getString("uid",null);
+
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
+        String uid=sharedPreferences.getString("uid",null);
+        day=sharedPreferences.getString("day",null);
+        level=sharedPreferences.getString("level",null);
+        Log.d(TAG, "onCreate: "+uid+","+day+","+level);
 
         AlertDialog("Instructions","You are about to start the Chinese tones training section.\n" +
                 "Please make sure your earphones are functioning properly and carefully follow the instructions listed below: \n");
 
-        //check user test day
-        LoadUser(uid);
 
 
-        Log.d("Debug", "data check:"+day);
         if (!level.equals("Teacher")){
             if (day.equals("0")){
                 //insert to topic speak
@@ -79,51 +85,13 @@ public class TestGroupActivity extends Activity {
     private void OpenAnswerActivity(String t_index){
         Intent ToAnswer=new Intent(TestGroupActivity.this,AnswerActivity.class);
         ToAnswer.putExtra("index", t_index);
+        ToAnswer.putExtra("day", day);
         startActivity(ToAnswer);
         finish();
     }
-    public void LoadUser(final String uid){
-        String url = "http://140.122.63.99/app/loaduser.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Response:",response);
-                        try {
-                            byte[] u = response.getBytes(
-                                    "UTF-8");
-                            response = new String(u, "UTF-8");
-                            Log.d(ContentValues.TAG, "Response " + response);
-                            GsonBuilder builder = new GsonBuilder();
-                            Gson mGson = builder.create();
-                            List<ItemAccount> posts = new ArrayList<ItemAccount>();
-                            posts = Arrays.asList(mGson.fromJson(response, ItemAccount[].class));
-                            day=String.valueOf(posts.get(0).getDay());
-                            level=posts.get(0).getLevel();
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
 
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //do stuffs with response erroe
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("uid",uid);
 
-                return params;
-            }
 
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(TestGroupActivity.this);
-        requestQueue.add(stringRequest);
-    }
 
     public void LoadTopicSpeak(final String uid){
         String url = "http://140.122.63.99/app/load_topic_speak.php";
@@ -141,7 +109,6 @@ public class TestGroupActivity extends Activity {
                             Gson mGson = builder.create();
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
-                            //處理陣列
                             index=posts.get(0).getTopic_index();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();

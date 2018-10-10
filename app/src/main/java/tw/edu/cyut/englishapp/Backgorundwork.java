@@ -22,11 +22,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import tw.edu.cyut.englishapp.Group.ControlGroupActivity;
+import tw.edu.cyut.englishapp.Group.group_control;
 import tw.edu.cyut.englishapp.Group.TeacherGroupActivity;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Haru on 2017/12/19.
@@ -35,11 +34,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class Backgorundwork extends AsyncTask<String,Void,String> {
     Context context;
     MaterialDialog.Builder alertDialog;
-    public static final String KEY = "STATUS";
     String thisURL="http://140.122.63.99";
-    private static final String ACTIVITY_TAG ="Logwrite";
-    String Username;
-    String Password;
+
     public Backgorundwork(Context ctx){
         context = ctx;
     }
@@ -51,9 +47,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         if(type.equals("login")){
             try {
                 String username = params[1];
-                Username=username;
                 String pwd = params[2];
-                Password=pwd;
                 String login_url =thisURL+"/app/ajax_login.php";
                 URL url = new URL(login_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -241,6 +235,46 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if (type.equals("Update user day")){
+            try {
+                String uid = params[1];
+                String day = params[2];
+
+                String connection_url =thisURL+"/app/update_user_day.php";
+                URL url = new URL(connection_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
+                        URLEncoder.encode("day","UTF-8")+"="+URLEncoder.encode(day,"UTF-8");
+                Log.d("POST_DATA", "doInBackground: "+post_data);
+
+
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+                String result="";
+                String line=null;
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
 
@@ -256,18 +290,15 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         //alertDialog.content(result).show();
+        Log.d("Background", "onPostExecute: "+result);
         if(result==null){
             Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
         } else if (result.contains("login success")) {
-            SharedPreferences sharedPreferences = context.getSharedPreferences(KEY , MODE_PRIVATE);
-            sharedPreferences.edit().putBoolean("Status" , true).apply();
-            sharedPreferences.edit().putString("Username" , Username).apply();
-            sharedPreferences.edit().putString("Password" ,Password ).apply();
 
             ((Activity)context).finish();
             if (result.contains("control")){
                 //in control
-                Intent ToControl=new Intent(context,ControlGroupActivity.class);
+                Intent ToControl=new Intent(context,group_control.class);
                 context.startActivity(ToControl);
                 ((Activity) context).finish();
             }else if (result.contains("test")){

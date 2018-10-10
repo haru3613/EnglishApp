@@ -2,6 +2,7 @@ package tw.edu.cyut.englishapp;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -41,12 +42,13 @@ import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.model.ItemAccount;
 import tw.edu.cyut.englishapp.model.ItemTopic;
 
-import static tw.edu.cyut.englishapp.Backgorundwork.KEY;
+import static tw.edu.cyut.englishapp.LoginActivity.KEY;
+
 
 public class AnswerActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String correct_ans,uid, choice_ans;
+    private String correct_ans,uid, choice_ans,day;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
@@ -60,16 +62,17 @@ public class AnswerActivity extends Activity {
         initAnswerActivity();
 
         final String origin_time=getDateNow();
+        Log.d("onCreate", "TimeNow:"+origin_time);
 
         play_count=0;
         uid="";
-        SharedPreferences sharedPreferences = AnswerActivity.this.getSharedPreferences(KEY, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
-
+        Log.d("onCreate", "uid: "+uid);
 
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
-
+        day = intent.getStringExtra("day");
 
         //Load exam data
         LoadExamData(t_index);
@@ -86,7 +89,7 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="1";
-                ans2.setEnabled(false);
+                ans2.setVisibility(View.GONE);
                 ans3.setEnabled(false);
                 ans4.setEnabled(false);
                 if (correct_ans.equals(choice_ans)){
@@ -198,7 +201,9 @@ public class AnswerActivity extends Activity {
 
     private void OpenAnswerActivity(String t_index){
         if (t_index.equals("題目總數")){
-            //TODO update user day+1
+            String type = "Update user day";
+            Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
+            backgorundwork.execute(type,uid,String.valueOf(Integer.parseInt(day)+1));
             finish();
         }else{
             Intent ToAnswer=new Intent(AnswerActivity.this,AnswerActivity.class);
@@ -233,8 +238,6 @@ public class AnswerActivity extends Activity {
                             Gson mGson = builder.create();
                             List<ItemTopic> posts = new ArrayList<ItemTopic>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopic[].class));
-                            String pinyin=posts.get(0).getPinyin();
-                            String name=posts.get(0).getPinyin();
                             correct_ans=String.valueOf(posts.get(0).getAns());
 
                         } catch (UnsupportedEncodingException e) {
