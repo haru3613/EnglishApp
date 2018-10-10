@@ -7,7 +7,7 @@
     tools:context=".Group.group_control">
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/image_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/bt_next"
@@ -48,7 +48,7 @@
         android:id="@+id/bt_speak_start"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:onClick="bt_speak_start"
+        android:onClick="bt_recode_start"
         android:src="@drawable/app_g_enable_record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
         android:id="@+id/bt_stop_speak"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:onClick="bt_stop_speak"
+        android:onClick="bt_recode_stop"
         android:src="@drawable/app_g_disable_record"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +101,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
-        android:onClick="bt_speak_talker"
+        android:onClick="bt_recode_playing"
         android:src="@drawable/app_g_speaker"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
