@@ -38,7 +38,7 @@ import android.widget.Toast;
 public class SignUpActivity extends AppCompatActivity {
 
     String username, mail, pwd, name, re_pwd,country,tbackground,Learninghours,testseries,testname,certification,sex,year,month,day,native_language,learningyears,o_language,education,learingmethod;
-
+    Spinner sp_sex,sp_years,sp_month,sp_day,sp_learing_method;
 
 
     @Override
@@ -46,33 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        final Spinner sp_sex = (Spinner)findViewById(R.id.gender);
-        final Spinner sp_years = (Spinner)findViewById(R.id.years);
-        final Spinner sp_month = (Spinner)findViewById(R.id.month);
-        final Spinner sp_day = (Spinner)findViewById(R.id.day);
-        final Spinner sp_learing_method = (Spinner)findViewById(R.id.LearningMethod);
-        ArrayAdapter<CharSequence> SexList = ArrayAdapter.createFromResource(SignUpActivity.this,
-                R.array.sex,
-                android.R.layout.simple_spinner_dropdown_item);
-        sp_sex.setAdapter(SexList);
-        ArrayAdapter<CharSequence> YearList = ArrayAdapter.createFromResource(SignUpActivity.this,
-                R.array.years,
-                android.R.layout.simple_spinner_dropdown_item);
-        sp_years.setAdapter(YearList);
-        ArrayAdapter<CharSequence> MonthList = ArrayAdapter.createFromResource(SignUpActivity.this,
-                R.array.month,
-                android.R.layout.simple_spinner_dropdown_item);
-        sp_month.setAdapter(MonthList);
-        ArrayAdapter<CharSequence> DayList = ArrayAdapter.createFromResource(SignUpActivity.this,
-                R.array.day,
-                android.R.layout.simple_spinner_dropdown_item);
-        sp_day.setAdapter(DayList);
-        ArrayAdapter<CharSequence> learingList = ArrayAdapter.createFromResource(SignUpActivity.this,
-                R.array.learing,
-                android.R.layout.simple_spinner_dropdown_item);
-        sp_learing_method.setAdapter(learingList);
-
-
+        initSignUpActivity();
 
         final Button SignUp = (Button) findViewById(R.id.sign);
         SignUp.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +99,34 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    private void initSignUpActivity(){
+        sp_sex= (Spinner)findViewById(R.id.gender);
+        sp_years = (Spinner)findViewById(R.id.years);
+        sp_month = (Spinner)findViewById(R.id.month);
+        sp_day = (Spinner)findViewById(R.id.day);
+        sp_learing_method = (Spinner)findViewById(R.id.LearningMethod);
+
+        ArrayAdapter<CharSequence> SexList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.sex,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_sex.setAdapter(SexList);
+        ArrayAdapter<CharSequence> YearList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.years,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_years.setAdapter(YearList);
+        ArrayAdapter<CharSequence> MonthList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.month,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_month.setAdapter(MonthList);
+        ArrayAdapter<CharSequence> DayList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.day,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_day.setAdapter(DayList);
+        ArrayAdapter<CharSequence> learingList = ArrayAdapter.createFromResource(SignUpActivity.this,
+                R.array.learing,
+                android.R.layout.simple_spinner_dropdown_item);
+        sp_learing_method.setAdapter(learingList);
+    }
 }
 
 
