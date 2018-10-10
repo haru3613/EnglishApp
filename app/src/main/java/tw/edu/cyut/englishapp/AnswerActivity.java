@@ -55,6 +55,9 @@ public class AnswerActivity extends Activity {
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
 
+        if (t_index.equals("145")){
+            //TODO update user day+1
+        }
         //Load exam data
         LoadExamData(t_index);
 
@@ -165,6 +168,7 @@ public class AnswerActivity extends Activity {
         next.findViewById(R.id.next);
 
     }
+
     public void LoadExamData(final String index){
         String url = "http://140.122.63.99/app/load_topic_data.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
