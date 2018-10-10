@@ -181,4 +181,5 @@ public class TestGroupActivity extends Activity {
         content_txt.setText(content);
         dialog.show();
     }
+
 }
