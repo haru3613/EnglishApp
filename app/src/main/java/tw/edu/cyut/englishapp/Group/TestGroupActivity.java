@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -45,39 +46,46 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class TestGroupActivity extends Activity {
     private String day,index,level;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_group);
 
+        Button btn_start=findViewById(R.id.btn_start);
 
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
-        String uid=sharedPreferences.getString("uid",null);
+        final String uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
         level=sharedPreferences.getString("level",null);
         Log.d(TAG, "onCreate: "+uid+","+day+","+level);
 
 
-
-        if (!level.equals("Teacher")){
-            if (day.equals("0")){
-                //insert to topic speak
-                String type = "BuildTestData";
-                Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
-                backgorundwork.execute(type,uid);
-                //pre-test
-                Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
-                startActivity(ToPreTest);
-                finish();
-            }else{
-                //get index
-
-                LoadTopicSpeak(uid);
-                //start ans questions
-                OpenAnswerActivity(index);
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!level.equals("Teacher")){
+                    if (day.equals("0")){
+                        //insert to topic speak
+                        String type = "BuildTestData";
+                        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
+                        backgorundwork.execute(type,uid);
+                        //pre-test
+                        Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
+                        startActivity(ToPreTest);
+                        finish();
+                    }else{
+                        //get index
+                        LoadTopicSpeak(uid);
+                        //start ans questions
+                        OpenAnswerActivity(index);
+                    }
+                }
             }
-        }
+        });
+
+
 
     }
 
