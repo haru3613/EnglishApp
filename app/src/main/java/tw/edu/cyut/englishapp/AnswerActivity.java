@@ -45,18 +45,20 @@ import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.model.ItemAccount;
 import tw.edu.cyut.englishapp.model.ItemTopic;
 
+import static com.android.volley.VolleyLog.TAG;
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 
 public class AnswerActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String correct_ans,uid, choice_ans,day,audio;
+    private String correct_ans,uid, choice_ans,day,file_name;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
+    private String[] audio_list;
     private int play_count;
     private boolean initialStage = true;
     Timer timerExit = new Timer();
@@ -109,10 +111,16 @@ public class AnswerActivity extends Activity {
 
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
+        //TODO 判斷是第幾階段
         day = intent.getStringExtra("day");
 
         //Load exam data
         LoadExamData(t_index);
+
+        //TODO 從xml檔撈陣列給audio_list
+        //TODO 從陣列抓取音檔
+        file_name=audio_list[Integer.parseInt(t_index)];
+        Log.d(TAG, "onCreate file_name:"+file_name);
 
         choice_ans="";
 
@@ -193,7 +201,7 @@ public class AnswerActivity extends Activity {
                     play_count+=1;
 
                     if (initialStage) {
-                        new Player().execute("https://www.ssaurel.com/tmp/mymusic.mp3");
+                        new Player().execute("http://140.122.63.99/app/"+file_name);
                     } else {
                         if (!mediaPlayer.isPlaying())
                             mediaPlayer.start();
@@ -238,7 +246,8 @@ public class AnswerActivity extends Activity {
     }
 
     private void OpenAnswerActivity(String t_index){
-        if (t_index.equals("題目總數")){
+        if (Integer.parseInt(t_index)==audio_list.length){
+            //如果等於總數
             String type = "Update user day";
             Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
             backgorundwork.execute(type,uid,String.valueOf(Integer.parseInt(day)+1));
@@ -276,7 +285,6 @@ public class AnswerActivity extends Activity {
                             Gson mGson = builder.create();
                             List<ItemTopic> posts = new ArrayList<ItemTopic>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopic[].class));
-                            audio=posts.get(0).getAudio();
                             correct_ans=posts.get(0).getAns();
 
                         } catch (UnsupportedEncodingException e) {
