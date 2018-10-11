@@ -51,14 +51,12 @@ public class TestGroupActivity extends Activity {
         setContentView(R.layout.activity_test_group);
 
 
+
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         String uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
         level=sharedPreferences.getString("level",null);
         Log.d(TAG, "onCreate: "+uid+","+day+","+level);
-
-        AlertDialog("Instructions","You are about to start the Chinese tones training section.\n" +
-                "Please make sure your earphones are functioning properly and carefully follow the instructions listed below: \n");
 
 
 
@@ -74,6 +72,7 @@ public class TestGroupActivity extends Activity {
                 finish();
             }else{
                 //get index
+
                 LoadTopicSpeak(uid);
                 //start ans questions
                 OpenAnswerActivity(index);
@@ -89,7 +88,6 @@ public class TestGroupActivity extends Activity {
         startActivity(ToAnswer);
         finish();
     }
-
 
 
 
@@ -135,18 +133,6 @@ public class TestGroupActivity extends Activity {
         requestQueue.add(stringRequest);
     }
 
-    private void AlertDialog(String title,String content){
-        boolean wrapInScrollView = true;
-        MaterialDialog dialog=new MaterialDialog.Builder(TestGroupActivity.this)
-                .title(title)
-                .customView(R.layout.alert_dialog, wrapInScrollView)
-                .backgroundColorRes(R.color.colorBackground)
-                .positiveText("OK")
-                .build();
-        final View item = dialog.getCustomView();
-        TextView content_txt=item.findViewById(R.id.dialog_content);
-        content_txt.setText(content);
-        dialog.show();
-    }
+
 
 }

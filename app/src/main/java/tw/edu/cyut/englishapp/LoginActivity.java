@@ -17,8 +17,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -46,8 +48,8 @@ import static android.content.ContentValues.TAG;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private static Boolean isExit = false;
-    private static Boolean hasTask = false;
+    private  Boolean isExit = false;
+    private  Boolean hasTask = false;
     public static final String KEY = "com.cyut.englishapp";
     private Button SignUp,Login;
     String email;
@@ -92,6 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 
         initLoginActivity();
 
+        AlertDialog("Instructions","You are about to start the Chinese tones training section.\n" +
+                "Please make sure your earphones are functioning properly and carefully follow the instructions listed below: \n");
 
 
         Login.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +188,18 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
         requestQueue.add(stringRequest);
     }
-
+    private void AlertDialog(String title,String content){
+        boolean wrapInScrollView = true;
+        MaterialDialog dialog=new MaterialDialog.Builder(LoginActivity.this)
+                .title(title)
+                .customView(R.layout.alert_dialog, wrapInScrollView)
+                .backgroundColorRes(R.color.colorBackground)
+                .positiveText("OK")
+                .build();
+        final View item = dialog.getCustomView();
+        TextView content_txt=item.findViewById(R.id.dialog_content);
+        content_txt.setText(content);
+        dialog.show();
+    }
 
 }

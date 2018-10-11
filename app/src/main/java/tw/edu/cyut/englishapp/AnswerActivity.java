@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,6 +38,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.model.ItemAccount;
@@ -48,12 +51,46 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class AnswerActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String correct_ans,uid, choice_ans,day;
+    private String correct_ans,uid, choice_ans,day,audio;
+    private  Boolean isExit = false;
+    private  Boolean hasTask = false;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
     private int play_count;
     private boolean initialStage = true;
+    Timer timerExit = new Timer();
+    TimerTask task = new TimerTask() {
+
+        @Override
+        public void run() {
+            isExit = false;
+            hasTask = true;
+        }
+    };
+
+    //按兩次Back退出app
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 判斷是否按下Back
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 是否要退出
+            if(!isExit ) {
+                isExit = true; //記錄下一次要退出
+                Toast.makeText(this, "Press Back again to exit the app."
+                        , Toast.LENGTH_SHORT).show();
+                // 如果超過兩秒則恢復預設值
+                if(!hasTask) {
+                    timerExit.schedule(task, 2000);
+                }
+            } else {
+                finish(); // 離開程式
+                System.exit(0);
+            }
+        }
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,6 +220,7 @@ public class AnswerActivity extends Activity {
                     finish();
                 }else{
                     if (!choice_ans.equals("")){
+                        //新增test資料表的答案，並update topic_speak的index
                         String type = "InsertAns";
                         Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
                         backgorundwork.execute(type,uid,t_index,choice_ans);
@@ -214,12 +252,12 @@ public class AnswerActivity extends Activity {
     }
 
     private void initAnswerActivity(){
-        play.findViewById(R.id.play);
-        ans1.findViewById(R.id.ans1);
-        ans2.findViewById(R.id.ans2);
-        ans3.findViewById(R.id.ans3);
-        ans4.findViewById(R.id.ans4);
-        next.findViewById(R.id.next);
+        play=findViewById(R.id.play);
+        ans1=findViewById(R.id.ans1);
+        ans2=findViewById(R.id.ans2);
+        ans3=findViewById(R.id.ans3);
+        ans4=findViewById(R.id.ans4);
+        next=findViewById(R.id.next);
 
     }
 
@@ -238,7 +276,8 @@ public class AnswerActivity extends Activity {
                             Gson mGson = builder.create();
                             List<ItemTopic> posts = new ArrayList<ItemTopic>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopic[].class));
-                            correct_ans=String.valueOf(posts.get(0).getAns());
+                            audio=posts.get(0).getAudio();
+                            correct_ans=posts.get(0).getAns();
 
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
