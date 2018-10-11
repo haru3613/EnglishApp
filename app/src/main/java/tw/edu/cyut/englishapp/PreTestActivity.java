@@ -14,7 +14,10 @@ public class PreTestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_test);
 
+
         AlertDialog("Pre-test","You are about to start the pretest. Please make sure your microphone is functioning properly and carefully follow the instructions listed below:");
+
+        //TODO update user day=1
     }
 
     private void AlertDialog(String title,String content){
