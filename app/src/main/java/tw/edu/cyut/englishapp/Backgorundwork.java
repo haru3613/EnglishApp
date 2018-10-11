@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,10 +42,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     Context context;
     MaterialDialog.Builder alertDialog;
     public static final String KEY = "STATUS";
-    String thisURL="http://140.122.63.99";
     private static final String ACTIVITY_TAG ="Logwrite";
+    String Uid;
     String Username;
     String Password;
+    String thisURL="http://140.122.63.99";
+
     public Backgorundwork(Context ctx){
         context = ctx;
     }
@@ -183,8 +186,6 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8");
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
-
-
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -225,7 +226,6 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
 
-
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -250,7 +250,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             int serverResponseCode = 0;
             String result = null;
             //final String SERVER_PATH = "http://163.17.5.182/englishCase/record_mp3/file_upload.php";
-            final String SERVER_PATH = "http://140.122.63.99/record_mp3/file_upload.php";
+            final String SERVER_PATH = thisURL+"/record_mp3/file_upload.php";
             final String selectedPath = params[1];
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
@@ -265,17 +265,11 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             if (sourceFile.isFile()) {
                 try {
                     FileInputStream fileInputStream = new FileInputStream(new File(selectedPath));
-                    // open a URL connection to the Servlet
                     URL url = new URL(SERVER_PATH);
-                    // Open a HTTP connection to the URL
                     conn = (HttpURLConnection) url.openConnection();
-                    // Allow Inputs
                     conn.setDoInput(true);
-                    // Allow Outputs
                     conn.setDoOutput(true);
-                    // Don't use a cached copy.
                     conn.setUseCaches(false);
-                    // Use a post method.
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Connection", "Keep-Alive");
                     conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
@@ -291,12 +285,10 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
                     while (bytesRead > 0) {
-
                         dos.write(buffer, 0, bufferSize);
                         bytesAvailable = fileInputStream.available();
                         bufferSize = Math.min(bytesAvailable, maxBufferSize);
                         bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
                     }
 
                     // send multipart form data necesssary after file data...
@@ -323,7 +315,43 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }else if (type.equals("insert_record")){
+            try {
+                String uid = params[1];
+                String filename =params[2];
+                String connection_url =thisURL+"/app/insertrecord.php";
+                URL url = new URL(connection_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
 
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
+                        URLEncoder.encode("filename","UTF-8")+"="+URLEncoder.encode(filename,"UTF-8");
+                Log.d("POST_DATA", "doInBackground: "+post_data);
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+                String result="";
+                String line=null;
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return null;
@@ -351,6 +379,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             ((Activity)context).finish();
             if (result.contains("control")){
                 //in control
+
                 Intent ToControl=new Intent(context,group_control.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", Username);
@@ -385,6 +414,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }
         else if (result.contains("Upload_Fail")){
             Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
+        }
+        else if (result.contains("Insert Success")){
+            Toast.makeText(context, "Insert Success", Toast.LENGTH_SHORT).show();
+        }
+        else if (result.contains("Insert Fail")){
+            Toast.makeText(context, "Insert Fail", Toast.LENGTH_SHORT).show();
         }
         else
         {

@@ -32,12 +32,17 @@ public class group_control extends AppCompatActivity  {
     private MediaPlayer   mPlayer = null;
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-
+    int count_topic_speaker=1;
+    int count_record=1;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Bundle bundle = getIntent().getExtras();
         String Username = bundle.getString("Username");
+        Backgorundwork backgorundwork = new Backgorundwork(this);
+        String response= String.valueOf(backgorundwork.execute("select_user",Username));
+        Log.e(LOG_TAG, "response--------->"+response);
+        Toast.makeText(getApplicationContext(), "Username="+Username, Toast.LENGTH_LONG).show();
         switch (requestCode){
             case REQUEST_RECORD_AUDIO_PERMISSION:
                 permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
@@ -79,12 +84,19 @@ public class group_control extends AppCompatActivity  {
     }
 
     public void bt_recode_start(View view) {
-        bt_speak_talker.setVisibility(View.INVISIBLE);
-        bt_speak_talker.setEnabled(false);
-        mFileName = getExternalCacheDir().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp";
-        startRecording();
-        Toast.makeText(getApplicationContext(), "Start Recording", Toast.LENGTH_LONG).show();
+        if (count_record<4) {
+            bt_next.setVisibility(View.INVISIBLE);
+            bt_next.setEnabled(false);
+            count_record+=1;
+            bt_speak_talker.setVisibility(View.INVISIBLE);
+            bt_speak_talker.setEnabled(false);
+            mFileName = getExternalCacheDir().getAbsolutePath();
+            mFileName += "/audiorecordtest.3gp";
+            startRecording();
+            Toast.makeText(getApplicationContext(), "Start Recording", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "You can't record more than three times.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -98,10 +110,19 @@ public class group_control extends AppCompatActivity  {
         bt_next.setVisibility(View.VISIBLE);
         bt_next.setEnabled(true);
         stopRecording();
-        Toast.makeText(getApplicationContext(), "Stop Recording", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Stop Recording", Toast.LENGTH_SHORT).show();
     }
 
     public void bt_topic_speak(View view) {
+        if (count_topic_speaker<4){
+            count_topic_speaker+=1;
+            Backgorundwork backgorundwork = new Backgorundwork(this);
+            backgorundwork.execute("Launch_Streaming","http://140.122.63.99/topic_audio/all_audio/"+"pei2JS"+".wav");
+
+        }else{
+            Toast.makeText(getApplicationContext(), "You can't play more than three times.", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
