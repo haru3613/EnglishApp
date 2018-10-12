@@ -37,11 +37,12 @@ import tw.edu.cyut.englishapp.Group.TestGroupActivity;
  */
 
 public class Backgorundwork extends AsyncTask<String,Void,String> {
+    String FileURL;
     Context context;
     MaterialDialog.Builder alertDialog;
     String thisURL="http://140.122.63.99";
     String Username;
-    String FileName;
+
     public Backgorundwork(Context ctx){
         context = ctx;
     }
@@ -285,9 +286,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }else if (type.equals("Upload_record")) {
             int serverResponseCode = 0;
             String result = null;
-            //final String SERVER_PATH = "http://163.17.5.182/englishCase/record_mp3/file_upload.php";
             final String SERVER_PATH = "http://140.122.63.99/record_mp3/file_upload.php";
-            FileName= params[1];
+            FileURL= params[1];
+            String uid=params[2];
+            String t_index=params[3];
+            String FileName= params[4];
+            Log.e("All params->", "uid->" + uid+"t_index->" +t_index+"FileName->" +FileName );
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
             DataInputStream inStream = null;
@@ -297,28 +301,47 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             int bytesRead, bytesAvailable, bufferSize;
             byte[] buffer;
             int maxBufferSize = 1 * 1024 * 1024;
-            File sourceFile = new File(FileName);
+            File sourceFile = new File(FileURL);
             if (sourceFile.isFile()) {
                 try {
-                    FileInputStream fileInputStream = new FileInputStream(new File(FileName));
-                    // open a URL connection to the Servlet
+
+                    FileInputStream fileInputStream = new FileInputStream(new File(FileURL));
                     URL url = new URL(SERVER_PATH);
-                    // Open a HTTP connection to the URL
                     conn = (HttpURLConnection) url.openConnection();
-                    // Allow Inputs
                     conn.setDoInput(true);
-                    // Allow Outputs
                     conn.setDoOutput(true);
-                    // Don't use a cached copy.
                     conn.setUseCaches(false);
-                    // Use a post method.
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Connection", "Keep-Alive");
+                    conn.setRequestProperty("Charset", "utf-8");
                     conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                     dos = new DataOutputStream(conn.getOutputStream());
+
+                    //
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
-                    dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + FileName + "\"" + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uid\"" + lineEnd);
                     dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(uid,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+//
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"t_index\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(t_index,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+//
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"filename\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(FileName,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + FileURL + "\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+
+//
+
                     // create a buffer of maximum size
                     bytesAvailable = fileInputStream.available();
                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -361,6 +384,10 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 }
 
             }
+        }else if(type.equals("Upload_record")) {
+
+
+
         }
         return null;
 
@@ -415,10 +442,16 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }
         else if (result.contains("Upload_Success")){
             Toast.makeText(context, "Upload Success", Toast.LENGTH_SHORT).show();
-            File file = new File(FileName);
+            File file = new File(FileURL);
             if (file.exists()){
                 file.delete();
                 Log.d("Success ", "File was deleted"+result);
+                Intent ToControl=new Intent(context,group_control.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Username", Username);
+                ToControl.putExtras(bundle);
+                context.startActivity(ToControl);
+                ((Activity) context).finish();
             }else{
                 Log.d("Error ", "File doesn't exist"+result);
             }
