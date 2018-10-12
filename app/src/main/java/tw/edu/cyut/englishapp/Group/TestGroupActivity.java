@@ -125,7 +125,7 @@ public class TestGroupActivity extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //do stuffs with response erroe
+                        //do stuffs with response erro
                     }
                 }){
             @Override

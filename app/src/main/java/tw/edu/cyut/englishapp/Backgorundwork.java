@@ -41,6 +41,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     MaterialDialog.Builder alertDialog;
     String thisURL="http://140.122.63.99";
     String Username;
+    String FileName;
     public Backgorundwork(Context ctx){
         context = ctx;
     }
@@ -286,7 +287,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             String result = null;
             //final String SERVER_PATH = "http://163.17.5.182/englishCase/record_mp3/file_upload.php";
             final String SERVER_PATH = "http://140.122.63.99/record_mp3/file_upload.php";
-            final String selectedPath = params[1];
+            FileName= params[1];
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
             DataInputStream inStream = null;
@@ -296,10 +297,10 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             int bytesRead, bytesAvailable, bufferSize;
             byte[] buffer;
             int maxBufferSize = 1 * 1024 * 1024;
-            File sourceFile = new File(selectedPath);
+            File sourceFile = new File(FileName);
             if (sourceFile.isFile()) {
                 try {
-                    FileInputStream fileInputStream = new FileInputStream(new File(selectedPath));
+                    FileInputStream fileInputStream = new FileInputStream(new File(FileName));
                     // open a URL connection to the Servlet
                     URL url = new URL(SERVER_PATH);
                     // Open a HTTP connection to the URL
@@ -316,7 +317,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                     conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                     dos = new DataOutputStream(conn.getOutputStream());
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
-                    dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + selectedPath + "\"" + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + FileName + "\"" + lineEnd);
                     dos.writeBytes(lineEnd);
                     // create a buffer of maximum size
                     bytesAvailable = fileInputStream.available();
@@ -414,6 +415,15 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }
         else if (result.contains("Upload_Success")){
             Toast.makeText(context, "Upload Success", Toast.LENGTH_SHORT).show();
+            File file = new File(FileName);
+            if (file.exists()){
+                file.delete();
+                Log.d("Success ", "File was deleted"+result);
+            }else{
+                Log.d("Error ", "File doesn't exist"+result);
+            }
+
+
         }
         else if (result.contains("Upload_Fail")){
             Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();
