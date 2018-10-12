@@ -77,9 +77,8 @@ public class TestGroupActivity extends Activity {
                         finish();
                     }else{
                         //get index
-                        LoadTopicSpeak(uid);
                         //start ans questions
-                        OpenAnswerActivity(index);
+                        LoadTopicSpeak(uid);
                     }
                 }
             }
@@ -116,6 +115,7 @@ public class TestGroupActivity extends Activity {
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             index=posts.get(0).getTopic_index();
+                            OpenAnswerActivity(index);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
