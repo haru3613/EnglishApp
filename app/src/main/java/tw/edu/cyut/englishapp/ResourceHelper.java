@@ -15,7 +15,7 @@ public class ResourceHelper {
         try {
             Class<R.array> res = R.array.class;
             Field field;
-            int counter = 1;
+            int counter = 0;
 
             do {
                 field = res.getField(key + "_" + counter);
