@@ -111,7 +111,8 @@ public class AnswerActivity extends Activity {
 
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
-
+        final String qbank = intent.getStringExtra("qbank");
+        Log.d("onCreate","這是第幾個題庫:"+qbank);
         Log.d("onCreate","這是第幾題:"+t_index);
 
         if (Integer.parseInt(t_index)<=34){
@@ -130,18 +131,18 @@ public class AnswerActivity extends Activity {
         if(objectArray!=null){
             audio_list = new String[objectArray.length][];
             Log.d(TAG, "onCreate: length"+objectArray.length);
-            for(int i=1;i<objectArray.length;i++){
+            for(int i=0;i<objectArray.length;i++){
                 audio_list[i]=(String[]) objectArray[i];
             }
         }
 
-        Log.d(TAG, "onCreate: 音檔名稱"+audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)]);
+        file_name=audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)];
+        Log.d(TAG, "onCreate: 音檔名稱:"+file_name);
 
-        //Load exam data
-        LoadExamData(t_index);
 
-        //TODO 從xml檔撈陣列給audio_list
-        //TODO 從陣列抓取音檔
+        String c=file_name.substring(file_name.length()-3,file_name.length()-2);
+        int index=file_name.indexOf(c);
+        Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
 
 
         choice_ans="";
@@ -223,7 +224,7 @@ public class AnswerActivity extends Activity {
                     play_count+=1;
 
                     if (initialStage) {
-                        new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)]+".wav");
+                        new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)]+".wav");
                     } else {
                         if (!mediaPlayer.isPlaying())
                             mediaPlayer.start();
@@ -268,7 +269,7 @@ public class AnswerActivity extends Activity {
     }
 
     private void OpenAnswerActivity(String t_index){
-        if (Integer.parseInt(t_index)==audio_list.length){
+        if (Integer.parseInt(t_index)==audio_list[Integer.parseInt(day)].length){
             //如果等於總數
             String type = "Update user day";
             Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
@@ -277,6 +278,10 @@ public class AnswerActivity extends Activity {
         }else{
             Intent ToAnswer=new Intent(AnswerActivity.this,AnswerActivity.class);
             ToAnswer.putExtra("index", t_index);
+            ToAnswer.putExtra("day", day);
+            Bundle mBundle = new Bundle();
+            mBundle.putSerializable("audio_list", audio_list);
+            ToAnswer.putExtras(mBundle);
             startActivity(ToAnswer);
             finish();
         }
@@ -292,46 +297,6 @@ public class AnswerActivity extends Activity {
 
     }
 
-    public void LoadExamData(final String index){
-        String url = "http://140.122.63.99/app/load_topic_data.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            byte[] u = response.getBytes(
-                                    "UTF-8");
-                            response = new String(u, "UTF-8");
-                            Log.d(ContentValues.TAG, "Response " + response);
-                            GsonBuilder builder = new GsonBuilder();
-                            Gson mGson = builder.create();
-                            List<ItemTopic> posts = new ArrayList<ItemTopic>();
-                            posts = Arrays.asList(mGson.fromJson(response, ItemTopic[].class));
-                            correct_ans=posts.get(0).getAns();
-
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //do stuffs with response erroe
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("tid",index);
-                return params;
-            }
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(AnswerActivity.this);
-        requestQueue.add(stringRequest);
-    }
 
     private void AlertDialog(int draw){
         boolean wrapInScrollView = true;
@@ -343,7 +308,7 @@ public class AnswerActivity extends Activity {
         final View item = dialog.getCustomView();
         ImageView gif=item.findViewById(R.id.image_gif);
         Glide.with(item)
-                .load(ContextCompat.getDrawable(item.getContext(),draw ))
+                .load(ContextCompat.getDrawable(item.getContext(),draw))
                 .into(gif);
         dialog.show();
     }
