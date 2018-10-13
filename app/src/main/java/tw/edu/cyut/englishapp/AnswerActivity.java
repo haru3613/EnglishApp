@@ -111,7 +111,17 @@ public class AnswerActivity extends Activity {
 
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
-        //TODO 判斷是第幾階段
+
+        Log.d("onCreate","這是第幾題:"+t_index);
+
+        if (Integer.parseInt(t_index)<=34){
+            ans1.setVisibility(View.GONE);
+            ans4.setVisibility(View.GONE);
+        }else if (Integer.parseInt(t_index)<=64) {
+            ans2.setVisibility(View.GONE);
+            ans3.setVisibility(View.GONE);
+        }
+
         day = intent.getStringExtra("day");
 
         //Load exam data
@@ -119,7 +129,7 @@ public class AnswerActivity extends Activity {
 
         //TODO 從xml檔撈陣列給audio_list
         //TODO 從陣列抓取音檔
-        file_name=audio_list[Integer.parseInt(t_index)];
+        //file_name=audio_list[Integer.parseInt(t_index)];
         Log.d(TAG, "onCreate file_name:"+file_name);
 
         choice_ans="";
@@ -134,9 +144,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="1";
-                ans2.setVisibility(View.GONE);
-                ans3.setEnabled(false);
-                ans4.setEnabled(false);
+                ans2.setVisibility(View.INVISIBLE);
+                ans3.setVisibility(View.INVISIBLE);
+                ans4.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
@@ -150,9 +160,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="2";
-                ans1.setEnabled(false);
-                ans3.setEnabled(false);
-                ans4.setEnabled(false);
+                ans1.setVisibility(View.INVISIBLE);
+                ans3.setVisibility(View.INVISIBLE);
+                ans4.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
@@ -166,9 +176,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="3";
-                ans1.setEnabled(false);
-                ans2.setEnabled(false);
-                ans4.setEnabled(false);
+                ans1.setVisibility(View.INVISIBLE);
+                ans2.setVisibility(View.INVISIBLE);
+                ans4.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
@@ -182,9 +192,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="4";
-                ans2.setEnabled(false);
-                ans3.setEnabled(false);
-                ans1.setEnabled(false);
+                ans2.setVisibility(View.INVISIBLE);
+                ans3.setVisibility(View.INVISIBLE);
+                ans1.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
