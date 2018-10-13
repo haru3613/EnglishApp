@@ -36,7 +36,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class PreTestActivity extends Activity {
     private String index;
-    private String [][] pre_test_array=new String[16][105];
+    private String [][] pre_test_array=new String[16][139];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

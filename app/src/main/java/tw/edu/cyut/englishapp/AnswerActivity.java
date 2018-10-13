@@ -136,12 +136,13 @@ public class AnswerActivity extends Activity {
             }
         }
 
-        Log.d(TAG, "onCreate: 音檔名稱"+audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)]);
+        file_name=audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)];
+        Log.d(TAG, "onCreate: 音檔名稱:"+file_name);
 
-        String origin=audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)];
-        char c=(audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)]).charAt(-3);
-        int index=origin.indexOf(c);
-        Log.d("","題目名稱:"+origin.substring(0,index)+"答案:"+c);
+
+        String c=file_name.substring(file_name.length()-3,file_name.length()-2);
+        int index=file_name.indexOf(c);
+        Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
 
 
         choice_ans="";
