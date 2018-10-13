@@ -33,13 +33,13 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class PreStartActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String correct_ans,uid, choice_ans,day,file_name;
+    private String uid;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
-    private String[][] audio_list=new String[16][105];
+    private String[][] audio_list=new String[16][106];
     private int play_count;
     private boolean initialStage = true;
     Timer timerExit = new Timer();
@@ -111,13 +111,12 @@ public class PreStartActivity extends Activity {
 
         Log.d(TAG, "onCreate: 音檔名稱"+audio_list[0][Integer.parseInt(t_index)]);
 
-        String origin=audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)];
-        char c=(audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)]).charAt(-3);
+        String origin=audio_list[0][Integer.parseInt(t_index)];
+        char c=(audio_list[0][Integer.parseInt(t_index)]).charAt(-3);
         int index=origin.indexOf(c);
         Log.d("","題目名稱:"+origin.substring(0,index)+"答案:"+c);
 
 
-        choice_ans="";
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);

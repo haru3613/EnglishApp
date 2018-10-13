@@ -49,7 +49,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class TestGroupActivity extends Activity {
     private String day,index,level,qbank;
 
-    private String [][] audio_list=new String[16][105];
+    private String [][] audio_list=new String[16][139];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +64,12 @@ public class TestGroupActivity extends Activity {
         day=sharedPreferences.getString("day",null);
         level=sharedPreferences.getString("level",null);
         Log.d(TAG, "onCreate: "+uid+","+day+","+level);
-
+        //第幾個題庫
+        LoadExamSort(uid);
+        //第幾題
+        LoadTopicSpeak(uid);
         //xml to array
-        int j=1;
+        int j=0;
         for (TypedArray item : ResourceHelper.getMultiTypedArray(TestGroupActivity.this, "day")) {
             for (int i=1;i<=Integer.parseInt(item.getString(0));i++){
                 audio_list[j][i]=item.getString(i);
@@ -90,10 +93,7 @@ public class TestGroupActivity extends Activity {
                     }else{
                         //get index
                         //start ans questions
-                        //第幾個題庫
-                        LoadExamSort(uid);
-                        //第幾題
-                        LoadTopicSpeak(uid);
+                        OpenAnswerActivity(index);
                     }
                 }
             }
@@ -181,7 +181,7 @@ public class TestGroupActivity extends Activity {
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             index=posts.get(0).getTopic_index();
-                            OpenAnswerActivity(index);
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
