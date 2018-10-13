@@ -54,11 +54,13 @@ public class ItemAccount {
     private String day;
     @SerializedName("time_examing")
     private String time_examing;
+    @SerializedName("qbank")
+    private String qbank;
 
 
 
     public ItemAccount(String uid, String username,String password,String names,String email,String sex,String country,String education,String language,String o_language,String y_birthday,String m_birthday,String d_birthday,String y_leraning,String method_leraning,String backgound,
-                       String certification,String name_certification,String level_certification,String level,String enable,String created_at,String updated_at,String time_examing,String day) {
+                       String certification,String name_certification,String level_certification,String level,String enable,String created_at,String updated_at,String time_examing,String day,String qbank) {
         this.uid = uid;
         this.username = username;
         this.password=password;
@@ -84,7 +86,7 @@ public class ItemAccount {
         this.updated_at=updated_at;
         this.time_examing=time_examing;
         this.day=day;
-
+        this.qbank=qbank;
     }
 
     public String getUid() {
@@ -186,4 +188,9 @@ public class ItemAccount {
     public String getTime_examing() {
         return time_examing;
     }
+
+    public String getQbank() {
+        return qbank;
+    }
 }
+
