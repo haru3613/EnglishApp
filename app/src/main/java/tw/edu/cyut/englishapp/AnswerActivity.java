@@ -58,7 +58,7 @@ public class AnswerActivity extends Activity {
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
-    private String[] audio_list;
+    private String[][] audio_list=new String[16][105];
     private int play_count;
     private boolean initialStage = true;
     Timer timerExit = new Timer();
@@ -111,16 +111,38 @@ public class AnswerActivity extends Activity {
 
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
-        //TODO 判斷是第幾階段
+
+        Log.d("onCreate","這是第幾題:"+t_index);
+
+        if (Integer.parseInt(t_index)<=34){
+            ans1.setVisibility(View.GONE);
+            ans4.setVisibility(View.GONE);
+        }else if (Integer.parseInt(t_index)<=64) {
+            ans2.setVisibility(View.GONE);
+            ans3.setVisibility(View.GONE);
+        }
+
         day = intent.getStringExtra("day");
+
+        //接收array
+        audio_list=null;
+        Object[] objectArray = (Object[]) getIntent().getExtras().getSerializable("audio_list");
+        if(objectArray!=null){
+            audio_list = new String[objectArray.length][];
+            Log.d(TAG, "onCreate: length"+objectArray.length);
+            for(int i=1;i<objectArray.length;i++){
+                audio_list[i]=(String[]) objectArray[i];
+            }
+        }
+
+        Log.d(TAG, "onCreate: 音檔名稱"+audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)]);
 
         //Load exam data
         LoadExamData(t_index);
 
         //TODO 從xml檔撈陣列給audio_list
         //TODO 從陣列抓取音檔
-        file_name=audio_list[Integer.parseInt(t_index)];
-        Log.d(TAG, "onCreate file_name:"+file_name);
+
 
         choice_ans="";
 
@@ -134,9 +156,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="1";
-                ans2.setVisibility(View.GONE);
-                ans3.setEnabled(false);
-                ans4.setEnabled(false);
+                ans2.setVisibility(View.INVISIBLE);
+                ans3.setVisibility(View.INVISIBLE);
+                ans4.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
@@ -150,9 +172,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="2";
-                ans1.setEnabled(false);
-                ans3.setEnabled(false);
-                ans4.setEnabled(false);
+                ans1.setVisibility(View.INVISIBLE);
+                ans3.setVisibility(View.INVISIBLE);
+                ans4.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
@@ -166,9 +188,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="3";
-                ans1.setEnabled(false);
-                ans2.setEnabled(false);
-                ans4.setEnabled(false);
+                ans1.setVisibility(View.INVISIBLE);
+                ans2.setVisibility(View.INVISIBLE);
+                ans4.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
@@ -182,9 +204,9 @@ public class AnswerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 choice_ans="4";
-                ans2.setEnabled(false);
-                ans3.setEnabled(false);
-                ans1.setEnabled(false);
+                ans2.setVisibility(View.INVISIBLE);
+                ans3.setVisibility(View.INVISIBLE);
+                ans1.setVisibility(View.INVISIBLE);
                 if (correct_ans.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
@@ -201,7 +223,7 @@ public class AnswerActivity extends Activity {
                     play_count+=1;
 
                     if (initialStage) {
-                        new Player().execute("http://140.122.63.99/app/"+file_name);
+                        new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)]+".wav");
                     } else {
                         if (!mediaPlayer.isPlaying())
                             mediaPlayer.start();
@@ -303,7 +325,6 @@ public class AnswerActivity extends Activity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("tid",index);
-
                 return params;
             }
 
@@ -335,6 +356,8 @@ public class AnswerActivity extends Activity {
 
 
     private boolean date_count(String origin ,String now){
+        Log.d(TAG, "date_count: origin:"+origin);
+        Log.d(TAG, "date_count: now:"+now);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
             Date dt1 =sdf.parse(origin);
