@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -34,6 +35,7 @@ import tw.edu.cyut.englishapp.Backgorundwork;
 import tw.edu.cyut.englishapp.LoginActivity;
 import tw.edu.cyut.englishapp.PreTestActivity;
 import tw.edu.cyut.englishapp.R;
+import tw.edu.cyut.englishapp.ResourceHelper;
 import tw.edu.cyut.englishapp.model.ItemAccount;
 import tw.edu.cyut.englishapp.model.ItemTestSpeak;
 import tw.edu.cyut.englishapp.model.ItemTopic;
@@ -46,6 +48,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class TestGroupActivity extends Activity {
     private String day,index,level;
 
+    private String [][] audio_list=new String[16][105];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,18 @@ public class TestGroupActivity extends Activity {
         day=sharedPreferences.getString("day",null);
         level=sharedPreferences.getString("level",null);
         Log.d(TAG, "onCreate: "+uid+","+day+","+level);
+
+        //xml to array
+        int j=1;
+        for (TypedArray item : ResourceHelper.getMultiTypedArray(TestGroupActivity.this, "day")) {
+            for (int i=1;i<=Integer.parseInt(item.getString(0));i++){
+                audio_list[j][i]=item.getString(i);
+                Log.d(TAG, "List: "+j+"-"+i+":"+audio_list[j][i]);
+            }
+            j++;
+        }
+
+
 
 
         btn_start.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +105,11 @@ public class TestGroupActivity extends Activity {
 
     private void OpenAnswerActivity(String t_index){
         Intent ToAnswer=new Intent(TestGroupActivity.this,AnswerActivity.class);
+        Bundle mBundle = new Bundle();
         ToAnswer.putExtra("index", t_index);
         ToAnswer.putExtra("day", day);
+        mBundle.putSerializable("audio_list", audio_list);
+        ToAnswer.putExtras(mBundle);
         startActivity(ToAnswer);
         finish();
     }

@@ -58,7 +58,7 @@ public class AnswerActivity extends Activity {
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
-    private String[] audio_list;
+    private String[][] audio_list=new String[16][105];
     private int play_count;
     private boolean initialStage = true;
     Timer timerExit = new Timer();
@@ -124,13 +124,25 @@ public class AnswerActivity extends Activity {
 
         day = intent.getStringExtra("day");
 
+        //接收array
+        audio_list=null;
+        Object[] objectArray = (Object[]) getIntent().getExtras().getSerializable("audio_list");
+        if(objectArray!=null){
+            audio_list = new String[objectArray.length][];
+            Log.d(TAG, "onCreate: length"+objectArray.length);
+            for(int i=1;i<objectArray.length;i++){
+                audio_list[i]=(String[]) objectArray[i];
+            }
+        }
+
+        Log.d(TAG, "onCreate: 音檔名稱"+audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)]);
+
         //Load exam data
         LoadExamData(t_index);
 
         //TODO 從xml檔撈陣列給audio_list
         //TODO 從陣列抓取音檔
-        //file_name=audio_list[Integer.parseInt(t_index)];
-        Log.d(TAG, "onCreate file_name:"+file_name);
+
 
         choice_ans="";
 
@@ -211,7 +223,7 @@ public class AnswerActivity extends Activity {
                     play_count+=1;
 
                     if (initialStage) {
-                        new Player().execute("http://140.122.63.99/app/"+file_name);
+                        new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(day)][Integer.parseInt(t_index)]+".wav");
                     } else {
                         if (!mediaPlayer.isPlaying())
                             mediaPlayer.start();
@@ -313,7 +325,6 @@ public class AnswerActivity extends Activity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("tid",index);
-
                 return params;
             }
 
@@ -345,6 +356,8 @@ public class AnswerActivity extends Activity {
 
 
     private boolean date_count(String origin ,String now){
+        Log.d(TAG, "date_count: origin:"+origin);
+        Log.d(TAG, "date_count: now:"+now);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
             Date dt1 =sdf.parse(origin);
