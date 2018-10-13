@@ -83,14 +83,14 @@ public class TestGroupActivity extends Activity {
                 if (!level.equals("Teacher")){
                     if (day.equals("0")){
                         //insert to topic speak
-                        String type = "BuildTestData";
-                        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
-                        backgorundwork.execute(type,uid);
                         //pre-test
                         Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
                         startActivity(ToPreTest);
                         finish();
                     }else{
+                        String type = "BuildTestData";
+                        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
+                        backgorundwork.execute(type,uid);
                         //get index
                         //start ans questions
                         OpenAnswerActivity(index);
@@ -115,7 +115,56 @@ public class TestGroupActivity extends Activity {
         finish();
     }
 
+    public void BuildTestData(final String uid){
+        String url = "http://140.122.63.99/app/load_exam_sort.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response:",response);
+                        try {
+                            byte[] u = response.getBytes(
+                                    "UTF-8");
+                            response = new String(u, "UTF-8");
+                            Log.d(ContentValues.TAG, "Response " + response);
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson mGson = builder.create();
+                            List<ItemSort> posts = new ArrayList<ItemSort>();
+                            posts = Arrays.asList(mGson.fromJson(response, ItemSort[].class));
+                            int i=Integer.parseInt(posts.get(0).getQbank())+Integer.parseInt(day);
+                            Log.d(TAG, "onResponse: i="+i);
+                            if (i>15)
+                                qbank=String.valueOf(i-15);
+                            else
+                                qbank=String.valueOf(i);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
 
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //do stuffs with response erro
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("uid",uid);
+
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(TestGroupActivity.this);
+        requestQueue.add(stringRequest);
+
+
+
+
+    }
 
     public void LoadExamSort(final String uid){
         String url = "http://140.122.63.99/app/load_exam_sort.php";

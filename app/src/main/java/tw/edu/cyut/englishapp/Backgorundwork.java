@@ -455,8 +455,6 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             }else{
                 Log.d("Error ", "File doesn't exist"+result);
             }
-
-
         }
         else if (result.contains("Upload_Fail")){
             Toast.makeText(context, "Upload Fail", Toast.LENGTH_SHORT).show();

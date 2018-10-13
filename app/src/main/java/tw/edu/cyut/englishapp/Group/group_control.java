@@ -67,7 +67,7 @@ public class group_control extends AppCompatActivity  {
     private ProgressDialog progressDialog;
     private boolean initialStage = true;
     private boolean playPause;
-    private String[][] audio_list=new String[16][138];
+    private String[][] audio_list=new String[16][139];
     private String topic_url;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -107,34 +107,22 @@ public class group_control extends AppCompatActivity  {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         if (!level.equals("Teacher")){
             if (day.equals("0")){
-                //insert to topic speak
-                String type = "BuildTestData";
-                Backgorundwork backgorundwork = new Backgorundwork(group_control.this);
-                backgorundwork.execute(type,uid);
-                //pre-test
-                Intent ToPreTest=new Intent(group_control.this,PreTestActivity.class);
-                startActivity(ToPreTest);
+                Intent intent = new Intent();
+                intent.setClass(group_control.this , PreTestActivity.class);
+                startActivity(intent);
                 finish();
             }
             else{
                 //get index
                 LoadTopicSpeak(uid);
-//                if (Integer.parseInt(index) >Integer.parseInt(day_array[Integer.parseInt(day)][0])){
-//                    Toast.makeText(getApplicationContext(), "Today is finish", Toast.LENGTH_LONG).show();
-//                    //Todo into the activity  "Today is finish "
-//                    Intent ToLogin=new Intent(group_control.this,LoginActivity.class);
-//                    startActivity(ToLogin);
-//                    finish();
-//                }
             }
         }
 
         //接收array
-        int j=1;
+        int j=0;
         for (TypedArray item : ResourceHelper.getMultiTypedArray(group_control.this, "day")) {
             for (int i=1;i<=Integer.parseInt(item.getString(0));i++){
                 audio_list[j][i]=item.getString(i);
-                Log.d(TAG, "List: "+j+"-"+i+":"+audio_list[j][i]);
             }
             j++;
         }
@@ -220,7 +208,7 @@ public class group_control extends AppCompatActivity  {
     }
 
     public void LoadTopicSpeak(final String uid){
-        String url = "http://140.122.63.99/app/load_topic_speak.php";
+        String url = "http://140.122.63.99/app/buildtestdata.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -236,7 +224,7 @@ public class group_control extends AppCompatActivity  {
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             index=posts.get(0).getTopic_index();
-                            Log.e(LOG_TAG, "My index~"+index);
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 

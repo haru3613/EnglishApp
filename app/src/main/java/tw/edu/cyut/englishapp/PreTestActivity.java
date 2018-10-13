@@ -41,12 +41,11 @@ public class PreTestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_test);
-
         Button btn_start=findViewById(R.id.btn_pre_start);
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
-        final String uid=sharedPreferences.getString("uid",null);
-
+        String uid=sharedPreferences.getString("uid",null);
+        Log.d("I'm in Pretest","Check uid = "+uid);
         //讀取第幾題
         LoadTopicSpeak(uid);
 
@@ -93,7 +92,7 @@ public class PreTestActivity extends Activity {
     }
 
     public void LoadTopicSpeak(final String uid){
-        String url = "http://140.122.63.99/app/load_topic_speak.php";
+        String url = "http://140.122.63.99/app/buildtestdata.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
