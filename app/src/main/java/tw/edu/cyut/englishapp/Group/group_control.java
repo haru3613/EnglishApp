@@ -63,7 +63,7 @@ public class group_control extends AppCompatActivity  {
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
     private Integer count_topic=0,count_record=0;
-    private String day,uid,level,index,username,fname;
+    private String day,uid,level,index,username,fname,qbank,get_topic_day;
     private ProgressDialog progressDialog;
     private boolean initialStage = true;
     private boolean playPause;
@@ -91,7 +91,12 @@ public class group_control extends AppCompatActivity  {
         uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
         level=sharedPreferences.getString("level",null);
-
+        qbank=sharedPreferences.getString("qbank",null);
+        Log.d("day and qbank=","day->"+day+",qbank->"+qbank);
+        get_topic_day=String.valueOf(Integer.parseInt(day)+Integer.parseInt(qbank));
+        if (Integer.parseInt(get_topic_day)>15){
+            get_topic_day=String.valueOf(Integer.parseInt(get_topic_day)-15);
+        };
         image_background = findViewById(R.id.image_background);
         bt_topic_speak = findViewById(R.id.bt_topic_speak);
         bt_speak_talker = findViewById(R.id.bt_speak_talker);
@@ -104,6 +109,19 @@ public class group_control extends AppCompatActivity  {
         bt_next.setEnabled(false);
         text_count = findViewById(R.id.text_count);
 
+        //接收array
+        int j=0;
+        for (TypedArray item : ResourceHelper.getMultiTypedArray(group_control.this, "day")) {
+            for (int i=0;i<=Integer.parseInt(item.getString(0));i++){
+                audio_list[j][i]=item.getString(i);
+            }
+            j++;
+        }
+        Toast.makeText(getApplicationContext(), "11111111="+audio_list[1][0], Toast.LENGTH_LONG).show();
+        mPlayer = new MediaPlayer();
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        progressDialog = new ProgressDialog(this);
+        //
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         if (!level.equals("Teacher")){
             if (day.equals("0")){
@@ -118,18 +136,6 @@ public class group_control extends AppCompatActivity  {
             }
         }
 
-        //接收array
-        int j=0;
-        for (TypedArray item : ResourceHelper.getMultiTypedArray(group_control.this, "day")) {
-            for (int i=1;i<=Integer.parseInt(item.getString(0));i++){
-                audio_list[j][i]=item.getString(i);
-            }
-            j++;
-        }
-        mPlayer = new MediaPlayer();
-        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        progressDialog = new ProgressDialog(this);
-        //
 
     }
 
@@ -177,7 +183,7 @@ public class group_control extends AppCompatActivity  {
     }
 
     public void bt_topic_speak(View view) {
-        topic_url="http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(day)][Integer.parseInt(index)]+".wav";
+        topic_url="http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(get_topic_day)][Integer.parseInt(index)]+".wav";
         count_topic+=1;
         if(count_topic<4){
             if (!playPause) {
@@ -224,7 +230,7 @@ public class group_control extends AppCompatActivity  {
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             index=posts.get(0).getTopic_index();
-
+                            text_count.setText(String.valueOf(Integer.parseInt(index)) +"/"+(audio_list[Integer.parseInt(get_topic_day)][0]));
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 

@@ -157,12 +157,14 @@ public class LoginActivity extends AppCompatActivity {
                             String uid=posts.get(0).getUid();
                             String day=posts.get(0).getDay();
                             String level=posts.get(0).getLevel();
+                            String qbank=posts.get(0).getQbank();
                             Log.d(TAG, "onResponse uid: "+uid);
                             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("uid",uid);
                             editor.putString("day",day);
                             editor.putString("level",level);
+                            editor.putString("qbank",qbank);
                             editor.apply();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
