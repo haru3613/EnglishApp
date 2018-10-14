@@ -254,7 +254,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="教師背景"
+                android:hint="Chinese teacher's background"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
@@ -265,29 +265,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="每周平均學習時數"
-                android:inputType="textPersonName"
-                app:met_floatingLabel="normal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/testseries"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="測驗級數"
-                android:inputType="textPersonName"
-                app:met_floatingLabel="normal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/testname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="測驗名稱"
+                android:hint="average study hours per week"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
@@ -298,9 +276,33 @@
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="通過的華語文認證"
+                android:hint="Chinese language level"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/testseries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="courses certificates earned"
+                android:inputType="textPersonName"
+                app:met_floatingLabel="normal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/testname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="courses completed"
+                android:inputType="textPersonName"
+                app:met_floatingLabel="normal" />
+
+
 
             <com.rey.material.widget.Button
                 android:id="@+id/sign"

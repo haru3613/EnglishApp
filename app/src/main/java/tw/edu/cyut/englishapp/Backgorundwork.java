@@ -3,7 +3,6 @@ package tw.edu.cyut.englishapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,9 +26,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import tw.edu.cyut.englishapp.Group.TeacherGroupActivity;
 import tw.edu.cyut.englishapp.Group.TestPreTestActivity;
 import tw.edu.cyut.englishapp.Group.group_control;
-import tw.edu.cyut.englishapp.Group.TeacherGroupActivity;
+import tw.edu.cyut.englishapp.Group.RecordCheckActivity;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 
 
@@ -209,6 +209,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 String uid = params[1];
                 String tindex = params[2];
                 String ans = params[3];
+                String correct_ans = params[4];
                 String connection_url =thisURL+"/app/insert_ans.php";
                 URL url = new URL(connection_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -220,7 +221,8 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
                         URLEncoder.encode("t_index","UTF-8")+"="+URLEncoder.encode(tindex,"UTF-8")+"&"+
-                        URLEncoder.encode("ans","UTF-8")+"="+URLEncoder.encode(ans,"UTF-8");
+                        URLEncoder.encode("ans","UTF-8")+"="+URLEncoder.encode(ans,"UTF-8")+"&"+
+                        URLEncoder.encode("correct_ans","UTF-8")+"="+URLEncoder.encode(correct_ans,"UTF-8");
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
 
@@ -325,6 +327,50 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if (type.equals("Insert topic check")){
+            try {
+                String uid = params[1];
+                String filename = params[2];
+                String correct_ans = params[3];
+                String ans = params[4];
+
+                String connection_url =thisURL+"/app/insert_checked_file.php";
+                URL url = new URL(connection_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
+                        URLEncoder.encode("filename","UTF-8")+"="+URLEncoder.encode(filename,"UTF-8")+"&"+
+                        URLEncoder.encode("correct_ans","UTF-8")+"="+URLEncoder.encode(correct_ans,"UTF-8")+"&"+
+                        URLEncoder.encode("ans","UTF-8")+"="+URLEncoder.encode(ans,"UTF-8");
+                Log.d("POST_DATA", "doInBackground: "+post_data);
+
+
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+                String result="";
+                String line=null;
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else if (type.equals("Upload_record")) {
             int serverResponseCode = 0;
             String result = null;
@@ -360,25 +406,25 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                     conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                     dos = new DataOutputStream(conn.getOutputStream());
 
-                    //
+
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
                     dos.writeBytes("Content-Disposition: form-data; name=\"uid\"" + lineEnd);
                     dos.writeBytes(lineEnd);
                     dos.writeBytes(URLEncoder.encode(uid,"UTF-8"));
                     dos.writeBytes(lineEnd);
-//
+
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
                     dos.writeBytes("Content-Disposition: form-data; name=\"t_index\"" + lineEnd);
                     dos.writeBytes(lineEnd);
                     dos.writeBytes(URLEncoder.encode(index,"UTF-8"));
                     dos.writeBytes(lineEnd);
-//
+
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
                     dos.writeBytes("Content-Disposition: form-data; name=\"today_finish\"" + lineEnd);
                     dos.writeBytes(lineEnd);
                     dos.writeBytes(URLEncoder.encode(today_finish,"UTF-8"));
                     dos.writeBytes(lineEnd);
-//
+
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
                     dos.writeBytes("Content-Disposition: form-data; name=\"filename\"" + lineEnd);
                     dos.writeBytes(lineEnd);
@@ -389,7 +435,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                     dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + FileURL + "\"" + lineEnd);
                     dos.writeBytes(lineEnd);
 
-//
+
 
                     // create a buffer of maximum size
                     bytesAvailable = fileInputStream.available();

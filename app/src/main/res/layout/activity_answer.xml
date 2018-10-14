@@ -12,7 +12,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/test_background"
             android:layout_width="match_parent"
             android:layout_height="577dp"
             android:layout_weight="1"
