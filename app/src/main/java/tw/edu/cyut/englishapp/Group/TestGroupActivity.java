@@ -77,12 +77,15 @@ public class TestGroupActivity extends Activity {
             public void onClick(View view) {
                 if (!level.equals("Teacher")){
                     if (day.equals("0")){
-
+                        //insert to topic speak
                         //pre-test
                         Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
                         startActivity(ToPreTest);
                         finish();
                     }else{
+                        String type = "BuildTestData";
+                        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
+                        backgorundwork.execute(type,uid);
                         //get index
                         //start ans questions
                         //第幾題
@@ -108,8 +111,6 @@ public class TestGroupActivity extends Activity {
         startActivity(ToAnswer);
         finish();
     }
-
-
 
 
 
