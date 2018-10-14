@@ -30,7 +30,7 @@ import java.util.Map;
 
 import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
-import tw.edu.cyut.englishapp.PreTestActivity;
+import tw.edu.cyut.englishapp.PreExamActivity;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.ResourceHelper;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
@@ -51,6 +51,13 @@ public class TestGroupActivity extends Activity {
 
         Button btn_start=findViewById(R.id.btn_start);
 
+        int j=0;
+        for (TypedArray item : ResourceHelper.getMultiTypedArray(TestGroupActivity.this, "day")) {
+            for (int i=0;i<=Integer.parseInt(item.getString(0));i++){
+                audio_list[j][i]=item.getString(i);
+            }
+            j++;
+        }
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         final String uid=sharedPreferences.getString("uid",null);
@@ -60,34 +67,28 @@ public class TestGroupActivity extends Activity {
         //第幾個題庫
         qbank=sharedPreferences.getString("qbank",null);
 
-        //xml to array
-        int j=0;
-        for (TypedArray item : ResourceHelper.getMultiTypedArray(TestGroupActivity.this, "day")) {
-            for (int i=0;i<=Integer.parseInt(item.getString(0));i++){
-                audio_list[j][i]=item.getString(i);
-            }
-            j++;
-        }
-        //insert to topic speak
-        String type = "BuildTestData";
-        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
-        backgorundwork.execute(type,uid);
+
+        LoadTopicSpeak(uid);
+
+
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!level.equals("Teacher")){
-                    if (day.equals("0")){
-                        //insert to topic speak
-                        //pre-test
-                        Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
-                        startActivity(ToPreTest);
-                        finish();
+                    if (Integer.parseInt(index)==0){
+                        OpenTestPreTest();
                     }else{
-                        //get index
-                        //start ans questions
-                        //第幾題
-                        LoadTopicSpeak(uid);
 
+                        if (day.equals("0")){
+                            //insert to topic speak
+                            //pre-exam
+                            Intent ToPreExam=new Intent(TestGroupActivity.this,PreExamActivity.class);
+                            startActivity(ToPreExam);
+                            finish();
+                        }else{
+                            //pre-test
+                            OpenAnswerActivity(index);
+                        }
                     }
                 }
             }
@@ -96,7 +97,6 @@ public class TestGroupActivity extends Activity {
 
 
     }
-
     private void OpenAnswerActivity(String t_index){
         Intent ToAnswer=new Intent(TestGroupActivity.this,AnswerActivity.class);
         Bundle mBundle = new Bundle();
@@ -108,8 +108,16 @@ public class TestGroupActivity extends Activity {
         startActivity(ToAnswer);
         finish();
     }
-
-
+    private void OpenTestPreTest(){
+        Intent ToTest=new Intent(TestGroupActivity.this,TestPreTestActivity.class);
+        Bundle mBundle = new Bundle();
+        ToTest.putExtra("index",0);
+        String[] test_audio={"ba1dT","chang2dT","deng3dT","he4dT","ta1dT"};
+        mBundle.putStringArray("test_audio", test_audio);
+        ToTest.putExtras(mBundle);
+        startActivity(ToTest);
+        finish();
+    }
 
     public void LoadTopicSpeak(final String uid){
         String url = "http://140.122.63.99/app/load_topic_speak.php";
@@ -128,7 +136,7 @@ public class TestGroupActivity extends Activity {
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             index=posts.get(0).getTopic_index();
-                            OpenAnswerActivity(index);
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
@@ -153,5 +161,7 @@ public class TestGroupActivity extends Activity {
         RequestQueue requestQueue = Volley.newRequestQueue(TestGroupActivity.this);
         requestQueue.add(stringRequest);
     }
+
+
 
 }

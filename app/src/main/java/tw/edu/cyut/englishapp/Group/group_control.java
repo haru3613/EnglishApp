@@ -1,7 +1,6 @@
 package tw.edu.cyut.englishapp.Group;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,7 +12,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +31,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -43,13 +40,11 @@ import java.util.List;
 import java.util.Map;
 
 import tw.edu.cyut.englishapp.Backgorundwork;
-import tw.edu.cyut.englishapp.LoginActivity;
-import tw.edu.cyut.englishapp.PreTestActivity;
+import tw.edu.cyut.englishapp.PreExamActivity;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.ResourceHelper;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 
-import static com.android.volley.VolleyLog.TAG;
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class group_control extends AppCompatActivity  {
@@ -126,7 +121,7 @@ public class group_control extends AppCompatActivity  {
         if (!level.equals("Teacher")){
             if (day.equals("0")){
                 Intent intent = new Intent();
-                intent.setClass(group_control.this , PreTestActivity.class);
+                intent.setClass(group_control.this , PreExamActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -159,4 +159,6 @@
     <string name="title_activity_test_group">TestGroupActivity</string>
     <string name="title_activity_answer">AnswerActivity</string>
     <string name="title_activity_pre_test">PreTestActivity</string>
+    <string name="title_activity_control_pre_test">ControlPreTestActivity</string>
+    <string name="title_activity_test_pre_test">TestPreTestActivity</string>
 </resources>
