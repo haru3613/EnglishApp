@@ -50,6 +50,7 @@
             android:name=".Group.TestPreTestActivity"
             android:label="@string/title_activity_test_pre_test"></activity>
         <activity android:name=".todayisfinish"></activity>
+
     </application>
 
 </manifest>
