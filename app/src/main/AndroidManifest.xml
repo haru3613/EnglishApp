@@ -52,6 +52,7 @@
         <activity android:name=".todayisfinish"></activity>
         <activity android:name=".Group.TeacherGroupActivity"></activity>
         <activity android:name=".Group.TopicCheckActivity"></activity>
+
     </application>
 
 </manifest>
