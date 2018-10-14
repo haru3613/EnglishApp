@@ -157,7 +157,12 @@ public class LoginActivity extends AppCompatActivity {
                             String uid=posts.get(0).getUid();
                             String day=posts.get(0).getDay();
                             String level=posts.get(0).getLevel();
-                            String qbank=posts.get(0).getQbank();
+                            int i=Integer.parseInt(posts.get(0).getQbank())+Integer.parseInt(day);
+                            String qbank;
+                            if (i>15)
+                                qbank=String.valueOf(i-15);
+                            else
+                                qbank=String.valueOf(i);
                             Log.d(TAG, "onResponse uid: "+uid);
                             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();

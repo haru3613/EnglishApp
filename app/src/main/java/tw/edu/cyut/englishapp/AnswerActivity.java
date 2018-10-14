@@ -5,17 +5,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -26,6 +29,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -52,7 +59,8 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class AnswerActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String correct_ans,uid, choice_ans,day,file_name;
+    private TextView count;
+    private String qbank,uid, choice_ans,day,file_name;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
     private boolean playPause;
@@ -111,7 +119,7 @@ public class AnswerActivity extends Activity {
 
         Intent intent = this.getIntent();//取得傳遞過來的資料
         final String t_index = intent.getStringExtra("index");
-        final String qbank = intent.getStringExtra("qbank");
+        qbank = intent.getStringExtra("qbank");
         Log.d("onCreate","這是第幾個題庫:"+qbank);
         Log.d("onCreate","這是第幾題:"+t_index);
 
@@ -140,11 +148,11 @@ public class AnswerActivity extends Activity {
         Log.d(TAG, "onCreate: 音檔名稱:"+file_name);
 
 
-        String c=file_name.substring(file_name.length()-3,file_name.length()-2);
+        final String c=file_name.substring(file_name.length()-3,file_name.length()-2);
         int index=file_name.indexOf(c);
         Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
 
-
+        count.setText(t_index+"/"+audio_list[Integer.parseInt(qbank)][0]);
         choice_ans="";
 
         mediaPlayer = new MediaPlayer();
@@ -160,7 +168,7 @@ public class AnswerActivity extends Activity {
                 ans2.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (correct_ans.equals(choice_ans)){
+                if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -176,7 +184,7 @@ public class AnswerActivity extends Activity {
                 ans1.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (correct_ans.equals(choice_ans)){
+                if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -192,7 +200,7 @@ public class AnswerActivity extends Activity {
                 ans1.setVisibility(View.INVISIBLE);
                 ans2.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (correct_ans.equals(choice_ans)){
+                if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -208,7 +216,7 @@ public class AnswerActivity extends Activity {
                 ans2.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
                 ans1.setVisibility(View.INVISIBLE);
-                if (correct_ans.equals(choice_ans)){
+                if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
                 }else {
@@ -269,8 +277,8 @@ public class AnswerActivity extends Activity {
     }
 
     private void OpenAnswerActivity(String t_index){
-        if (Integer.parseInt(t_index)==audio_list[Integer.parseInt(day)].length){
-            //如果等於總數
+        if (Integer.parseInt(t_index)>Integer.parseInt(audio_list[Integer.parseInt(qbank)][0])){
+            //如果大於總數
             String type = "Update user day";
             Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
             backgorundwork.execute(type,uid,String.valueOf(Integer.parseInt(day)+1));
@@ -279,6 +287,7 @@ public class AnswerActivity extends Activity {
             Intent ToAnswer=new Intent(AnswerActivity.this,AnswerActivity.class);
             ToAnswer.putExtra("index", t_index);
             ToAnswer.putExtra("day", day);
+            ToAnswer.putExtra("qbank", qbank);
             Bundle mBundle = new Bundle();
             mBundle.putSerializable("audio_list", audio_list);
             ToAnswer.putExtras(mBundle);
@@ -294,6 +303,7 @@ public class AnswerActivity extends Activity {
         ans3=findViewById(R.id.ans3);
         ans4=findViewById(R.id.ans4);
         next=findViewById(R.id.next);
+        count=findViewById(R.id.text_count);
 
     }
 
@@ -307,8 +317,10 @@ public class AnswerActivity extends Activity {
                 .build();
         final View item = dialog.getCustomView();
         ImageView gif=item.findViewById(R.id.image_gif);
+
         Glide.with(item)
-                .load(ContextCompat.getDrawable(item.getContext(),draw))
+                .asGif()
+                .load(draw)
                 .into(gif);
         dialog.show();
     }
@@ -323,15 +335,16 @@ public class AnswerActivity extends Activity {
     private boolean date_count(String origin ,String now){
         Log.d(TAG, "date_count: origin:"+origin);
         Log.d(TAG, "date_count: now:"+now);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date dt1 =sdf.parse(origin);
             Date dt2 =sdf.parse(now);
             Long ut1=dt1.getTime();
             Long ut2=dt2.getTime();
             Long timeP=ut2-ut1;
-            Long min=timeP/1000*60;
-            if (min>3){
+            Long sec=timeP/1000;
+            Log.d(TAG, "date_count: "+sec);
+            if (sec>180){
                 return true;
             }
         } catch (ParseException e) {
