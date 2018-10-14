@@ -27,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import tw.edu.cyut.englishapp.Group.TestPreTestActivity;
 import tw.edu.cyut.englishapp.Group.group_control;
 import tw.edu.cyut.englishapp.Group.TeacherGroupActivity;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
@@ -284,6 +285,46 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if (type.equals("finish pretest")){
+            try {
+                String uid = params[1];
+                String index = params[2];
+
+                String connection_url =thisURL+"/app/update_topic_index.php";
+                URL url = new URL(connection_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
+                        URLEncoder.encode("day","UTF-8")+"="+URLEncoder.encode(index,"UTF-8");
+                Log.d("POST_DATA", "doInBackground: "+post_data);
+
+
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+                String result="";
+                String line=null;
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else if (type.equals("Upload_record")) {
             int serverResponseCode = 0;
             String result = null;
@@ -438,6 +479,11 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             }
         }else if (result.contains("this is null")){
             Toast.makeText(context, "Not yet open for answer.", Toast.LENGTH_SHORT).show();
+        }else if (result.contains("Congratulations on completing today's pre-test")){
+            Intent ToTestGroup=new Intent(context,TestPreTestActivity.class);
+            context.startActivity(ToTestGroup);
+            ((Activity) context).finish();
+            Toast.makeText(context, "Congratulations on completing today's pre-test!", Toast.LENGTH_SHORT).show();
         }
         else if (result.contains("register success")){
             Intent toLogin=new Intent(context,LoginActivity.class);

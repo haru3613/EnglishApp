@@ -170,10 +170,6 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("day",day);
                             editor.putString("level",level);
                             editor.putString("qbank",qbank);
-                            //insert to topic speak
-                            String type = "BuildTestData";
-                            Backgorundwork backgorundwork = new Backgorundwork(LoginActivity.this);
-                            backgorundwork.execute(type,uid);
                             editor.apply();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();

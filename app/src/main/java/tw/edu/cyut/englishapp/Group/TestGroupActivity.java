@@ -59,16 +59,18 @@ public class TestGroupActivity extends Activity {
             j++;
         }
 
+
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         final String uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
         level=sharedPreferences.getString("level",null);
         Log.d(TAG, "onCreate: "+uid+","+day+","+level);
+
         //第幾個題庫
         qbank=sharedPreferences.getString("qbank",null);
 
 
-        LoadTopicSpeak(uid);
+        InsertTopicSpeak(uid);
 
 
         btn_start.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +80,6 @@ public class TestGroupActivity extends Activity {
                     if (Integer.parseInt(index)==0){
                         OpenTestPreTest();
                     }else{
-
                         if (day.equals("0")){
                             //insert to topic speak
                             //pre-exam
@@ -87,7 +88,9 @@ public class TestGroupActivity extends Activity {
                             finish();
                         }else{
                             //pre-test
-                            OpenAnswerActivity(index);
+                            if (Integer.parseInt(index)<=Integer.parseInt(audio_list[Integer.parseInt(qbank)][0]))
+                                OpenAnswerActivity(index);
+
                         }
                     }
                 }
@@ -119,8 +122,9 @@ public class TestGroupActivity extends Activity {
         finish();
     }
 
-    public void LoadTopicSpeak(final String uid){
-        String url = "http://140.122.63.99/app/load_topic_speak.php";
+
+    public void InsertTopicSpeak(final String uid){
+        String url = "http://140.122.63.99/app/buildtestdata.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -161,7 +165,6 @@ public class TestGroupActivity extends Activity {
         RequestQueue requestQueue = Volley.newRequestQueue(TestGroupActivity.this);
         requestQueue.add(stringRequest);
     }
-
 
 
 }
