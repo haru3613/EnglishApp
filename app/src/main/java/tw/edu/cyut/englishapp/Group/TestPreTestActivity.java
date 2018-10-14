@@ -50,7 +50,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class TestPreTestActivity extends Activity {
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String choice_ans,file_name,t_index,uid,day,qbank;
+    private String choice_ans,file_name,uid;
     private TextView count;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
@@ -69,8 +69,6 @@ public class TestPreTestActivity extends Activity {
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
-        day=sharedPreferences.getString("day",null);
-        qbank=sharedPreferences.getString("qbank",null);
 
         play_count=0;
 
@@ -191,7 +189,6 @@ public class TestPreTestActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (!choice_ans.equals("")){
-
                     //開啟自己並讓index+1
                     OpenSelf(String.valueOf(Integer.parseInt(index)+1));
                 }else{
@@ -224,11 +221,10 @@ public class TestPreTestActivity extends Activity {
                 }
                 j++;
             }
-            //TODO udpate index = 1
-            String type = "Update";
+            String type = "finish pretest";
             Backgorundwork backgorundwork = new Backgorundwork(TestPreTestActivity.this);
             backgorundwork.execute(type,uid,"1");
-            LoadTopicSpeak(uid);
+
         }else{
             Intent ToSelf=new Intent(TestPreTestActivity.this,TestPreTestActivity.class);
             ToSelf.putExtra("index",index);
@@ -241,20 +237,6 @@ public class TestPreTestActivity extends Activity {
         }
     }
 
-    private void OpenAnswerActivity(String t_index){
-        Intent intent = this.getIntent();//取得傳遞過來的資料
-        qbank = intent.getStringExtra("qank");
-        day = intent.getStringExtra("day");
-        Intent ToAnswer=new Intent(TestPreTestActivity.this,AnswerActivity.class);
-        Bundle mBundle = new Bundle();
-        ToAnswer.putExtra("index", t_index);
-        ToAnswer.putExtra("day", day);
-        ToAnswer.putExtra("qbank", qbank);
-        mBundle.putSerializable("audio_list", audio_list);
-        ToAnswer.putExtras(mBundle);
-        startActivity(ToAnswer);
-        finish();
-    }
 
     private void AlertDialog(int draw){
         boolean wrapInScrollView = true;
@@ -336,46 +318,5 @@ public class TestPreTestActivity extends Activity {
         }
     }
 
-    public void LoadTopicSpeak(final String uid){
-        String url = "http://140.122.63.99/app/load_topic_speak.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Response:",response);
-                        try {
-                            byte[] u = response.getBytes(
-                                    "UTF-8");
-                            response = new String(u, "UTF-8");
-                            Log.d(ContentValues.TAG, "Response " + response);
-                            GsonBuilder builder = new GsonBuilder();
-                            Gson mGson = builder.create();
-                            List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
-                            posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
-                            t_index=posts.get(0).getTopic_index();
-                            OpenAnswerActivity(t_index);
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
 
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //do stuffs with response erro
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("uid",uid);
-
-                return params;
-            }
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(TestPreTestActivity.this);
-        requestQueue.add(stringRequest);
-    }
 }
