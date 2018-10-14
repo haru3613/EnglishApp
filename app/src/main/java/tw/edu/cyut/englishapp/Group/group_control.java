@@ -63,7 +63,7 @@ public class group_control extends AppCompatActivity  {
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
     private Integer count_topic=0,count_record=0;
-    private String day,uid,level,index,username,fname,qbank,get_topic_day;
+    private String day,uid,level,index,username,fname,qbank,get_topic_day,today_finish;
     private ProgressDialog progressDialog;
     private boolean initialStage = true;
     private boolean playPause;
@@ -93,6 +93,7 @@ public class group_control extends AppCompatActivity  {
         level=sharedPreferences.getString("level",null);
         qbank=sharedPreferences.getString("qbank",null);
         Log.d("day and qbank=","day->"+day+",qbank->"+qbank);
+        get_topic_day=qbank;
         get_topic_day=String.valueOf(Integer.parseInt(day)+Integer.parseInt(qbank));
         if (Integer.parseInt(get_topic_day)>15){
             get_topic_day=String.valueOf(Integer.parseInt(get_topic_day)-15);
@@ -117,7 +118,6 @@ public class group_control extends AppCompatActivity  {
             }
             j++;
         }
-        Toast.makeText(getApplicationContext(), "11111111="+audio_list[1][0], Toast.LENGTH_LONG).show();
         mPlayer = new MediaPlayer();
         mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         progressDialog = new ProgressDialog(this);
@@ -140,9 +140,15 @@ public class group_control extends AppCompatActivity  {
     }
 
     public void bt_next(View view) {
-        String index_add=Integer.toString(Integer.parseInt(index)+1);
+        if (index.equals(audio_list[Integer.parseInt(get_topic_day)][0])){
+            today_finish= "1";
+        }else{
+            Log.d("look longe and index","index="+index+" long="+audio_list[Integer.parseInt(get_topic_day)][0]);
+            today_finish= "0";
+
+        }
         Backgorundwork backgorundwork = new Backgorundwork(this);
-        backgorundwork.execute("Upload_record",mFileName,uid,index_add,fname);
+        backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish);
 
     }
 
@@ -161,9 +167,9 @@ public class group_control extends AppCompatActivity  {
             fname=uid+"_d"+day+"_"+index;
             mFileName += "/"+fname+".3gp";
             startRecording();
-            Toast.makeText(getApplicationContext(), "Start Recording", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Start Recording", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(getApplicationContext(), "You can't record more than three times,please click \"GO\".", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You can't record more than three times,please click \"GO\".", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -179,7 +185,7 @@ public class group_control extends AppCompatActivity  {
         bt_next.setVisibility(View.VISIBLE);
         bt_next.setEnabled(true);
         stopRecording();
-        Toast.makeText(getApplicationContext(), "Stop Recording", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Stop Recording", Toast.LENGTH_SHORT).show();
     }
 
     public void bt_topic_speak(View view) {
@@ -208,7 +214,7 @@ public class group_control extends AppCompatActivity  {
 
 
         }else{
-            Toast.makeText(getApplicationContext(), "You can't play more than three times.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You can't play more than three times.", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -231,6 +237,30 @@ public class group_control extends AppCompatActivity  {
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             index=posts.get(0).getTopic_index();
                             text_count.setText(String.valueOf(Integer.parseInt(index)) +"/"+(audio_list[Integer.parseInt(get_topic_day)][0]));
+                            if (Integer.parseInt(index)>34 &&Integer.parseInt(index)<70){
+                                bt_topic_speak.setImageResource(R.drawable.app_y_speaker);
+                                image_background.setImageResource(R.drawable.app_y_interface);
+                                bt_next.setImageResource(R.drawable.app_y_go);
+                                bt_speak_start.setImageResource(R.drawable.app_y_enable_record);
+                                bt_stop_speak.setImageResource(R.drawable.app_y_disable_record);
+                                bt_speak_talker.setImageResource(R.drawable.app_y_speaker);
+
+                            }else if(Integer.parseInt(index)>69){
+                                bt_topic_speak.setImageResource(R.drawable.app_r_speaker);
+                                image_background.setImageResource(R.drawable.app_r_interface);
+                                bt_next.setImageResource(R.drawable.app_r_go);
+                                bt_speak_start.setImageResource(R.drawable.app_r_enable_record);
+                                bt_stop_speak.setImageResource(R.drawable.app_r_disable_record);
+                                bt_speak_talker.setImageResource(R.drawable.app_r_speaker);
+                            }else{
+                                bt_topic_speak.setImageResource(R.drawable.app_g_speaker);
+                                image_background.setImageResource(R.drawable.app_g_interface);
+                                bt_next.setImageResource(R.drawable.app_g_go);
+                                bt_speak_start.setImageResource(R.drawable.app_g_enable_record);
+                                bt_stop_speak.setImageResource(R.drawable.app_g_disable_record);
+                                bt_speak_talker.setImageResource(R.drawable.app_g_speaker);
+                            }
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
