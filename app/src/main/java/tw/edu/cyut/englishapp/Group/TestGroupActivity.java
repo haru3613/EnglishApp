@@ -83,9 +83,6 @@ public class TestGroupActivity extends Activity {
                         startActivity(ToPreTest);
                         finish();
                     }else{
-                        String type = "BuildTestData";
-                        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
-                        backgorundwork.execute(type,uid);
                         //get index
                         //start ans questions
                         //第幾題
