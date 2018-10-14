@@ -43,16 +43,13 @@
             android:label="@string/title_activity_pre_test" />
         <activity android:name=".Group.controldetail" />
         <activity android:name=".Group.group_control" />
-<<<<<<< HEAD
         <activity
             android:name=".Group.ControlPreTestActivity"
             android:label="@string/title_activity_control_pre_test" />
         <activity
             android:name=".Group.TestPreTestActivity"
             android:label="@string/title_activity_test_pre_test"></activity>
-=======
         <activity android:name=".todayisfinish"></activity>
->>>>>>> c8e2b1f4d4cc430658cd0cfd5623a0e234770e97
     </application>
 
 </manifest>

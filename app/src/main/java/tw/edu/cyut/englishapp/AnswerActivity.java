@@ -282,6 +282,8 @@ public class AnswerActivity extends Activity {
             String type = "Update user day";
             Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
             backgorundwork.execute(type,uid,String.valueOf(Integer.parseInt(day)+1));
+            Intent ToFinish=new Intent(AnswerActivity.this,todayisfinish.class);
+            startActivity(ToFinish);
             finish();
         }else{
             Intent ToAnswer=new Intent(AnswerActivity.this,AnswerActivity.class);
