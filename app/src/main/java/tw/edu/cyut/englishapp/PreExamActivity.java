@@ -29,18 +29,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
-public class PreTestActivity extends Activity {
+public class PreExamActivity extends Activity {
     private String index;
     private String [][] pre_test_array=new String[16][139];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pre_test);
+        setContentView(R.layout.activity_pre_exam);
         Button btn_start=findViewById(R.id.btn_pre_start);
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
@@ -51,7 +50,7 @@ public class PreTestActivity extends Activity {
 
         //xml to array
         int j=0;
-        for (TypedArray item : ResourceHelper.getMultiTypedArray(PreTestActivity.this, "day")) {
+        for (TypedArray item : ResourceHelper.getMultiTypedArray(PreExamActivity.this, "day")) {
             for (int i=1;i<=Integer.parseInt(item.getString(0));i++){
                 pre_test_array[j][i]=item.getString(i);
             }
@@ -69,7 +68,7 @@ public class PreTestActivity extends Activity {
     }
 
     private void OpenPreStartActivity(String t_index){
-        Intent ToAnswer=new Intent(PreTestActivity.this,PreStartActivity.class);
+        Intent ToAnswer=new Intent(PreExamActivity.this,PreStartActivity.class);
         Bundle mBundle = new Bundle();
         ToAnswer.putExtra("index", t_index);
         mBundle.putSerializable("audio_list", pre_test_array);
@@ -79,7 +78,7 @@ public class PreTestActivity extends Activity {
     }
     private void AlertDialog(String title,String content){
         boolean wrapInScrollView = true;
-        MaterialDialog dialog=new MaterialDialog.Builder(PreTestActivity.this)
+        MaterialDialog dialog=new MaterialDialog.Builder(PreExamActivity.this)
                 .title(title)
                 .customView(R.layout.alert_dialog, wrapInScrollView)
                 .backgroundColorRes(R.color.colorBackground)
@@ -130,7 +129,7 @@ public class PreTestActivity extends Activity {
             }
 
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(PreTestActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(PreExamActivity.this);
         requestQueue.add(stringRequest);
     }
 }
