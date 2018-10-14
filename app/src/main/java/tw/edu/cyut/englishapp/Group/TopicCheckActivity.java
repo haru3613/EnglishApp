@@ -1,18 +1,15 @@
-package tw.edu.cyut.englishapp;
+package tw.edu.cyut.englishapp.Group;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,10 +26,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,29 +38,33 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import tw.edu.cyut.englishapp.Group.TestGroupActivity;
-import tw.edu.cyut.englishapp.model.ItemAccount;
-import tw.edu.cyut.englishapp.model.ItemTopic;
+import tw.edu.cyut.englishapp.Backgorundwork;
+import tw.edu.cyut.englishapp.R;
+import tw.edu.cyut.englishapp.model.ItemTest;
+import tw.edu.cyut.englishapp.model.ItemTopicCheck;
+import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
+import tw.edu.cyut.englishapp.todayisfinish;
 
 import static com.android.volley.VolleyLog.TAG;
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 
-public class AnswerActivity extends Activity {
+public class TopicCheckActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
     private TextView count;
-    private String qbank,uid, choice_ans,day,file_name;
+    private String qbank,uid, choice_ans,day,file_name,checked_file;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
+    Boolean checked;
     private String[][] audio_list=new String[16][105];
-    private int play_count;
     private boolean initialStage = true;
     Timer timerExit = new Timer();
     TimerTask task = new TimerTask() {
@@ -108,51 +105,44 @@ public class AnswerActivity extends Activity {
 
         initAnswerActivity();
 
-        final String origin_time=getDateNow();
-        Log.d("onCreate", "TimeNow:"+origin_time);
-
-        play_count=0;
         uid="";
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
         Log.d("onCreate", "uid: "+uid);
 
-        Intent intent = this.getIntent();//取得傳遞過來的資料
-        final String t_index = intent.getStringExtra("index");
-        qbank = intent.getStringExtra("qbank");
-        Log.d("onCreate","這是第幾個題庫:"+qbank);
-        Log.d("onCreate","這是第幾題:"+t_index);
 
-        if (Integer.parseInt(t_index)<=34){
-            ans1.setVisibility(View.GONE);
-            ans4.setVisibility(View.GONE);
-        }else if (Integer.parseInt(t_index)<=64) {
-            ans2.setVisibility(View.GONE);
-            ans3.setVisibility(View.GONE);
-        }
-
-        day = intent.getStringExtra("day");
 
         //接收array
         audio_list=null;
         Object[] objectArray = (Object[]) getIntent().getExtras().getSerializable("audio_list");
         if(objectArray!=null){
             audio_list = new String[objectArray.length][];
-            Log.d(TAG, "onCreate: length"+objectArray.length);
             for(int i=0;i<objectArray.length;i++){
                 audio_list[i]=(String[]) objectArray[i];
             }
         }
 
-        file_name=audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)];
-        Log.d(TAG, "onCreate: 音檔名稱:"+file_name);
+        checked=false;
+
+        do {
+            Random ran = new Random();
+            int i=ran.nextInt(16);
+            int j=ran.nextInt(Integer.parseInt(audio_list[i][0]));
+            Log.d(TAG, "onCreate: "+i+":"+j);
+            file_name=audio_list[i][j];
+            audio_list[i][j]="";
+            Log.d(TAG, "onCreate: 音檔名稱:"+file_name);
+            LoadChecked(file_name);
+            //如果filename=""或等於資料庫有的音檔則重抓
+        }while (checked==true || file_name.equals(""));
+
 
 
         final String c=file_name.substring(file_name.length()-3,file_name.length()-2);
         int index=file_name.indexOf(c);
         Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
 
-        count.setText(t_index+"/"+audio_list[Integer.parseInt(qbank)][0]);
+
         choice_ans="";
 
         mediaPlayer = new MediaPlayer();
@@ -228,11 +218,10 @@ public class AnswerActivity extends Activity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!playPause && play_count!=3) {
-                    play_count+=1;
+                if (!playPause) {
 
                     if (initialStage) {
-                        new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(qbank)][Integer.parseInt(t_index)]+".wav");
+                        new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+file_name+".wav");
                     } else {
                         if (!mediaPlayer.isPlaying())
                             mediaPlayer.start();
@@ -254,20 +243,13 @@ public class AnswerActivity extends Activity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date_count(origin_time,getDateNow())){
-                    //如果等於true則大於三分鐘
-                    finish();
+                if (!choice_ans.equals("")){
+                    String type = "Insert topic check";
+                    Backgorundwork backgorundwork = new Backgorundwork(TopicCheckActivity.this);
+                    backgorundwork.execute(type,uid,file_name,c,choice_ans);
+                    OpenSelf();
                 }else{
-                    if (!choice_ans.equals("")){
-                        //新增test資料表的答案，並update topic_speak的index
-                        String type = "InsertAns";
-                        Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
-                        backgorundwork.execute(type,uid,t_index,choice_ans,c);
-                        //開啟自己並讓index+1
-                        OpenAnswerActivity(String.valueOf(Integer.parseInt(t_index)+1));
-                    }else{
-                        Toast.makeText(AnswerActivity.this,"Choose your answer",Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(TopicCheckActivity.this,"Choose your answer",Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -276,24 +258,26 @@ public class AnswerActivity extends Activity {
 
     }
 
-    private void OpenAnswerActivity(String t_index){
-        if (Integer.parseInt(t_index)>Integer.parseInt(audio_list[Integer.parseInt(qbank)][0])){
-            //如果大於總數
-            String type = "Update user day";
-            Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
-            backgorundwork.execute(type,uid,String.valueOf(Integer.parseInt(day)+1));
-            Intent ToFinish=new Intent(AnswerActivity.this,todayisfinish.class);
+
+    private void OpenSelf(){
+        Boolean emptyList=true;
+        for (int i=0;i<=15;i++){
+            for(int j=1;j<=Integer.parseInt(audio_list[i][0]);j++){
+                if (audio_list[i][j].equals(""))
+                    emptyList=false;
+            }
+        }
+        if (emptyList){
+            //如果是空陣列
+            Intent ToFinish=new Intent(TopicCheckActivity.this,todayisfinish.class);
             startActivity(ToFinish);
             finish();
         }else{
-            Intent ToAnswer=new Intent(AnswerActivity.this,AnswerActivity.class);
-            ToAnswer.putExtra("index", t_index);
-            ToAnswer.putExtra("day", day);
-            ToAnswer.putExtra("qbank", qbank);
+            Intent ToTopicCheck=new Intent(TopicCheckActivity.this,TopicCheckActivity.class);
             Bundle mBundle = new Bundle();
             mBundle.putSerializable("audio_list", audio_list);
-            ToAnswer.putExtras(mBundle);
-            startActivity(ToAnswer);
+            ToTopicCheck.putExtras(mBundle);
+            startActivity(ToTopicCheck);
             finish();
         }
     }
@@ -312,7 +296,7 @@ public class AnswerActivity extends Activity {
 
     private void AlertDialog(int draw){
         boolean wrapInScrollView = true;
-        MaterialDialog dialog=new MaterialDialog.Builder(AnswerActivity.this)
+        MaterialDialog dialog=new MaterialDialog.Builder(TopicCheckActivity.this)
                 .customView(R.layout.alert_gif, wrapInScrollView)
                 .backgroundColorRes(R.color.colorBackground)
                 .positiveText("OK")
@@ -327,33 +311,9 @@ public class AnswerActivity extends Activity {
         dialog.show();
     }
 
-    private String getDateNow(){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
-        return formatter.format(curDate);
-    }
 
 
-    private boolean date_count(String origin ,String now){
-        Log.d(TAG, "date_count: origin:"+origin);
-        Log.d(TAG, "date_count: now:"+now);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date dt1 =sdf.parse(origin);
-            Date dt2 =sdf.parse(now);
-            Long ut1=dt1.getTime();
-            Long ut2=dt2.getTime();
-            Long timeP=ut2-ut1;
-            Long sec=timeP/1000;
-            Log.d(TAG, "date_count: "+sec);
-            if (sec>180){
-                return true;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-       return false;
-    }
+
 
     @Override
     protected void onPause() {
@@ -415,5 +375,51 @@ public class AnswerActivity extends Activity {
             progressDialog.setMessage("Buffering...");
             progressDialog.show();
         }
+    }
+
+    public void LoadChecked(final String filename){
+        String url = "http://140.122.63.99/app/load_checked_file.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response:",response);
+                        try {
+                            byte[] u = response.getBytes(
+                                    "UTF-8");
+                            response = new String(u, "UTF-8");
+                            Log.d(ContentValues.TAG, "Response " + response);
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson mGson = builder.create();
+                            if (!response.contains("Undefined")){
+                                List<ItemTopicCheck> posts = new ArrayList<ItemTopicCheck>();
+                                posts = Arrays.asList(mGson.fromJson(response, ItemTopicCheck[].class));
+                                checked=true;
+                            }else{
+                                checked=false;
+                            }
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //do stuffs with response erro
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("filename",filename);
+
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(TopicCheckActivity.this);
+        requestQueue.add(stringRequest);
     }
 }
