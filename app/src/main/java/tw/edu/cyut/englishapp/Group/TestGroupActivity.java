@@ -68,16 +68,16 @@ public class TestGroupActivity extends Activity {
             }
             j++;
         }
-
+        //insert to topic speak
+        String type = "BuildTestData";
+        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
+        backgorundwork.execute(type,uid);
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!level.equals("Teacher")){
                     if (day.equals("0")){
-                        //insert to topic speak
-                        String type = "BuildTestData";
-                        Backgorundwork backgorundwork = new Backgorundwork(TestGroupActivity.this);
-                        backgorundwork.execute(type,uid);
+
                         //pre-test
                         Intent ToPreTest=new Intent(TestGroupActivity.this,PreTestActivity.class);
                         startActivity(ToPreTest);
