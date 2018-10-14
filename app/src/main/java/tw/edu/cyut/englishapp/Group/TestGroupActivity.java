@@ -78,7 +78,6 @@ public class TestGroupActivity extends Activity {
                     if (Integer.parseInt(index)==0){
                         OpenTestPreTest();
                     }else{
-
                         if (day.equals("0")){
                             //insert to topic speak
                             //pre-exam

@@ -140,7 +140,6 @@ public class group_control extends AppCompatActivity  {
         }else{
             Log.d("look longe and index","index="+index+" long="+audio_list[Integer.parseInt(get_topic_day)][0]);
             today_finish= "0";
-
         }
         Backgorundwork backgorundwork = new Backgorundwork(this);
         backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish);
