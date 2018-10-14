@@ -42,6 +42,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     MaterialDialog.Builder alertDialog;
     String thisURL="http://140.122.63.99";
     String Username;
+    String audio_list_long,index,today_finish;
 
     public Backgorundwork(Context ctx){
         context = ctx;
@@ -289,9 +290,10 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             final String SERVER_PATH = "http://140.122.63.99/record_mp3/file_upload.php";
             FileURL= params[1];
             String uid=params[2];
-            String t_index=params[3];
+            index=params[3];
             String FileName= params[4];
-            Log.e("All params->", "uid->" + uid+"t_index->" +t_index+"FileName->" +FileName );
+            today_finish= params[5];
+            Log.e("All params->", "uid->" + uid+"t_index->" +index+"FileName->" +FileName +"today_finish->"+today_finish);
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
             DataInputStream inStream = null;
@@ -327,7 +329,13 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
                     dos.writeBytes("Content-Disposition: form-data; name=\"t_index\"" + lineEnd);
                     dos.writeBytes(lineEnd);
-                    dos.writeBytes(URLEncoder.encode(t_index,"UTF-8"));
+                    dos.writeBytes(URLEncoder.encode(index,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+//
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"today_finish\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(today_finish,"UTF-8"));
                     dos.writeBytes(lineEnd);
 //
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
@@ -446,12 +454,17 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             if (file.exists()){
                 file.delete();
                 Log.d("Success ", "File was deleted"+result);
-                Intent ToControl=new Intent(context,group_control.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("Username", Username);
-                ToControl.putExtras(bundle);
-                context.startActivity(ToControl);
-                ((Activity) context).finish();
+                if (today_finish.equals("0")){
+                    Intent ToControl=new Intent(context,group_control.class);
+                    context.startActivity(ToControl);
+                    ((Activity) context).finish();
+                }else{
+                    Intent Totodayisfinish=new Intent(context,todayisfinish.class);
+                    context.startActivity(Totodayisfinish);
+                    ((Activity) context).finish();
+
+                }
+
             }else{
                 Log.d("Error ", "File doesn't exist"+result);
             }
