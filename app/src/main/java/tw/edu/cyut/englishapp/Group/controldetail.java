@@ -75,6 +75,9 @@ public class controldetail extends AppCompatActivity {
         }else if(leadto.equals("Exam_Pre_test")) {
             Intent intent = new Intent();
             intent.setClass(controldetail.this, preexam_test.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("index","0");
+            intent.putExtras(bundle);
             startActivity(intent);
             controldetail.this.finish();
 

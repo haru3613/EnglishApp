@@ -119,16 +119,7 @@ public class group_control extends AppCompatActivity  {
         //
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         if (!level.equals("Teacher")){
-            if (day.equals("0")){
-                Intent intent = new Intent();
-                intent.setClass(group_control.this , PreExamActivity.class);
-                startActivity(intent);
-                finish();
-            }
-            else{
-                //get index
-                LoadTopicSpeak(uid);
-            }
+             LoadTopicSpeak(uid);
         }
 
 
@@ -304,6 +295,7 @@ public class group_control extends AppCompatActivity  {
         mPlayer.release();
         mPlayer = null;
     }
+
     private void startRecording() {
         bt_speak_start.setEnabled(false);
         bt_speak_start.setVisibility(View.INVISIBLE);

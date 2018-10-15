@@ -27,15 +27,15 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:background="@null"
+        android:maxWidth="80dp"
+        android:maxHeight="80dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/app_g_speaker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279"
-        android:maxWidth="80dp"
-        android:maxHeight="80dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/app_g_speaker" />
+        app:layout_constraintVertical_bias="0.279" />
 
 
     <TextView
@@ -50,8 +50,10 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/test_background"
-        app:layout_constraintTop_toTopOf="@+id/test_background"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/test_background" />
 
     <ImageButton
         android:id="@+id/ans1"
@@ -143,13 +145,13 @@
         android:id="@+id/image_count"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:src="@drawable/technology1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:src="@drawable/technology1" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/next"
@@ -157,16 +159,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="11dp"
         android:adjustViewBounds="true"
+        android:background="@null"
+        android:maxWidth="70dp"
+        android:maxHeight="70dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/app_g_go"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:background="@null"
-        android:maxWidth="70dp"
-        android:maxHeight="70dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/app_g_go" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

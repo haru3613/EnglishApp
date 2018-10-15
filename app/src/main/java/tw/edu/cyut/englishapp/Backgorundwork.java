@@ -291,6 +291,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             try {
                 String uid = params[1];
                 String index = params[2];
+                String topic_day=params[3];
 
                 String connection_url =thisURL+"/app/update_topic_index.php";
                 URL url = new URL(connection_url);
@@ -302,7 +303,8 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
-                        URLEncoder.encode("day","UTF-8")+"="+URLEncoder.encode(index,"UTF-8");
+                        URLEncoder.encode("index","UTF-8")+"="+URLEncoder.encode(index,"UTF-8")+"&"+
+                        URLEncoder.encode("topic_day","UTF-8")+"="+URLEncoder.encode(topic_day,"UTF-8");
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
 
@@ -520,10 +522,156 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 }
 
             }
-        }else if(type.equals("Upload_record")) {
+        }else if (type.equals("Exam_Upload_record")) {
+            int serverResponseCode = 0;
+            String result = null;
+            final String SERVER_PATH = "http://140.122.63.99/record_mp3/file_upload_control.php";
+            FileURL= params[1];
+            String uid=params[2];
+            index=params[3];
+            String FileName= params[4];
+            today_finish= params[5];
+            Log.e("All params->", "uid->" + uid+"t_index->" +index+"FileName->" +FileName +"today_finish->"+today_finish);
+            HttpURLConnection conn = null;
+            DataOutputStream dos = null;
+            DataInputStream inStream = null;
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+            int bytesRead, bytesAvailable, bufferSize;
+            byte[] buffer;
+            int maxBufferSize = 1 * 1024 * 1024;
+            File sourceFile = new File(FileURL);
+            if (sourceFile.isFile()) {
+                try {
+
+                    FileInputStream fileInputStream = new FileInputStream(new File(FileURL));
+                    URL url = new URL(SERVER_PATH);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+                    conn.setUseCaches(false);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Connection", "Keep-Alive");
+                    conn.setRequestProperty("Charset", "utf-8");
+                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                    dos = new DataOutputStream(conn.getOutputStream());
+
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uid\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(uid,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"t_index\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(index,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"today_finish\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(today_finish,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"filename\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(FileName,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + FileURL + "\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
 
 
 
+                    // create a buffer of maximum size
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    buffer = new byte[bufferSize];
+                    // read file and write it into form...
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    while (bytesRead > 0) {
+
+                        dos.write(buffer, 0, bufferSize);
+                        bytesAvailable = fileInputStream.available();
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    }
+
+                    // send multipart form data necesssary after file data...
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                    // close streams
+                    fileInputStream.close();
+                    dos.flush();
+                    dos.close();
+                    InputStream inputStream = conn.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String u_result = "";
+                    String line = null;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        u_result += line;
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    conn.disconnect();
+                    Log.e("Check_result", "result------>" + u_result);
+                    return u_result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        else if (type.equals("finish pretest_control")) {
+            try {
+                String uid = params[1];
+                String index = params[2];
+                String topic_day = params[3];
+
+                String connection_url = thisURL + "/app/update_topic_index_control.php";
+                URL url = new URL(connection_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("uid", "UTF-8") + "=" + URLEncoder.encode(uid, "UTF-8") + "&" +
+                        URLEncoder.encode("index", "UTF-8") + "=" + URLEncoder.encode(index, "UTF-8") + "&" +
+                        URLEncoder.encode("topic_day", "UTF-8") + "=" + URLEncoder.encode(topic_day, "UTF-8");
+                Log.d("POST_DATA", "doInBackground: " + post_data);
+
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                String result = "";
+                String line = null;
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
 
@@ -587,6 +735,27 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 Log.d("Success ", "File was deleted"+result);
                 if (today_finish.equals("0")){
                     Intent ToControl=new Intent(context,group_control.class);
+                    context.startActivity(ToControl);
+                    ((Activity) context).finish();
+                }else{
+                    Intent Totodayisfinish=new Intent(context,todayisfinish.class);
+                    context.startActivity(Totodayisfinish);
+                    ((Activity) context).finish();
+
+                }
+
+            }else{
+                Log.d("Error ", "File doesn't exist"+result);
+            }
+        }
+        else if (result.contains("PreExam_upload_success")){
+            Toast.makeText(context, "Upload Success", Toast.LENGTH_SHORT).show();
+            File file = new File(FileURL);
+            if (file.exists()){
+                file.delete();
+                Log.d("Success ", "File was deleted"+result);
+                if (today_finish.equals("0")){
+                    Intent ToControl=new Intent(context,PreExamActivity.class);
                     context.startActivity(ToControl);
                     ((Activity) context).finish();
                 }else{
