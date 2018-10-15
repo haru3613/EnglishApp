@@ -77,22 +77,20 @@ public class TestGroupActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (!level.equals("Teacher")){
-                    if (Integer.parseInt(index)==0){
-                        OpenTestPreTest();
+                    if (day.equals("0")){
+                        //insert to topic speak
+                        //pre-exam
+                        Intent ToPreExam=new Intent(TestGroupActivity.this,PreExamActivity.class);
+                        startActivity(ToPreExam);
+                        finish();
                     }else{
-                        if (day.equals("0")){
-                            //insert to topic speak
-                            //pre-exam
-                            Intent ToPreExam=new Intent(TestGroupActivity.this,PreExamActivity.class);
-                            startActivity(ToPreExam);
-                            finish();
-                        }else{
-                            //pre-test
-                            if (Integer.parseInt(index)<=Integer.parseInt(audio_list[Integer.parseInt(qbank)][0]))
-                                OpenAnswerActivity(index);
-
+                        if (Integer.parseInt(index)==0){
+                            OpenTestPreTest();
+                        }else if (Integer.parseInt(index)<=Integer.parseInt(audio_list[Integer.parseInt(qbank)][0])){
+                            OpenAnswerActivity(index);
                         }
                     }
+
                 }
             }
         });
