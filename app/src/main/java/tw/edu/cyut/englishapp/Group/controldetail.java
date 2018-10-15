@@ -19,7 +19,7 @@ public class controldetail extends AppCompatActivity {
 
     public void bt_continue(View view) {
         Intent i = new Intent();
-        i.setClass(controldetail.this, LoginActivity.class);
+        i.setClass(controldetail.this, group_control.class);
         startActivity(i);
         controldetail.this.finish();//結束目前 Activity
 
@@ -27,7 +27,7 @@ public class controldetail extends AppCompatActivity {
 
     public void bt_back(View view) {
         Intent i = new Intent();
-        i.setClass(controldetail.this, ControlPreTestActivity.class);
+        i.setClass(controldetail.this, LoginActivity.class);
         startActivity(i);
         controldetail.this.finish();//結束目前 Activity
 
