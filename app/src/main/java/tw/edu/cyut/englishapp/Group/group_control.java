@@ -230,30 +230,39 @@ public class group_control extends AppCompatActivity  {
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
                             index=posts.get(0).getTopic_index();
-                            text_count.setText(String.valueOf(Integer.parseInt(index)) +"/"+(audio_list[Integer.parseInt(get_topic_day)][0]));
-                            if (Integer.parseInt(index)>34 &&Integer.parseInt(index)<70){
-                                bt_topic_speak.setImageResource(R.drawable.app_y_speaker);
-                                image_background.setImageResource(R.drawable.app_y_interface);
-                                bt_next.setImageResource(R.drawable.app_y_go);
-                                bt_speak_start.setImageResource(R.drawable.app_y_enable_record);
-                                bt_stop_speak.setImageResource(R.drawable.app_y_disable_record);
-                                bt_speak_talker.setImageResource(R.drawable.app_y_speaker);
+                            if (index.equals("0")){
+                                Intent intent = new Intent();
+                                intent.setClass(group_control.this , ControlPreTestActivity.class);
+                                startActivity(intent);
+                                finish();
 
-                            }else if(Integer.parseInt(index)>69){
-                                bt_topic_speak.setImageResource(R.drawable.app_r_speaker);
-                                image_background.setImageResource(R.drawable.app_r_interface);
-                                bt_next.setImageResource(R.drawable.app_r_go);
-                                bt_speak_start.setImageResource(R.drawable.app_r_enable_record);
-                                bt_stop_speak.setImageResource(R.drawable.app_r_disable_record);
-                                bt_speak_talker.setImageResource(R.drawable.app_r_speaker);
                             }else{
-                                bt_topic_speak.setImageResource(R.drawable.app_g_speaker);
-                                image_background.setImageResource(R.drawable.app_g_interface);
-                                bt_next.setImageResource(R.drawable.app_g_go);
-                                bt_speak_start.setImageResource(R.drawable.app_g_enable_record);
-                                bt_stop_speak.setImageResource(R.drawable.app_g_disable_record);
-                                bt_speak_talker.setImageResource(R.drawable.app_g_speaker);
+                                text_count.setText(String.valueOf(Integer.parseInt(index)) +"/"+(audio_list[Integer.parseInt(get_topic_day)][0]));
+                                if (Integer.parseInt(index)>34 &&Integer.parseInt(index)<70){
+                                    bt_topic_speak.setImageResource(R.drawable.app_y_speaker);
+                                    image_background.setImageResource(R.drawable.app_y_interface);
+                                    bt_next.setImageResource(R.drawable.app_y_go);
+                                    bt_speak_start.setImageResource(R.drawable.app_y_enable_record);
+                                    bt_stop_speak.setImageResource(R.drawable.app_y_disable_record);
+                                    bt_speak_talker.setImageResource(R.drawable.app_y_speaker);
+
+                                }else if(Integer.parseInt(index)>69){
+                                    bt_topic_speak.setImageResource(R.drawable.app_r_speaker);
+                                    image_background.setImageResource(R.drawable.app_r_interface);
+                                    bt_next.setImageResource(R.drawable.app_r_go);
+                                    bt_speak_start.setImageResource(R.drawable.app_r_enable_record);
+                                    bt_stop_speak.setImageResource(R.drawable.app_r_disable_record);
+                                    bt_speak_talker.setImageResource(R.drawable.app_r_speaker);
+                                }else{
+                                    bt_topic_speak.setImageResource(R.drawable.app_g_speaker);
+                                    image_background.setImageResource(R.drawable.app_g_interface);
+                                    bt_next.setImageResource(R.drawable.app_g_go);
+                                    bt_speak_start.setImageResource(R.drawable.app_g_enable_record);
+                                    bt_stop_speak.setImageResource(R.drawable.app_g_disable_record);
+                                    bt_speak_talker.setImageResource(R.drawable.app_g_speaker);
+                                }
                             }
+
 
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();

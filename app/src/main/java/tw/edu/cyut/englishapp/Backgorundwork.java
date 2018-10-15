@@ -547,7 +547,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             ((Activity)context).finish();
             if (result.contains("control")){
                 //in control
-                Intent ToControl=new Intent(context,group_control.class);
+                Intent ToControl=new Intent(context,controldetail.class);
                 context.startActivity(ToControl);
                 ((Activity) context).finish();
 
