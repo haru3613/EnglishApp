@@ -256,6 +256,9 @@ public class AnswerActivity extends Activity {
             public void onClick(View view) {
                 if (date_count(origin_time,getDateNow())){
                     //如果等於true則大於三分鐘
+                    String type = "Delete Topic Speak";
+                    Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
+                    backgorundwork.execute(type,uid,day);
                     finish();
                 }else{
                     if (!choice_ans.equals("")){
