@@ -33,6 +33,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -48,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         initSignUpActivity();
 
+        AlertDialog("Registration","You are about to register for the Chinese Tones Learning Experiment. The research requires some basic background data and information about your Chinese learning experience. Please answer these questions as precisely as possible, according to your present situation. After answering the background questions, you will move on to the pretest. \n");
         final Button SignUp = (Button) findViewById(R.id.sign);
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +129,29 @@ public class SignUpActivity extends AppCompatActivity {
                 R.array.learing,
                 android.R.layout.simple_spinner_dropdown_item);
         sp_learing_method.setAdapter(learingList);
+    }
+    private void AlertDialog(String title,String content){
+        boolean wrapInScrollView = true;
+        MaterialDialog dialog=new MaterialDialog.Builder(SignUpActivity.this)
+                .title(title)
+                .customView(R.layout.alert_dialog, wrapInScrollView)
+                .backgroundColorRes(R.color.colorBackground)
+                .positiveText("OK")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://goo.gl/forms/45rID7ZAVesERpzz2"));
+                        startActivity(intent);
+                    }
+                })
+                .build();
+        final View item = dialog.getCustomView();
+
+        TextView content_txt=item.findViewById(R.id.dialog_content);
+        content_txt.setText(content);
+        dialog.show();
     }
 }
 
