@@ -1,12 +1,9 @@
 package tw.edu.cyut.englishapp.Group;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,10 +29,9 @@ import java.util.Map;
 
 import tw.edu.cyut.englishapp.LoginActivity;
 import tw.edu.cyut.englishapp.PreExamActivity;
-import tw.edu.cyut.englishapp.preexam_test;
+import tw.edu.cyut.englishapp.PreExam_test;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
-import tw.edu.cyut.englishapp.preexam_test;
 
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
@@ -74,7 +70,7 @@ public class controldetail extends AppCompatActivity {
 
         }else if(leadto.equals("Exam_Pre_test")) {
             Intent intent = new Intent();
-            intent.setClass(controldetail.this, preexam_test.class);
+            intent.setClass(controldetail.this, PreExam_test.class);
             Bundle bundle = new Bundle();
             bundle.putString("index","0");
             intent.putExtras(bundle);

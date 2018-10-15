@@ -52,7 +52,7 @@
         <activity android:name=".todayisfinish" />
         <activity android:name=".Group.TeacherGroupActivity" />
         <activity android:name=".Group.TopicCheckActivity" />
-        <activity android:name=".preexam_test"></activity>
+        <activity android:name=".PreExam_test"></activity>
     </application>
 
 </manifest>

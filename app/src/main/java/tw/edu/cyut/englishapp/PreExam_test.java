@@ -21,12 +21,9 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
-import tw.edu.cyut.englishapp.Group.ControlPreTestActivity;
-import tw.edu.cyut.englishapp.Group.group_control;
-
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
-public class preexam_test extends AppCompatActivity {
+public class PreExam_test extends AppCompatActivity {
     private ImageView bt_topic_speak,image_background,bt_next,bt_speak_start,bt_stop_speak,bt_speak_talker;
     private TextView text_count;
     private static final String LOG_TAG = "AudioRecordTest";
@@ -89,17 +86,17 @@ public class preexam_test extends AppCompatActivity {
                 Backgorundwork backgorundwork = new Backgorundwork(this);
                 backgorundwork.execute("finish pretest_control",uid,"1",day);
                 Intent intent = new Intent();
-                intent.setClass(preexam_test.this, PreExamActivity.class);
+                intent.setClass(PreExam_test.this, PreExamActivity.class);
                 startActivity(intent);
-                preexam_test.this.finish();
+                PreExam_test.this.finish();
             }else{
                 Intent intent = new Intent();
-                intent.setClass(preexam_test.this, preexam_test.class);
+                intent.setClass(PreExam_test.this, PreExam_test.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("index",String.valueOf(Integer.parseInt(test_index)+1) );
                 intent.putExtras(bundle);
                 startActivity(intent);
-                preexam_test.this.finish();
+                PreExam_test.this.finish();
 
             }
 
@@ -146,7 +143,7 @@ public class preexam_test extends AppCompatActivity {
             if (!playPause) {
                 Toast.makeText(getApplicationContext(), "Topic is playing", Toast.LENGTH_SHORT).show();
                 if (initialStage) {
-                    new preexam_test.Player().execute(topic_url);
+                    new PreExam_test.Player().execute(topic_url);
                 } else {
                     if (!mPlayer.isPlaying())
                         mPlayer.start();
