@@ -48,6 +48,7 @@
             android:label="@string/title_activity_control_pre_test" />
         <activity
             android:name=".Group.TestPreTestActivity"
+
             android:label="@string/title_activity_test_pre_test"></activity>
         <activity android:name=".todayisfinish"></activity>
         <activity android:name=".Group.TeacherGroupActivity"></activity>

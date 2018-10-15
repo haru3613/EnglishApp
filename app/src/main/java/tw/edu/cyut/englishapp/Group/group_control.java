@@ -159,7 +159,7 @@ public class group_control extends AppCompatActivity  {
             bt_speak_talker.setEnabled(false);
             mFileName = getExternalCacheDir().getAbsolutePath();
             fname=uid+"_d"+day+"_"+index;
-            mFileName += "/"+fname+".3gp";
+            mFileName += "/"+fname+".mp3";
             startRecording();
             Toast.makeText(getApplicationContext(), "Start Recording", Toast.LENGTH_SHORT).show();
         }else{
@@ -302,8 +302,8 @@ public class group_control extends AppCompatActivity  {
         bt_stop_speak.setVisibility(View.VISIBLE);
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mRecorder.setOutputFile(mFileName);
         Log.e(LOG_TAG, "prepare() failed"+mFileName);
 

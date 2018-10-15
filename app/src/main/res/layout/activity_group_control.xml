@@ -1,113 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Group.group_control">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".Group.group_control">
 
-    <ImageView
-        android:id="@+id/image_background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/app_g_interface"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+<ImageView
+    android:id="@+id/image_background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scaleType="centerCrop"
+    android:src="@drawable/app_g_interface"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/bt_next"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:onClick="bt_next"
-        android:src="@drawable/app_g_go"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+<ImageView
+    android:id="@+id/bt_next"
+    android:layout_width="70dp"
+    android:layout_height="70dp"
+    android:onClick="bt_next"
+    android:src="@drawable/app_g_go"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/image_count"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/technology1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+<ImageView
+    android:id="@+id/image_count"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:src="@drawable/technology1"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/bt_speak_start"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:onClick="bt_recode_start"
-        android:src="@drawable/app_g_enable_record"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+<ImageView
+    android:id="@+id/bt_speak_start"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:onClick="bt_recode_start"
+    android:src="@drawable/app_g_enable_record"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.788" />
 
-    <ImageView
-        android:id="@+id/bt_stop_speak"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:onClick="bt_recode_stop"
-        android:src="@drawable/app_g_disable_record"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+<ImageView
+    android:id="@+id/bt_stop_speak"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:onClick="bt_recode_stop"
+    android:src="@drawable/app_g_disable_record"
+    android:visibility="invisible"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.788" />
 
-    <ImageView
-        android:id="@+id/bt_topic_speak"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:onClick="bt_topic_speak"
-        android:src="@drawable/app_g_speaker"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+<ImageView
+    android:id="@+id/bt_topic_speak"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:onClick="bt_topic_speak"
+    android:src="@drawable/app_g_speaker"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.279" />
 
-    <TextView
-        android:id="@+id/text_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0/144"
-        android:textColor="@color/secondaryTextColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+<TextView
+    android:id="@+id/text_count"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="0/144"
+    android:textColor="@color/secondaryTextColor"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.135"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/bt_speak_talker"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
-        android:onClick="bt_recode_playing"
-        android:src="@drawable/app_g_speaker"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.966" />
+<ImageView
+    android:id="@+id/bt_speak_talker"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginEnd="3dp"
+    android:layout_marginRight="3dp"
+    android:onClick="bt_recode_playing"
+    android:src="@drawable/app_g_speaker"
+    android:visibility="invisible"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.504"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.966" />
 </android.support.constraint.ConstraintLayout>

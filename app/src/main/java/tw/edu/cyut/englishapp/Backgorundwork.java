@@ -31,7 +31,7 @@ import tw.edu.cyut.englishapp.Group.TestPreTestActivity;
 import tw.edu.cyut.englishapp.Group.group_control;
 import tw.edu.cyut.englishapp.Group.RecordCheckActivity;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
-
+import tw.edu.cyut.englishapp.Group.controldetail;
 
 /**
  * Created by Haru on 2017/12/19.
@@ -548,11 +548,9 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             if (result.contains("control")){
                 //in control
                 Intent ToControl=new Intent(context,group_control.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("Username", Username);
-                ToControl.putExtras(bundle);
                 context.startActivity(ToControl);
                 ((Activity) context).finish();
+
             }else if (result.contains("test")){
                 //in test
                 Intent ToTest=new Intent(context,TestGroupActivity.class);
