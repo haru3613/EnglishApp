@@ -2,13 +2,17 @@ package tw.edu.cyut.englishapp.Group;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +30,8 @@ import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.ResourceHelper;
 import tw.edu.cyut.englishapp.todayisfinish;
 
+import static tw.edu.cyut.englishapp.LoginActivity.KEY;
+
 public class ControlPreTestActivity extends Activity {
     private ImageView bt_topic_speak,image_background,bt_next,bt_speak_start,bt_stop_speak,bt_speak_talker;
     private TextView text_count;
@@ -42,16 +48,43 @@ public class ControlPreTestActivity extends Activity {
     private boolean initialStage = true;
     private boolean playPause;
     private String[][] audio_list=new String[16][139];
-    private String topic_url;
+    private String topic_url,test_index;
     private String test_account;
-    private String[] test_audio;
+    private String[] test_audio={"deng3dT","ta1dT","he4dT","ba1dT","chang2dT"};
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if (!permissionToRecordAccepted ) finish();
+        bt_next.setVisibility(View.INVISIBLE);
+        bt_stop_speak.setVisibility(View.INVISIBLE);
+        bt_speak_talker.setVisibility(View.INVISIBLE);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_pre_test);
-
-
-
+        Bundle bundle = getIntent().getExtras();
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
+        day=sharedPreferences.getString("day",null);
+        uid=sharedPreferences.getString("uid",null);
+        test_index = bundle.getString("index");
+        bt_topic_speak = findViewById(R.id.bt_topic_speak);
+        bt_speak_talker = findViewById(R.id.bt_speak_talker);
+        bt_speak_start = findViewById(R.id.bt_speak_start);
+        bt_stop_speak = findViewById(R.id.bt_stop_speak);
+        bt_stop_speak.setVisibility(View.INVISIBLE);
+        bt_stop_speak.setEnabled(false);
+        bt_next = findViewById(R.id.bt_next);
+        bt_next.setVisibility(View.INVISIBLE);
+        bt_next.setEnabled(false);
+        text_count = findViewById(R.id.text_count);
+        text_count.setText(Integer.parseInt(test_index)+1 +"/5");
+        progressDialog = new ProgressDialog(this);
     }
 
 
@@ -59,14 +92,21 @@ public class ControlPreTestActivity extends Activity {
         File file = new File(mFileName);
         if (file.exists()){
             file.delete();
-            if (today_finish.equals("0")){
-//                Intent ToControl=new Intent(context,group_control.class);
-//                context.startActivity(ToControl);
-//                ((Activity) context).finish();
+            if (test_index.equals("4")){
+                Backgorundwork backgorundwork = new Backgorundwork(this);
+                backgorundwork.execute("finish pretest_control",uid,"1",day);
+                Intent intent = new Intent();
+                intent.setClass(ControlPreTestActivity.this, group_control.class);
+                startActivity(intent);
+                ControlPreTestActivity.this.finish();
             }else{
-//                Intent Totodayisfinish=new Intent(context,todayisfinish.class);
-//                context.startActivity(Totodayisfinish);
-//                ((Activity) context).finish();
+                Intent intent = new Intent();
+                intent.setClass(ControlPreTestActivity.this, ControlPreTestActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("index",String.valueOf(Integer.parseInt(test_index)+1) );
+                intent.putExtras(bundle);
+                startActivity(intent);
+                ControlPreTestActivity.this.finish();
 
             }
 
@@ -106,8 +146,9 @@ public class ControlPreTestActivity extends Activity {
     }
 
     public void bt_topic_speak(View view) {
-        topic_url="http://140.122.63.99/topic_audio/test_audio/"+audio_list[Integer.parseInt(get_topic_day)][Integer.parseInt(index)]+".wav";
+        topic_url="http://140.122.63.99/topic_audio/test_audio/"+test_audio[Integer.parseInt(test_index)]+".wav";
         count_topic+=1;
+        Log.d("topic_url",topic_url);
         if(count_topic<4){
             if (!playPause) {
                 Toast.makeText(getApplicationContext(), "Topic is playing", Toast.LENGTH_SHORT).show();
@@ -135,7 +176,7 @@ public class ControlPreTestActivity extends Activity {
     }
 
     public void bt_recode_playing(View view) {
-
+        startPlaying();
     }
 
 
@@ -193,52 +234,6 @@ public class ControlPreTestActivity extends Activity {
         }
     }
 
-
-    private void OpenSelf(String index){
-        if (Integer.parseInt(index)==test_audio.length){
-
-            //xml to array
-            int j=0;
-            for (TypedArray item : ResourceHelper.getMultiTypedArray(ControlPreTestActivity.this, "day")) {
-                for (int i=0;i<=Integer.parseInt(item.getString(0));i++){
-                    audio_list[j][i]=item.getString(i);
-                }
-                j++;
-            }
-            String type = "finish pretest";
-            Backgorundwork backgorundwork = new Backgorundwork(ControlPreTestActivity.this);
-            backgorundwork.execute(type,uid,"1");
-
-        }else{
-            Intent ToSelf=new Intent(ControlPreTestActivity.this,ControlPreTestActivity.class);
-            ToSelf.putExtra("index",index);
-            Bundle mBundle = new Bundle();
-            String[] test_audio={"ba1dT","chang2dT","deng3dT","he4dT","ta1dT"};
-            mBundle.putStringArray("test_audio", test_audio);
-            ToSelf.putExtras(mBundle);
-            startActivity(ToSelf);
-            finish();
-        }
-    }
-
-
-    private void AlertDialog(int draw){
-        boolean wrapInScrollView = true;
-        MaterialDialog dialog=new MaterialDialog.Builder(ControlPreTestActivity.this)
-                .customView(R.layout.alert_gif, wrapInScrollView)
-                .backgroundColorRes(R.color.colorBackground)
-                .positiveText("OK")
-                .build();
-        final View item = dialog.getCustomView();
-        ImageView gif=item.findViewById(R.id.image_gif);
-
-        Glide.with(item)
-                .asGif()
-                .load(draw)
-                .into(gif);
-        dialog.show();
-    }
-
     class Player extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String... strings) {
@@ -282,7 +277,6 @@ public class ControlPreTestActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             progressDialog.setMessage("Buffering...");
             progressDialog.show();
         }
