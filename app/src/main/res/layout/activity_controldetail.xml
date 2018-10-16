@@ -20,33 +20,33 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="330dp"
-        android:layout_height="438dp"
+        android:layout_width="358dp"
+        android:layout_height="408dp"
         android:background="#ffffff"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.256" />
+        app:layout_constraintVertical_bias="0.352" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="269dp"
-        android:layout_height="437dp"
+        android:layout_width="303dp"
+        android:layout_height="375dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:lineSpacingExtra="2sp"
-        android:text="\n\n\nDo not pause or take a break from the test once you begin.\n\n If the system does not detect any activity for 3 minutes, it will terminate the test, in which case you will need to sign in and start all-over again.\n\nRestarting the test may affect the award you will receive for participating."
+        android:text="\n\n\nDo not pause or take a break from the test once you begin.\n\n If the system does not detect any activity for 3 minutes, it will terminate the test, in which case you will need to sign in and start all-over again.\n\nRestarting the test may affect the award you will receive for participating.\n\nPress “Continue” to start the 5 trial samples to test your earphones and adjust the volume.
+\nPress “Back” to return to the previous page."
         android:textAllCaps="false"
         android:textColor="@color/secondaryTextColor"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272" />
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.195" />
 
     <Button
         android:id="@+id/bt_continue"
@@ -79,6 +79,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
         android:text="Instructions "
         android:textColor="@color/secondaryTextColor"
@@ -86,7 +87,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108" />
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.011" />
 
 </android.support.constraint.ConstraintLayout>

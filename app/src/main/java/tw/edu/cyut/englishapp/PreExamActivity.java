@@ -104,7 +104,6 @@ public class PreExamActivity extends Activity {
             get_topic_day=String.valueOf(Integer.parseInt(get_topic_day)-15);
         };
         image_background = findViewById(R.id.image_background);
-        bt_topic_speak = findViewById(R.id.bt_topic_speak);
         bt_speak_talker = findViewById(R.id.bt_speak_talker);
         bt_speak_start = findViewById(R.id.bt_speak_start);
         bt_stop_speak = findViewById(R.id.bt_stop_speak);
@@ -195,36 +194,6 @@ public class PreExamActivity extends Activity {
         Toast.makeText(getApplicationContext(), "Stop Recording", Toast.LENGTH_SHORT).show();
     }
 
-    public void bt_topic_speak(View view) {
-        topic_url="http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(get_topic_day)][Integer.parseInt(index)]+".wav";
-        count_topic+=1;
-        if(count_topic<4){
-            if (!playPause) {
-                Toast.makeText(getApplicationContext(), "Topic is playing", Toast.LENGTH_SHORT).show();
-                if (initialStage) {
-                    new PreExamActivity.Player().execute(topic_url);
-                } else {
-                    if (!mPlayer.isPlaying())
-                        mPlayer.start();
-                }
-
-                playPause = true;
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Stop playing", Toast.LENGTH_SHORT).show();
-                if (mPlayer.isPlaying()) {
-                    mPlayer.pause();
-                }
-
-                playPause = false;
-            }
-
-
-        }else{
-            Toast.makeText(getApplicationContext(), "You can't play more than three times.", Toast.LENGTH_SHORT).show();
-
-        }
-    }
 
     public void LoadTopicSpeak(final String uid){
         String url = "http://140.122.63.99/app/buildtestdata.php";
@@ -252,7 +221,6 @@ public class PreExamActivity extends Activity {
 
                             }else{
                                 if (Integer.parseInt(index)>34 &&Integer.parseInt(index)<70){
-                                    bt_topic_speak.setImageResource(R.drawable.app_y_speaker);
                                     image_background.setImageResource(R.drawable.app_y_interface);
                                     bt_next.setImageResource(R.drawable.app_y_go);
                                     bt_speak_start.setImageResource(R.drawable.app_y_enable_record);
@@ -260,14 +228,12 @@ public class PreExamActivity extends Activity {
                                     bt_speak_talker.setImageResource(R.drawable.app_y_speaker);
 
                                 }else if(Integer.parseInt(index)>69){
-                                    bt_topic_speak.setImageResource(R.drawable.app_r_speaker);
                                     image_background.setImageResource(R.drawable.app_r_interface);
                                     bt_next.setImageResource(R.drawable.app_r_go);
                                     bt_speak_start.setImageResource(R.drawable.app_r_enable_record);
                                     bt_stop_speak.setImageResource(R.drawable.app_r_disable_record);
                                     bt_speak_talker.setImageResource(R.drawable.app_r_speaker);
                                 }else{
-                                    bt_topic_speak.setImageResource(R.drawable.app_g_speaker);
                                     image_background.setImageResource(R.drawable.app_g_interface);
                                     bt_next.setImageResource(R.drawable.app_g_go);
                                     bt_speak_start.setImageResource(R.drawable.app_g_enable_record);

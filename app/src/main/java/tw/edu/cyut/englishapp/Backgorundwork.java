@@ -3,6 +3,7 @@ package tw.edu.cyut.englishapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,8 @@ import tw.edu.cyut.englishapp.Group.RecordCheckActivity;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.Group.controldetail;
 
+import static tw.edu.cyut.englishapp.LoginActivity.KEY;
+
 /**
  * Created by Haru on 2017/12/19.
  */
@@ -50,7 +53,6 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     }
     @Override
     protected String doInBackground(String... params) {
-
         String type =params[0];
 
         if(type.equals("login")){

@@ -182,7 +182,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-<<<<<<< HEAD
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -197,7 +196,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.79" />
-=======
->>>>>>> 5bcc12bc30aba2bdc3b69994a0588cb5bfd7f5bf
 
 </android.support.constraint.ConstraintLayout>

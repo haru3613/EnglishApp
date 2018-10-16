@@ -25,7 +25,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class PreExam_test extends AppCompatActivity {
     private ImageView bt_topic_speak,image_background,bt_next,bt_speak_start,bt_stop_speak,bt_speak_talker;
-    private TextView text_count;
+    private TextView text_count,topic_word;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
@@ -42,6 +42,7 @@ public class PreExam_test extends AppCompatActivity {
     private String topic_url,test_index;
     private String test_account;
     private String[] test_audio={"deng3dT","ta1dT","he4dT","ba1dT","chang2dT"};
+    private String[] test_audio_words={"deng3","ta1","he4","ba1","chang2"};
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -64,9 +65,10 @@ public class PreExam_test extends AppCompatActivity {
         day=sharedPreferences.getString("day",null);
         uid=sharedPreferences.getString("uid",null);
         test_index = bundle.getString("index");
-        bt_topic_speak = findViewById(R.id.bt_topic_speak);
         bt_speak_talker = findViewById(R.id.bt_speak_talker);
         bt_speak_start = findViewById(R.id.bt_speak_start);
+        topic_word=findViewById(R.id.topic_word);
+        topic_word.setText(test_audio_words[Integer.parseInt(test_index)]);
         bt_stop_speak = findViewById(R.id.bt_stop_speak);
         bt_stop_speak.setVisibility(View.INVISIBLE);
         bt_stop_speak.setEnabled(false);
@@ -135,35 +137,6 @@ public class PreExam_test extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Stop Recording", Toast.LENGTH_SHORT).show();
     }
 
-    public void bt_topic_speak(View view) {
-        topic_url="http://140.122.63.99/topic_audio/test_audio/"+test_audio[Integer.parseInt(test_index)]+".wav";
-        count_topic+=1;
-        Log.d("topic_url",topic_url);
-        if(count_topic<4){
-            if (!playPause) {
-                Toast.makeText(getApplicationContext(), "Topic is playing", Toast.LENGTH_SHORT).show();
-                if (initialStage) {
-                    new PreExam_test.Player().execute(topic_url);
-                } else {
-                    if (!mPlayer.isPlaying())
-                        mPlayer.start();
-                }
-
-                playPause = true;
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Stop playing", Toast.LENGTH_SHORT).show();
-                if (mPlayer.isPlaying()) {
-                    mPlayer.pause();
-                }
-
-                playPause = false;
-            }
-        }else{
-            Toast.makeText(getApplicationContext(), "You can't play more than three times.", Toast.LENGTH_SHORT).show();
-
-        }
-    }
 
     public void bt_recode_playing(View view) {
         startPlaying();
