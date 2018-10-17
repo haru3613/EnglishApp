@@ -35,8 +35,11 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +48,7 @@ import tw.edu.cyut.englishapp.Group.ControlPreTestActivity;
 import tw.edu.cyut.englishapp.Group.group_control;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 
+import static com.android.volley.VolleyLog.TAG;
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class PreExamActivity extends Activity {
@@ -64,6 +68,7 @@ public class PreExamActivity extends Activity {
     private boolean playPause;
     private String[][] audio_list=new String[16][139];
     private String topic_url;
+    private String origin_time;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -81,6 +86,7 @@ public class PreExamActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_exam);
+        origin_time=getDateNow();
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
@@ -98,7 +104,6 @@ public class PreExamActivity extends Activity {
             get_topic_day=String.valueOf(Integer.parseInt(get_topic_day)-15);
         };
         image_background = findViewById(R.id.image_background);
-        bt_topic_speak = findViewById(R.id.bt_topic_speak);
         bt_speak_talker = findViewById(R.id.bt_speak_talker);
         bt_speak_start = findViewById(R.id.bt_speak_start);
         bt_stop_speak = findViewById(R.id.bt_stop_speak);
@@ -137,9 +142,20 @@ public class PreExamActivity extends Activity {
             Log.d("look longe and index","index="+index+" long="+audio_list[Integer.parseInt(get_topic_day)][0]);
             today_finish= "0";
         }
-        Backgorundwork backgorundwork = new Backgorundwork(this);
-        backgorundwork.execute("Exam_Upload_record",mFileName,uid,index,fname,today_finish);
 
+        if (date_count(origin_time,getDateNow())) {
+            //如果等於true則大於三分鐘
+            String type = "Delete Topic Speak";
+            Backgorundwork backgorundwork = new Backgorundwork(PreExamActivity.this);
+            backgorundwork.execute(type, uid, day);
+            Intent intent = new Intent();
+            intent.setClass(PreExamActivity.this, LoginActivity.class);
+            startActivity(intent);
+            PreExamActivity.this.finish();
+        }else {
+            Backgorundwork backgorundwork = new Backgorundwork(this);
+            backgorundwork.execute("Exam_Upload_record", mFileName, uid, index, fname, today_finish);
+        }
     }
 
     public void bt_recode_playing(View view) {
@@ -178,36 +194,6 @@ public class PreExamActivity extends Activity {
         Toast.makeText(getApplicationContext(), "Stop Recording", Toast.LENGTH_SHORT).show();
     }
 
-    public void bt_topic_speak(View view) {
-        topic_url="http://140.122.63.99/topic_audio/all_audio/"+audio_list[Integer.parseInt(get_topic_day)][Integer.parseInt(index)]+".wav";
-        count_topic+=1;
-        if(count_topic<4){
-            if (!playPause) {
-                Toast.makeText(getApplicationContext(), "Topic is playing", Toast.LENGTH_SHORT).show();
-                if (initialStage) {
-                    new PreExamActivity.Player().execute(topic_url);
-                } else {
-                    if (!mPlayer.isPlaying())
-                        mPlayer.start();
-                }
-
-                playPause = true;
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Stop playing", Toast.LENGTH_SHORT).show();
-                if (mPlayer.isPlaying()) {
-                    mPlayer.pause();
-                }
-
-                playPause = false;
-            }
-
-
-        }else{
-            Toast.makeText(getApplicationContext(), "You can't play more than three times.", Toast.LENGTH_SHORT).show();
-
-        }
-    }
 
     public void LoadTopicSpeak(final String uid){
         String url = "http://140.122.63.99/app/buildtestdata.php";
@@ -235,7 +221,6 @@ public class PreExamActivity extends Activity {
 
                             }else{
                                 if (Integer.parseInt(index)>34 &&Integer.parseInt(index)<70){
-                                    bt_topic_speak.setImageResource(R.drawable.app_y_speaker);
                                     image_background.setImageResource(R.drawable.app_y_interface);
                                     bt_next.setImageResource(R.drawable.app_y_go);
                                     bt_speak_start.setImageResource(R.drawable.app_y_enable_record);
@@ -243,14 +228,12 @@ public class PreExamActivity extends Activity {
                                     bt_speak_talker.setImageResource(R.drawable.app_y_speaker);
 
                                 }else if(Integer.parseInt(index)>69){
-                                    bt_topic_speak.setImageResource(R.drawable.app_r_speaker);
                                     image_background.setImageResource(R.drawable.app_r_interface);
                                     bt_next.setImageResource(R.drawable.app_r_go);
                                     bt_speak_start.setImageResource(R.drawable.app_r_enable_record);
                                     bt_stop_speak.setImageResource(R.drawable.app_r_disable_record);
                                     bt_speak_talker.setImageResource(R.drawable.app_r_speaker);
                                 }else{
-                                    bt_topic_speak.setImageResource(R.drawable.app_g_speaker);
                                     image_background.setImageResource(R.drawable.app_g_interface);
                                     bt_next.setImageResource(R.drawable.app_g_go);
                                     bt_speak_start.setImageResource(R.drawable.app_g_enable_record);
@@ -393,5 +376,30 @@ public class PreExamActivity extends Activity {
             progressDialog.show();
         }
     }
+    private String getDateNow(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
+        return formatter.format(curDate);
+    }
 
+    private boolean date_count(String origin ,String now){
+        Log.d(TAG, "date_count: origin:"+origin);
+        Log.d(TAG, "date_count: now:"+now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date dt1 =sdf.parse(origin);
+            Date dt2 =sdf.parse(now);
+            Long ut1=dt1.getTime();
+            Long ut2=dt2.getTime();
+            Long timeP=ut2-ut1;
+            Long sec=timeP/1000;
+            Log.d(TAG, "date_count: "+sec);
+            if (sec>180){
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

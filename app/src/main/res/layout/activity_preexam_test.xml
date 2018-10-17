@@ -69,18 +69,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.788" />
 
-    <ImageView
-        android:id="@+id/bt_topic_speak"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:onClick="bt_topic_speak"
-        android:src="@drawable/app_g_speaker"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
-
     <TextView
         android:id="@+id/text_count"
         android:layout_width="wrap_content"
@@ -132,7 +120,7 @@
         android:layout_marginBottom="8dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Please listen to the question and record the syllable you hear. \n\n(Test your microphone for recording volumes and quality.)"
+        android:text="Please “read and record” questions. \n\n(Test your microphone for recording volumes and quality.)"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -141,5 +129,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.494" />
+
+    <TextView
+        android:id="@+id/topic_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.221" />
 
 </android.support.constraint.ConstraintLayout>

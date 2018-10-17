@@ -33,18 +33,24 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
+import tw.edu.cyut.englishapp.LoginActivity;
 import tw.edu.cyut.englishapp.PreExamActivity;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.ResourceHelper;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
 
+import static com.android.volley.VolleyLog.TAG;
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class group_control extends AppCompatActivity  {
@@ -62,6 +68,7 @@ public class group_control extends AppCompatActivity  {
     private ProgressDialog progressDialog;
     private boolean initialStage = true;
     private boolean playPause;
+    private String origin_time;
     private String[][] audio_list=new String[16][139];
     private String topic_url;
     @Override
@@ -82,6 +89,8 @@ public class group_control extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_control);
+        origin_time=getDateNow();
+        Log.d("onCreate", "TimeNow:"+origin_time);
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
@@ -132,8 +141,21 @@ public class group_control extends AppCompatActivity  {
             Log.d("look longe and index","index="+index+" long="+audio_list[Integer.parseInt(get_topic_day)][0]);
             today_finish= "0";
         }
-        Backgorundwork backgorundwork = new Backgorundwork(this);
-        backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish);
+        if (date_count(origin_time,getDateNow())) {
+            //如果等於true則大於三分鐘
+            String type = "Delete Topic Speak";
+            Backgorundwork backgorundwork = new Backgorundwork(group_control.this);
+            backgorundwork.execute(type, uid, day);
+            Intent intent = new Intent();
+            intent.setClass(group_control.this, LoginActivity.class);
+            startActivity(intent);
+            group_control.this.finish();
+        }else{
+            Backgorundwork backgorundwork = new Backgorundwork(this);
+            backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish);
+        }
+
+
 
     }
 
@@ -386,4 +408,30 @@ public class group_control extends AppCompatActivity  {
         }
     }
 
+    private String getDateNow(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
+        return formatter.format(curDate);
+    }
+
+    private boolean date_count(String origin ,String now){
+        Log.d(TAG, "date_count: origin:"+origin);
+        Log.d(TAG, "date_count: now:"+now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date dt1 =sdf.parse(origin);
+            Date dt2 =sdf.parse(now);
+            Long ut1=dt1.getTime();
+            Long ut2=dt2.getTime();
+            Long timeP=ut2-ut1;
+            Long sec=timeP/1000;
+            Log.d(TAG, "date_count: "+sec);
+            if (sec>180){
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
