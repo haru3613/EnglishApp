@@ -96,7 +96,7 @@ public class ControlPreTestActivity extends Activity {
                 Backgorundwork backgorundwork = new Backgorundwork(this);
                 backgorundwork.execute("finish pretest_control",uid,"1",day);
                 Intent intent = new Intent();
-                intent.setClass(ControlPreTestActivity.this, group_control.class);
+                intent.setClass(ControlPreTestActivity.this, controldetail.class);
                 startActivity(intent);
                 ControlPreTestActivity.this.finish();
             }else{

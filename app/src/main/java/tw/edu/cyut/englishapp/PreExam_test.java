@@ -21,6 +21,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
+import tw.edu.cyut.englishapp.Group.controldetail;
+
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class PreExam_test extends AppCompatActivity {
@@ -88,7 +90,7 @@ public class PreExam_test extends AppCompatActivity {
                 Backgorundwork backgorundwork = new Backgorundwork(this);
                 backgorundwork.execute("finish pretest_control",uid,"1",day);
                 Intent intent = new Intent();
-                intent.setClass(PreExam_test.this, PreExamActivity.class);
+                intent.setClass(PreExam_test.this, controldetail.class);
                 startActivity(intent);
                 PreExam_test.this.finish();
             }else{
