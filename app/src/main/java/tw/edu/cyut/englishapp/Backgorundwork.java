@@ -293,8 +293,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             try {
                 String uid = params[1];
                 String index = params[2];
-                String topic_day=params[3];
-
+                String day = params[3];
                 String connection_url =thisURL+"/app/update_topic_index.php";
                 URL url = new URL(connection_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -306,7 +305,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
                         URLEncoder.encode("index","UTF-8")+"="+URLEncoder.encode(index,"UTF-8")+"&"+
-                        URLEncoder.encode("topic_day","UTF-8")+"="+URLEncoder.encode(topic_day,"UTF-8");
+                        URLEncoder.encode("day","UTF-8")+"="+URLEncoder.encode(day,"UTF-8");
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
 
@@ -715,7 +714,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }else if (result.contains("this is null")){
             Toast.makeText(context, "Not yet open for answer.", Toast.LENGTH_SHORT).show();
         }else if (result.contains("Congratulations on completing today's pre-test")){
-            Intent ToTestGroup=new Intent(context,TestPreTestActivity.class);
+            Intent ToTestGroup=new Intent(context,TestGroupActivity.class);
             context.startActivity(ToTestGroup);
             ((Activity) context).finish();
             Toast.makeText(context, "Congratulations on completing today's pre-test!", Toast.LENGTH_SHORT).show();

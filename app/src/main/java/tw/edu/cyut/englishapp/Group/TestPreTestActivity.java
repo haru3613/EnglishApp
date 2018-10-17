@@ -50,12 +50,12 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class TestPreTestActivity extends Activity {
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private String choice_ans,file_name,uid;
+    private String choice_ans,file_name,uid,day;
     private TextView count;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
-    private String[][] audio_list=new String[16][105];
+    private String[][] audio_list=new String[16][139];
     private String[] test_audio;
     private int play_count;
     private boolean initialStage = true;
@@ -69,7 +69,7 @@ public class TestPreTestActivity extends Activity {
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
-
+        day=sharedPreferences.getString("day",null);
         play_count=0;
         Intent intent = this.getIntent();//取得傳遞過來的資料
 
@@ -225,7 +225,7 @@ public class TestPreTestActivity extends Activity {
             }
             String type = "finish pretest";
             Backgorundwork backgorundwork = new Backgorundwork(TestPreTestActivity.this);
-            backgorundwork.execute(type,uid,"1");
+            backgorundwork.execute(type,uid,"1",day);
 
         }else{
             Intent ToSelf=new Intent(TestPreTestActivity.this,TestPreTestActivity.class);
