@@ -65,8 +65,8 @@ public class RecordCheckActivity extends Activity {
 
     }
     private void initTeacherGroupActivity(){
-        play_media=findViewById(R.id.media_play);
-        btn_next=findViewById(R.id.teacher_next);
+        //play_media=findViewById(R.id.media_play);
+        //btn_next=findViewById(R.id.teacher_next);
     }
 
     private void OpenTeacherGroupActivity(){
