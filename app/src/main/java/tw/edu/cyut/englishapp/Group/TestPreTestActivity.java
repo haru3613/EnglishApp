@@ -71,11 +71,13 @@ public class TestPreTestActivity extends Activity {
         uid=sharedPreferences.getString("uid",null);
 
         play_count=0;
-
-        Bundle bundle =new Bundle();
-        //接收array
-        test_audio=bundle.getStringArray("test_audio");
         Intent intent = this.getIntent();//取得傳遞過來的資料
+
+        Bundle bundle =intent.getExtras();
+        //接收array
+        if (bundle!=null)
+            test_audio=intent.getStringArrayExtra("test_audio");
+        Log.d(TAG, "onCreate: "+test_audio);
         final String index = intent.getStringExtra("index");
 
         file_name=test_audio[Integer.parseInt(index)];

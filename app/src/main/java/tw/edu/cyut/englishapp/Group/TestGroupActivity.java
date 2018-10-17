@@ -122,9 +122,9 @@ public class TestGroupActivity extends Activity {
     private void OpenTestPreTest(){
         Intent ToTest=new Intent(TestGroupActivity.this,TestPreTestActivity.class);
         Bundle mBundle = new Bundle();
-        ToTest.putExtra("index",0);
-        String[] test_audio={"ba1dT","chang2dT","deng3dT","he4dT","ta1dT"};
-        mBundle.putStringArray("test_audio", test_audio);
+        ToTest.putExtra("index","0");
+        String[] test_audio=new String[]{"ba1dT","chang2dT","deng3dT","he4dT","ta1dT"};
+        ToTest.putExtra("test_audio", test_audio);
         ToTest.putExtras(mBundle);
         startActivity(ToTest);
         finish();

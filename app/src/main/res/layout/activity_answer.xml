@@ -61,7 +61,7 @@
     <ImageButton
         android:id="@+id/ans1"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
@@ -82,7 +82,7 @@
     <ImageButton
         android:id="@+id/ans2"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
@@ -182,7 +182,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-<<<<<<< HEAD
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -197,7 +196,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.79" />
-=======
->>>>>>> 5bcc12bc30aba2bdc3b69994a0588cb5bfd7f5bf
+
 
 </android.support.constraint.ConstraintLayout>
