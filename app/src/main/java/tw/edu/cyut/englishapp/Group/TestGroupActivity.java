@@ -31,6 +31,7 @@ import java.util.Map;
 import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
 import tw.edu.cyut.englishapp.PreExamActivity;
+import tw.edu.cyut.englishapp.PreExam_test;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.ResourceHelper;
 import tw.edu.cyut.englishapp.model.ItemTopicSpeak;
@@ -77,12 +78,21 @@ public class TestGroupActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (!level.equals("Teacher")){
-                    if (day.equals("0")){
-                        //insert to topic speak
-                        //pre-exam
-                        Intent ToPreExam=new Intent(TestGroupActivity.this,PreExamActivity.class);
-                        startActivity(ToPreExam);
-                        finish();
+                    if (day.equals("0") || day.equals("16") || day.equals("20")){
+                        if (Integer.parseInt(index)>0){
+                            //insert to topic speak
+                            //pre-exam
+                            Intent ToPreExam=new Intent(TestGroupActivity.this,PreExamActivity.class);
+                            startActivity(ToPreExam);
+                            finish();
+                        }else if (Integer.parseInt(index)==0){
+                            Intent ToPreExamTest=new Intent(TestGroupActivity.this,PreExam_test.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("index","0");
+                            ToPreExamTest.putExtras(bundle);
+                            startActivity(ToPreExamTest);
+                            finish();
+                        }
                     }else{
                         if (Integer.parseInt(index)==0){
                             OpenTestPreTest();
