@@ -152,7 +152,7 @@ public class group_control extends AppCompatActivity  {
             group_control.this.finish();
         }else{
             Backgorundwork backgorundwork = new Backgorundwork(this);
-            backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish);
+            backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish,day);
         }
 
 

@@ -14,10 +14,10 @@
         android:src="@drawable/app_g_interface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/bt_next"
@@ -46,20 +46,20 @@
 
     <ImageView
         android:id="@+id/bt_speak_start"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:onClick="bt_recode_start"
         android:src="@drawable/app_g_enable_record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+        app:layout_constraintVertical_bias="0.736" />
 
     <ImageView
         android:id="@+id/bt_stop_speak"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:onClick="bt_recode_stop"
         android:src="@drawable/app_g_disable_record"
         android:visibility="invisible"
@@ -67,19 +67,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+        app:layout_constraintVertical_bias="0.736" />
 
     <ImageView
         android:id="@+id/bt_topic_speak"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:onClick="bt_topic_speak"
         android:src="@drawable/app_g_speaker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.203" />
 
     <TextView
         android:id="@+id/text_count"
@@ -96,8 +96,8 @@
 
     <ImageView
         android:id="@+id/bt_speak_talker"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
@@ -106,10 +106,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.966" />
+        app:layout_constraintVertical_bias="0.985" />
 
     <TextView
         android:id="@+id/textView6"

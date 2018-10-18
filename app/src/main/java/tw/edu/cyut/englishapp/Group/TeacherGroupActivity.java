@@ -55,7 +55,7 @@ public class TeacherGroupActivity extends Activity {
     }
     private void initTeacherGroupActivity(){
 
-        topic_check=findViewById(R.id.bt_topic_check);
+//        topic_check=findViewById(R.id.bt_topic_check);
     }
 
     private void OpenTopicCheckActivity(){
@@ -68,4 +68,8 @@ public class TeacherGroupActivity extends Activity {
         finish();
     }
 
+    public void bt_Test_xaminer(View view) {
+
+
+    }
 }

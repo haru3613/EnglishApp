@@ -424,6 +424,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             index=params[3];
             String FileName= params[4];
             today_finish= params[5];
+            String day=params[6];
             Log.e("All params->", "uid->" + uid+"t_index->" +index+"FileName->" +FileName +"today_finish->"+today_finish);
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
@@ -467,6 +468,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                     dos.writeBytes("Content-Disposition: form-data; name=\"today_finish\"" + lineEnd);
                     dos.writeBytes(lineEnd);
                     dos.writeBytes(URLEncoder.encode(today_finish,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"day\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(day,"UTF-8"));
                     dos.writeBytes(lineEnd);
 
                     dos.writeBytes(twoHyphens + boundary + lineEnd);
@@ -532,6 +539,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             index=params[3];
             String FileName= params[4];
             today_finish= params[5];
+            String day=params[6];
             Log.e("All params->", "uid->" + uid+"t_index->" +index+"FileName->" +FileName +"today_finish->"+today_finish);
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
@@ -575,6 +583,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                     dos.writeBytes("Content-Disposition: form-data; name=\"today_finish\"" + lineEnd);
                     dos.writeBytes(lineEnd);
                     dos.writeBytes(URLEncoder.encode(today_finish,"UTF-8"));
+                    dos.writeBytes(lineEnd);
+
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"day\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(URLEncoder.encode(day,"UTF-8"));
                     dos.writeBytes(lineEnd);
 
                     dos.writeBytes(twoHyphens + boundary + lineEnd);

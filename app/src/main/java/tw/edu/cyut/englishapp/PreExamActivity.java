@@ -154,7 +154,7 @@ public class PreExamActivity extends Activity {
             PreExamActivity.this.finish();
         }else {
             Backgorundwork backgorundwork = new Backgorundwork(this);
-            backgorundwork.execute("Exam_Upload_record", mFileName, uid, index, fname, today_finish);
+            backgorundwork.execute("Exam_Upload_record", mFileName, uid, index, fname, today_finish,day);
         }
     }
 

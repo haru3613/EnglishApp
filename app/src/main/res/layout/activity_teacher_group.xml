@@ -19,15 +19,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
-
     <Button
         android:id="@+id/bt_topic_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
         android:text="示範音檢核"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.945"
@@ -37,11 +36,12 @@
 
     <Button
 
-        android:id="@+id/bt_back"
-        android:layout_width="119dp"
-        android:layout_height="102dp"
+        android:id="@+id/bt_Test_xaminer"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:text="聽音檢核"
-        android:textSize="20sp"
+        android:onClick="bt_Test_xaminer"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.054"
