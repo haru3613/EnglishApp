@@ -102,6 +102,17 @@
 
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Education"
+                android:inputType="textPersonName"
+                app:met_floatingLabel="normal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/native_language"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,40 +124,27 @@
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/other_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Other Language"
+                android:inputType="textPersonName"
+                app:met_floatingLabel="normal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/learing_years"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Learing Years"
+                android:hint="Chinese study details to date"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Learning Method"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
-
-                <Spinner
-                    android:id="@+id/LearningMethod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -176,27 +174,83 @@
                 android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Country"
                 android:inputType="textPersonName"
                 app:met_floatingLabel="normal" />
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text=" Chinese teacher’s background"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/teacher_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/other_language"
+                android:id="@+id/teacher_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Other Language"
+                android:hint="other"
                 android:inputType="textPersonName"
+                android:visibility="gone"
                 app:met_floatingLabel="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Learning Method"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/LearningMethod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/method_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="other"
+                android:inputType="textPersonName"
+                android:visibility="gone"
+                app:met_floatingLabel="normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -212,7 +266,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:gravity="right"
+                        android:paddingRight="10dp"
+                        android:text="Year"
+                        android:textColor="@color/primaryTextColor" />
 
                     <Spinner
                         android:id="@+id/years"
@@ -220,6 +285,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
                         android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <Spinner
                         android:id="@+id/month"
@@ -237,74 +308,69 @@
                 </LinearLayout>
             </LinearLayout>
 
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Average study hours per week"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Chinese language level"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/language_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Name of certificates earned"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/certificate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/education"
+                android:id="@+id/certificate_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Education"
+                android:hint="other"
                 android:inputType="textPersonName"
+                android:visibility="gone"
                 app:met_floatingLabel="normal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/background"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Chinese teacher's background"
-                android:inputType="textPersonName"
-                android:textSize="16sp"
-                app:met_floatingLabel="normal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/Learninghours"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="average study hours per week"
-                android:inputType="textPersonName"
-                android:textSize="16sp"
-                app:met_floatingLabel="normal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/certification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Chinese language level"
-                android:inputType="textPersonName"
-                app:met_floatingLabel="normal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/testseries"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="courses certificates earned"
-                android:inputType="textPersonName"
-                app:met_floatingLabel="normal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/testname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="courses completed"
-                android:inputType="textPersonName"
-                app:met_floatingLabel="normal" />
-
 
 
             <com.rey.material.widget.Button
@@ -312,6 +378,7 @@
                 android:layout_width="308dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="Register"
                 android:textSize="20sp"

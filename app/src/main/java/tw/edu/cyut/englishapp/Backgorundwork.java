@@ -102,8 +102,8 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             String mail=params[4];
             String tbackground=params[5];
             String Learninghours=params[6];
-            String testseries=params[7];
-            String testname=params[8];
+            String age=params[7];
+            String level=params[8];
             String certification=params[9];
             String sex=params[10];
             String year=params[11];
@@ -134,9 +134,9 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                         URLEncoder.encode("education","UTF-8")+"="+URLEncoder.encode(education,"UTF-8")+"&"+
                         URLEncoder.encode("background","UTF-8")+"="+URLEncoder.encode(tbackground,"UTF-8")+"&"+
                         URLEncoder.encode("average_learning","UTF-8")+"="+URLEncoder.encode(Learninghours,"UTF-8")+"&"+
-                        URLEncoder.encode("level_certification","UTF-8")+"="+URLEncoder.encode(testseries,"UTF-8")+"&"+
-                        URLEncoder.encode("name_certification","UTF-8")+"="+URLEncoder.encode(testname,"UTF-8")+"&"+
-                        URLEncoder.encode("certification","UTF-8")+"="+URLEncoder.encode(certification,"UTF-8")+"&"+
+                        URLEncoder.encode("age","UTF-8")+"="+URLEncoder.encode(age,"UTF-8")+"&"+
+                        URLEncoder.encode("name_certification","UTF-8")+"="+URLEncoder.encode(certification,"UTF-8")+"&"+
+                        URLEncoder.encode("certification","UTF-8")+"="+URLEncoder.encode(level,"UTF-8")+"&"+
                         URLEncoder.encode("sex","UTF-8")+"="+URLEncoder.encode(sex,"UTF-8")+"&"+
                         URLEncoder.encode("birthyear","UTF-8")+"="+URLEncoder.encode(year,"UTF-8")+"&"+
                         URLEncoder.encode("birthmonth","UTF-8")+"="+URLEncoder.encode(month,"UTF-8")+"&"+
