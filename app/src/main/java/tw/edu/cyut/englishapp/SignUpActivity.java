@@ -267,6 +267,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .title(title)
                 .customView(R.layout.alert_dialog, wrapInScrollView)
                 .backgroundColorRes(R.color.colorBackground)
+                .neutralText("SKIP")
                 .positiveText("OK")
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
