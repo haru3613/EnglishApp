@@ -11,7 +11,9 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +32,7 @@ import java.util.Map;
 
 import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
+import tw.edu.cyut.englishapp.LoginActivity;
 import tw.edu.cyut.englishapp.PreExamActivity;
 import tw.edu.cyut.englishapp.PreExam_test;
 import tw.edu.cyut.englishapp.R;
@@ -51,7 +54,7 @@ public class TestGroupActivity extends Activity {
         setContentView(R.layout.activity_test_group);
 
         Button btn_start=findViewById(R.id.btn_start);
-
+        Button btn_back=findViewById(R.id.btn_back);
         int j=0;
         for (TypedArray item : ResourceHelper.getMultiTypedArray(TestGroupActivity.this, "day")) {
             for (int i=0;i<=Integer.parseInt(item.getString(0));i++){
@@ -73,6 +76,14 @@ public class TestGroupActivity extends Activity {
 
         InsertTopicSpeak(uid);
 
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ToLogin=new Intent(TestGroupActivity.this,LoginActivity.class);
+                startActivity(ToLogin);
+                finish();
+            }
+        });
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +109,7 @@ public class TestGroupActivity extends Activity {
                             OpenTestPreTest();
                         }else if (Integer.parseInt(index)<=Integer.parseInt(audio_list[Integer.parseInt(qbank)][0])){
                             OpenAnswerActivity(index);
+
                         }
                     }
 
@@ -147,7 +159,46 @@ public class TestGroupActivity extends Activity {
                             Gson mGson = builder.create();
                             List<ItemTopicSpeak> posts = new ArrayList<ItemTopicSpeak>();
                             posts = Arrays.asList(mGson.fromJson(response, ItemTopicSpeak[].class));
-                            index=posts.get(0).getTopic_index();
+                            index = posts.get(0).getTopic_index();
+
+                            if (!level.equals("Teacher")) {
+                                if (day.equals("0") || day.equals("16") || day.equals("20")) {
+                                    if (Integer.parseInt(index) > 0) {
+                                        //insert to topic speak
+                                        //pre-exam
+                                        AlertDialog("Instructions ", "You are about to start the pretest. Please make sure your microphone is functioning properly and carefully follow the instructions listed below:\n" +
+                                                "您將開始前測，請確定您的麥克風可正常運作，並仔細閱讀下列資訊:\n" +
+                                                "Once you start the test, continue through all of the 138 “read and record” questions. \n" +
+                                                "開始測驗後，請完成138題「看字錄音」的題目。\n" +
+                                                "Before pressing confirm, playback the recording and listen to make sure you have recorded your response completely. If you need to record your response again, press Record. You can record your response up to 3 times. \n" +
+                                                "按下「確認」前，請播放您的錄音，檢查錄音檔完整。如果需要重新錄製，請按「錄音」，最多可錄製3次。\n" +
+                                                "After pressing “Confirm”, you move on to the next question and will not be able to go back to the previous question.\n" +
+                                                "按下「確認」後，將進入下一題，您無法再回到前一題。\n" +
+                                                "Do not pause or take a break from the test once you begin.  If the system does not detect any activity for 3 minutes, it will terminate the test, in which case you will need to sign in and start all-over again. Restarting the test may affect the award you will receive for participating. \n" +
+                                                "測驗開始後，請勿暫停或休息。如果系統偵測3分鐘無任何動作，將會自動結束測驗，您必須再次登入並重新開始測驗。重新開始測驗可能影響您的實驗獎勵。\n");
+                                    } else if (Integer.parseInt(index) == 0) {
+
+                                    }
+                                }else {
+                                    if (Integer.parseInt(index) == 0) {
+
+                                    } else if (Integer.parseInt(index) <= Integer.parseInt(audio_list[Integer.parseInt(qbank)][0])) {
+                                        AlertDialog("Instructions ", "You are about to start the Chinese tones training section.\n" +
+                                                "Please make sure your earphones are functioning properly and carefully follow the instructions listed below: \n" +
+                                                "您將開始中文聲調訓練階段，請確認您的耳機可正常運作，並仔細閱讀下列資訊:\n" +
+                                                "Once you start today’s training, continue through all of the 103 (or 104) “listen and select” samples. \n" +
+                                                "開始今日的訓練後，請持續完成所有103(或104)題的「聽音選擇聲調」。\n" +
+                                                "Press the speaker icon (播放音圖示) to play the sound, then choose the tone you hear. You can listen to each sample up to 3 times before choosing.\n" +
+                                                "按下播放音圖示聽音檔，每個錄音檔最多可播放3次。\n" +
+                                                "Once you press confirm, the test will move on to the next sample, and you will not be able to go back to the previous sample. \n" +
+                                                "按下「確認」後，將會進入下一題，並且無法回到上一題。\n" +
+                                                "The training section will take about 40 minutes. Do not pause or take a break from the test once you begin. If the system does not detect any activity for 3 minutes, it will terminate the session, in which case you will need to sign in and start all-over again. Restarting the session may affect the award you will receive for participating.\n" +
+                                                "此訓練階段大約40分鐘，開始後請勿暫停或休息。如果系統偵測3分鐘無任何動作，將會自動結束測驗，您必須再次登入並重新開始測驗。重新開始測驗可能影響您的實驗獎勵。");
+                                    }
+                            }
+
+
+                        }
 
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
@@ -172,6 +223,19 @@ public class TestGroupActivity extends Activity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(TestGroupActivity.this);
         requestQueue.add(stringRequest);
+    }
+    private void AlertDialog(String title,String content){
+        boolean wrapInScrollView = true;
+        MaterialDialog dialog=new MaterialDialog.Builder(TestGroupActivity.this)
+                .title(title)
+                .customView(R.layout.alert_dialog, wrapInScrollView)
+                .backgroundColorRes(R.color.colorBackground)
+                .positiveText("OK")
+                .build();
+        final View item = dialog.getCustomView();
+        TextView content_txt=item.findViewById(R.id.dialog_content);
+        content_txt.setText(content);
+        dialog.show();
     }
 
 
