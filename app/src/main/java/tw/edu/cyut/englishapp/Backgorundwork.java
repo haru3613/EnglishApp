@@ -212,6 +212,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 String tindex = params[2];
                 String ans = params[3];
                 String correct_ans = params[4];
+                String day = params[5];
                 String connection_url =thisURL+"/app/insert_ans.php";
                 URL url = new URL(connection_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -224,7 +225,8 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
                         URLEncoder.encode("t_index","UTF-8")+"="+URLEncoder.encode(tindex,"UTF-8")+"&"+
                         URLEncoder.encode("ans","UTF-8")+"="+URLEncoder.encode(ans,"UTF-8")+"&"+
-                        URLEncoder.encode("correct_ans","UTF-8")+"="+URLEncoder.encode(correct_ans,"UTF-8");
+                        URLEncoder.encode("correct_ans","UTF-8")+"="+URLEncoder.encode(correct_ans,"UTF-8")+"&"+
+                        URLEncoder.encode("day","UTF-8")+"="+URLEncoder.encode(day,"UTF-8");
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
 
