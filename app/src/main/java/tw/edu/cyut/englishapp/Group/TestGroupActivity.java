@@ -220,7 +220,7 @@ public class TestGroupActivity extends Activity {
                                     }
                                 }else {
                                     if (Integer.parseInt(index) == 0) {
-
+                                        AlertDialog("Instructions","Press “Continue” to start the 5 trial samples to test your microphone for recording volumes and quality.");
                                     } else if (Integer.parseInt(index) <= Integer.parseInt(audio_list[Integer.parseInt(qbank)][0])) {
                                         AlertDialog("Instructions ", "You are about to start the Chinese tones training section.\n" +
                                                 "Please make sure your earphones are functioning properly and carefully follow the instructions listed below: \n" +
