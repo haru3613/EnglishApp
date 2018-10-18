@@ -9,9 +9,11 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
@@ -29,6 +31,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import tw.edu.cyut.englishapp.AnswerActivity;
 import tw.edu.cyut.englishapp.Backgorundwork;
@@ -47,6 +51,41 @@ public class TestGroupActivity extends Activity {
     private String day,index,level,qbank;
 
     private String [][] audio_list=new String[16][139];
+
+    private  Boolean isExit = false;
+    private  Boolean hasTask = false;
+
+    Timer timerExit = new Timer();
+    TimerTask task = new TimerTask() {
+
+        @Override
+        public void run() {
+            isExit = false;
+            hasTask = true;
+        }
+    };
+
+    //按兩次Back退出app
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 判斷是否按下Back
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 是否要退出
+            if(!isExit ) {
+                isExit = true; //記錄下一次要退出
+                Toast.makeText(this, "Press Back again to exit the app."
+                        , Toast.LENGTH_SHORT).show();
+                // 如果超過兩秒則恢復預設值
+                if(!hasTask) {
+                    timerExit.schedule(task, 2000);
+                }
+            } else {
+                finish(); // 離開程式
+                System.exit(0);
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

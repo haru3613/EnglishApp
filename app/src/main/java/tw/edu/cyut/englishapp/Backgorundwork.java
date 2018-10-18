@@ -102,8 +102,8 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             String mail=params[4];
             String tbackground=params[5];
             String Learninghours=params[6];
-            String testseries=params[7];
-            String testname=params[8];
+            String age=params[7];
+            String level=params[8];
             String certification=params[9];
             String sex=params[10];
             String year=params[11];
@@ -134,9 +134,9 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                         URLEncoder.encode("education","UTF-8")+"="+URLEncoder.encode(education,"UTF-8")+"&"+
                         URLEncoder.encode("background","UTF-8")+"="+URLEncoder.encode(tbackground,"UTF-8")+"&"+
                         URLEncoder.encode("average_learning","UTF-8")+"="+URLEncoder.encode(Learninghours,"UTF-8")+"&"+
-                        URLEncoder.encode("level_certification","UTF-8")+"="+URLEncoder.encode(testseries,"UTF-8")+"&"+
-                        URLEncoder.encode("name_certification","UTF-8")+"="+URLEncoder.encode(testname,"UTF-8")+"&"+
-                        URLEncoder.encode("certification","UTF-8")+"="+URLEncoder.encode(certification,"UTF-8")+"&"+
+                        URLEncoder.encode("age","UTF-8")+"="+URLEncoder.encode(age,"UTF-8")+"&"+
+                        URLEncoder.encode("name_certification","UTF-8")+"="+URLEncoder.encode(certification,"UTF-8")+"&"+
+                        URLEncoder.encode("certification","UTF-8")+"="+URLEncoder.encode(level,"UTF-8")+"&"+
                         URLEncoder.encode("sex","UTF-8")+"="+URLEncoder.encode(sex,"UTF-8")+"&"+
                         URLEncoder.encode("birthyear","UTF-8")+"="+URLEncoder.encode(year,"UTF-8")+"&"+
                         URLEncoder.encode("birthmonth","UTF-8")+"="+URLEncoder.encode(month,"UTF-8")+"&"+
@@ -212,6 +212,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 String tindex = params[2];
                 String ans = params[3];
                 String correct_ans = params[4];
+                String day = params[5];
                 String connection_url =thisURL+"/app/insert_ans.php";
                 URL url = new URL(connection_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -224,7 +225,8 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 String post_data = URLEncoder.encode("uid","UTF-8")+"="+URLEncoder.encode(uid,"UTF-8")+"&"+
                         URLEncoder.encode("t_index","UTF-8")+"="+URLEncoder.encode(tindex,"UTF-8")+"&"+
                         URLEncoder.encode("ans","UTF-8")+"="+URLEncoder.encode(ans,"UTF-8")+"&"+
-                        URLEncoder.encode("correct_ans","UTF-8")+"="+URLEncoder.encode(correct_ans,"UTF-8");
+                        URLEncoder.encode("correct_ans","UTF-8")+"="+URLEncoder.encode(correct_ans,"UTF-8")+"&"+
+                        URLEncoder.encode("day","UTF-8")+"="+URLEncoder.encode(day,"UTF-8");
                 Log.d("POST_DATA", "doInBackground: "+post_data);
 
 

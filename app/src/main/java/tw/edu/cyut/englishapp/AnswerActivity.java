@@ -291,7 +291,8 @@ public class AnswerActivity extends Activity {
                         //新增test資料表的答案，並update topic_speak的index
                         String type = "InsertAns";
                         Backgorundwork backgorundwork = new Backgorundwork(AnswerActivity.this);
-                        backgorundwork.execute(type,uid,t_index,choice_ans,c);
+                        Log.d(TAG, "onClick: "+day+":"+choice_ans);
+                        backgorundwork.execute(type,uid,t_index,choice_ans,c,day);
                         //開啟自己並讓index+1
                         OpenAnswerActivity(String.valueOf(Integer.parseInt(t_index)+1));
                     }else{
