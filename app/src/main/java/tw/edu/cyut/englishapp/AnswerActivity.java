@@ -59,7 +59,8 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class AnswerActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private TextView count;
+    private ImageView background;
+    private TextView count,test_day;
     private String qbank,uid, choice_ans,day,file_name;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
@@ -126,12 +127,37 @@ public class AnswerActivity extends Activity {
         if (Integer.parseInt(t_index)<=34){
             ans1.setVisibility(View.GONE);
             ans4.setVisibility(View.GONE);
+            play.setImageResource(R.drawable.app_y_speaker);
+            background.setImageResource(R.drawable.app_y_interface);
+            next.setImageResource(R.drawable.app_y_go);
+            ans1.setImageResource(R.drawable.app_y_num1);
+            ans2.setImageResource(R.drawable.app_y_num2);
+            ans3.setImageResource(R.drawable.app_y_num3);
+            ans4.setImageResource(R.drawable.app_y_num4);
         }else if (Integer.parseInt(t_index)<=64) {
             ans2.setVisibility(View.GONE);
             ans3.setVisibility(View.GONE);
+            play.setImageResource(R.drawable.app_r_speaker);
+            background.setImageResource(R.drawable.app_r_interface);
+            next.setImageResource(R.drawable.app_r_go);
+            ans1.setImageResource(R.drawable.app_r_num1);
+            ans2.setImageResource(R.drawable.app_r_num2);
+            ans3.setImageResource(R.drawable.app_r_num3);
+            ans4.setImageResource(R.drawable.app_r_num4);
+        }else{
+            play.setImageResource(R.drawable.app_g_speaker);
+            background.setImageResource(R.drawable.app_g_interface);
+            next.setImageResource(R.drawable.app_g_go);
+            ans1.setImageResource(R.drawable.app_g_num1);
+            ans2.setImageResource(R.drawable.app_g_num2);
+            ans3.setImageResource(R.drawable.app_g_num3);
+            ans4.setImageResource(R.drawable.app_g_num4);
         }
 
+
         day = intent.getStringExtra("day");
+
+        test_day.setText("Day"+day);
 
         //接收array
         audio_list=null;
@@ -309,7 +335,8 @@ public class AnswerActivity extends Activity {
         ans4=findViewById(R.id.ans4);
         next=findViewById(R.id.next);
         count=findViewById(R.id.text_count);
-
+        background=findViewById(R.id.test_background);
+        test_day=findViewById(R.id.test_day);
     }
 
 

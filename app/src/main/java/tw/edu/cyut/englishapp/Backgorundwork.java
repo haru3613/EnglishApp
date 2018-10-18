@@ -717,7 +717,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             Intent ToTestGroup=new Intent(context,TestGroupActivity.class);
             context.startActivity(ToTestGroup);
             ((Activity) context).finish();
-            Toast.makeText(context, "Congratulations on completing today's pre-test!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Congratulations on completing today's pre-test!", Toast.LENGTH_LONG).show();
         }
         else if (result.contains("register success")){
             Intent toLogin=new Intent(context,LoginActivity.class);
@@ -775,7 +775,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         }
         else
         {
-            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         }
 
     }
