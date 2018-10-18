@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         initSignUpActivity();
 
-        AlertDialog("Registration","You are about to register for the Chinese Tones Learning Experiment. The research requires some basic background data and information about your Chinese learning experience. Please answer these questions as precisely as possible, according to your present situation. After answering the background questions, you will move on to the pretest. \n");
+        AlertDialog("Registration","You are about to register for the Chinese Tones Learning Experiment. The research requires some basic background data and information about your Chinese learning experience. Please answer these questions as precisely as possible, according to your present situation. After answering the background questions, you will move on to the pretest. \nYou are also invited to participate in the learners’ beliefs questionnaire study. If you wish to participate in the study, please press “OK”, otherwise press “Skip”.");
         final Button SignUp = (Button) findViewById(R.id.sign);
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
