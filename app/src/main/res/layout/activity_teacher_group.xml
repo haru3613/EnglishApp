@@ -4,130 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Group.RecordCheckActivity">
+    tools:context=".Group.TeacherGroupActivity">
 
     <ImageView
-        android:id="@+id/image_background"
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/app_g_interface"
+        android:src="@drawable/app_g_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/media_play"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/app_g_speaker"
+
+
+
+    <Button
+        android:id="@+id/bt_topic_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="示範音檢核"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.951" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="218dp"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="349dp">
+    <Button
 
-        <ImageButton
-            android:id="@+id/ans1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="20dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:maxWidth="60dp"
-            android:maxHeight="60dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/app_g_num1"
-            android:visibility="visible" />
-
-        <ImageButton
-            android:id="@+id/ans2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="190dp"
-            android:layout_marginTop="20dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:maxWidth="60dp"
-            android:maxHeight="60dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/app_g_num2"
-            android:visibility="visible" />
-
-        <ImageButton
-            android:id="@+id/ans3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ans1"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="20dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:maxWidth="60dp"
-            android:maxHeight="60dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/app_g_num3" />
-
-        <ImageButton
-            android:id="@+id/ans4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ans2"
-            android:layout_marginLeft="190dp"
-            android:layout_marginTop="20dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:maxWidth="60dp"
-            android:maxHeight="60dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/app_g_num4" />
-
-        <TextView
-            android:id="@+id/text_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="52dp"
-            android:layout_marginBottom="0dp"
-            android:text="0/144"
-            android:textColor="@color/secondaryTextColor" />
-
-        <ImageView
-            android:id="@+id/image_count"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/technology1" />
-
-        <ImageButton
-            android:id="@+id/teacher_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="11dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:maxWidth="70dp"
-            android:maxHeight="70dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/app_g_go" />
-    </RelativeLayout>
+        android:id="@+id/bt_back"
+        android:layout_width="119dp"
+        android:layout_height="102dp"
+        android:text="聽音檢核"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.951" />
 
 
 

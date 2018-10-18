@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import static com.android.volley.VolleyLog.TAG;
 
 public class TeacherGroupActivity extends Activity {
 
-    private ImageView btn_next;
+    private Button topic_check;
 
 
     private String [][] audio_list=new String[16][139];
@@ -41,7 +42,8 @@ public class TeacherGroupActivity extends Activity {
             j++;
         }
 
-        btn_next.setOnClickListener(new View.OnClickListener() {
+        //示範音檢核
+        topic_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //開啟TopicCheck
@@ -53,7 +55,7 @@ public class TeacherGroupActivity extends Activity {
     }
     private void initTeacherGroupActivity(){
 
-        btn_next=findViewById(R.id.teacher_next);
+        topic_check=findViewById(R.id.bt_topic_check);
     }
 
     private void OpenTopicCheckActivity(){
