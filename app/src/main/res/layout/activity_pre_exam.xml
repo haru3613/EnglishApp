@@ -102,7 +102,7 @@
     <TextView
         android:id="@+id/text_word"
         android:layout_width="180dp"
-        android:layout_height="46dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:gravity="center_horizontal"
