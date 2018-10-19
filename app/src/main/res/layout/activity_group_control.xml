@@ -14,10 +14,10 @@
         android:src="@drawable/app_g_interface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/bt_next"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.736" />
+        app:layout_constraintVertical_bias="0.777" />
 
     <ImageView
         android:id="@+id/bt_stop_speak"
@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.736" />
+        app:layout_constraintVertical_bias="0.777" />
 
     <ImageView
         android:id="@+id/bt_topic_speak"
@@ -109,7 +109,7 @@
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.985" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView6"
@@ -117,15 +117,29 @@
         android:layout_height="72dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Please listen to the question and record the syllable you hear. "
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.494" />
+
+    <TextView
+        android:id="@+id/text_viewday"
+        android:layout_width="95dp"
+        android:layout_height="46dp"
+        android:text="DAY0"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
 </android.support.constraint.ConstraintLayout>

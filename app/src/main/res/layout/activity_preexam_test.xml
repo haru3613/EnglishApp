@@ -46,20 +46,20 @@
 
     <ImageView
         android:id="@+id/bt_speak_start"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:onClick="bt_recode_start"
         android:src="@drawable/app_g_enable_record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+        app:layout_constraintVertical_bias="0.727" />
 
     <ImageView
         android:id="@+id/bt_stop_speak"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:onClick="bt_recode_stop"
         android:src="@drawable/app_g_disable_record"
         android:visibility="invisible"
@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+        app:layout_constraintVertical_bias="0.727" />
 
     <TextView
         android:id="@+id/text_count"
@@ -84,8 +84,8 @@
 
     <ImageView
         android:id="@+id/bt_speak_talker"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
@@ -118,10 +118,11 @@
         android:layout_height="126dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Please “read and record” questions. \n\n(Test your microphone for recording volumes and quality.)"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,19 +131,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.494" />
 
+
     <TextView
         android:id="@+id/topic_word"
-        android:layout_width="157dp"
-        android:layout_height="73dp"
+        android:layout_width="177dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="21dp"
+        android:background="@xml/textview_style"
         android:gravity="center_horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="@color/secondaryTextColor"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.221" />
+        app:layout_constraintVertical_bias="0.21" />
 
 </android.support.constraint.ConstraintLayout>

@@ -52,7 +52,11 @@
         <activity android:name=".todayisfinish" />
         <activity android:name=".Group.TeacherGroupActivity" />
         <activity android:name=".Group.TopicCheckActivity" />
-        <activity android:name=".PreExam_test"></activity>
+        <activity android:name=".PreExam_test" />
+
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/textview_style" />
     </application>
 
 </manifest>

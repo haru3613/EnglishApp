@@ -46,7 +46,7 @@ public class controldetail extends AppCompatActivity {
         uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
         LoadTopicSpeak(uid);
-        if (Integer.parseInt(day)>16 && Integer.parseInt(day)<20){
+        if (Integer.parseInt(day)>17){
             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(controldetail.this, LoginActivity.class);

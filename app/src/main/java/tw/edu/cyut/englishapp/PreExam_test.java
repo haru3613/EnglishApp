@@ -27,7 +27,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class PreExam_test extends AppCompatActivity {
     private ImageView bt_topic_speak,image_background,bt_next,bt_speak_start,bt_stop_speak,bt_speak_talker;
-    private TextView text_count,topic_word;
+    private TextView text_count,topic_word,text_viewday;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
@@ -79,6 +79,7 @@ public class PreExam_test extends AppCompatActivity {
         bt_next.setEnabled(false);
         text_count = findViewById(R.id.text_count);
         text_count.setText(Integer.parseInt(test_index)+1 +"/5");
+
         progressDialog = new ProgressDialog(this);
     }
 
