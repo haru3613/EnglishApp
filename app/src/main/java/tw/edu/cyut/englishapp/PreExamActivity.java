@@ -61,7 +61,7 @@ public class PreExamActivity extends Activity {
     private MediaPlayer mPlayer = null;
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private Integer count_topic=0,count_record=0;
+    private Integer count_topic=0,count_record=0,count_selfrecord=0;
     private String day,uid,level,index,username,fname,qbank,get_topic_day,today_finish;
     private ProgressDialog progressDialog;
     private boolean initialStage = true;
@@ -170,11 +170,20 @@ public class PreExamActivity extends Activity {
     }
 
     public void bt_recode_playing(View view) {
-        startPlaying();
+        count_selfrecord+=1;
+        if(count_selfrecord<4){
+            startPlaying();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "You can't play your record more than three times,please click \"GO\" or record again.", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     public void bt_recode_start(View view) {
         count_record+=1;
+        count_selfrecord=0;
         if(count_record<4){
             bt_next.setVisibility(View.INVISIBLE);
             bt_next.setEnabled(false);

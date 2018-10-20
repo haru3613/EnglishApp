@@ -23,7 +23,23 @@ public class todayisfinish extends AppCompatActivity {
         if (Integer.parseInt(day)==0){
             textView10.setVisibility(View.VISIBLE);
             textView9.setVisibility(View.VISIBLE);
-        }else{
+            textView9.setText("After you have completed the pre-test, the researcher will need some time to analyze the data. Once the researcher have completed the analysis, you will receive a notice advising you to proceed with the 15-Day Tone Training section of the experiment.");
+        }else if(Integer.parseInt(day)==16){
+            textView10.setVisibility(View.VISIBLE);
+            textView9.setVisibility(View.VISIBLE);
+            textView9.setText("Please return in 2 weeks for a follow-up post-test, which will be identical to the original post-test. Thank you for your participation.\n" +
+                    "請您於兩週後回到系統完成延時測，此測驗與後測相似。感謝您參與協助此研究。\n");
+
+        }else if(Integer.parseInt(day)==17){
+            textView10.setVisibility(View.VISIBLE);
+            textView9.setVisibility(View.VISIBLE);
+            textView9.setText("Thank you for your participation. Congratulations! You have completed the Mandarin Chinese Tones learning experiment. \n" +
+                    "感謝您參與此研究，恭禧您完成本次華語聲調學習實驗。\n");
+
+        }
+
+
+        else{
             textView10.setVisibility(View.INVISIBLE);
             textView9.setVisibility(View.INVISIBLE);
         }
