@@ -3,9 +3,7 @@ package tw.edu.cyut.englishapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,14 +25,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import tw.edu.cyut.englishapp.Group.TeacherGroupActivity;
-import tw.edu.cyut.englishapp.Group.TestPreTestActivity;
+import tw.edu.cyut.englishapp.Group.DemoExaminerGroup;
 import tw.edu.cyut.englishapp.Group.group_control;
-import tw.edu.cyut.englishapp.Group.RecordCheckActivity;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.Group.controldetail;
-
-import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 /**
  * Created by Haru on 2017/12/19.
@@ -721,11 +715,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 Intent ToTest=new Intent(context,TestGroupActivity.class);
                 context.startActivity(ToTest);
                 ((Activity) context).finish();
-            }else if(result.contains("teacher")){
-                //in teacher
-                Intent ToTeacher=new Intent(context,TeacherGroupActivity.class);
+            }else if(result.contains("Demo Examiner")){
+                Intent ToTeacher=new Intent(context,DemoExaminerGroup.class);
                 context.startActivity(ToTeacher);
                 ((Activity) context).finish();
+            }else if(result.contains("Test Examiner")){
+                //TODO 聽音人
             }
         }else if (result.contains("this is null")){
             Toast.makeText(context, "Not yet open for answer.", Toast.LENGTH_SHORT).show();
