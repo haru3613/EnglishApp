@@ -125,26 +125,6 @@ public class AnswerActivity extends Activity {
         Log.d("onCreate","這是第幾題:"+t_index);
 
         if (Integer.parseInt(t_index)<=34){
-            ans1.setVisibility(View.GONE);
-            ans4.setVisibility(View.GONE);
-            play.setImageResource(R.drawable.app_y_speaker);
-            background.setImageResource(R.drawable.app_y_interface);
-            next.setImageResource(R.drawable.app_y_go);
-            ans1.setImageResource(R.drawable.app_y_num1);
-            ans2.setImageResource(R.drawable.app_y_num2);
-            ans3.setImageResource(R.drawable.app_y_num3);
-            ans4.setImageResource(R.drawable.app_y_num4);
-        }else if (Integer.parseInt(t_index)<=64) {
-            ans2.setVisibility(View.GONE);
-            ans3.setVisibility(View.GONE);
-            play.setImageResource(R.drawable.app_r_speaker);
-            background.setImageResource(R.drawable.app_r_interface);
-            next.setImageResource(R.drawable.app_r_go);
-            ans1.setImageResource(R.drawable.app_r_num1);
-            ans2.setImageResource(R.drawable.app_r_num2);
-            ans3.setImageResource(R.drawable.app_r_num3);
-            ans4.setImageResource(R.drawable.app_r_num4);
-        }else{
             play.setImageResource(R.drawable.app_g_speaker);
             background.setImageResource(R.drawable.app_g_interface);
             next.setImageResource(R.drawable.app_g_go);
@@ -152,6 +132,27 @@ public class AnswerActivity extends Activity {
             ans2.setImageResource(R.drawable.app_g_num2);
             ans3.setImageResource(R.drawable.app_g_num3);
             ans4.setImageResource(R.drawable.app_g_num4);
+            ans1.setVisibility(View.GONE);
+            ans4.setVisibility(View.GONE);
+
+        }else if (Integer.parseInt(t_index)<=64) {
+            ans2.setVisibility(View.GONE);
+            ans3.setVisibility(View.GONE);
+            play.setImageResource(R.drawable.app_y_speaker);
+            background.setImageResource(R.drawable.app_y_interface);
+            next.setImageResource(R.drawable.app_y_go);
+            ans1.setImageResource(R.drawable.app_y_num1);
+            ans2.setImageResource(R.drawable.app_y_num2);
+            ans3.setImageResource(R.drawable.app_y_num3);
+            ans4.setImageResource(R.drawable.app_y_num4);
+        }else{
+            play.setImageResource(R.drawable.app_r_speaker);
+            background.setImageResource(R.drawable.app_r_interface);
+            next.setImageResource(R.drawable.app_r_go);
+            ans1.setImageResource(R.drawable.app_r_num1);
+            ans2.setImageResource(R.drawable.app_r_num2);
+            ans3.setImageResource(R.drawable.app_r_num3);
+            ans4.setImageResource(R.drawable.app_r_num4);
         }
 
 
