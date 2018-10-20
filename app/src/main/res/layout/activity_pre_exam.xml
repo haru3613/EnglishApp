@@ -137,17 +137,17 @@
 
     <TextView
         android:id="@+id/text_viewday"
-        android:layout_width="95dp"
-        android:layout_height="51dp"
+        android:layout_width="138dp"
+        android:layout_height="36dp"
         android:text="DAY0"
         android:textColor="@color/secondaryTextColor"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.159"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintVertical_bias="0.926" />
 
     <TextView
         android:id="@+id/text_mic_view"

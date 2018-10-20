@@ -71,19 +71,6 @@ public class group_control extends AppCompatActivity  {
     private String origin_time;
     private String[][] audio_list=new String[16][139];
     private String topic_url;
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                break;
-        }
-        if (!permissionToRecordAccepted ) finish();
-        bt_next.setVisibility(View.INVISIBLE);
-        bt_stop_speak.setVisibility(View.INVISIBLE);
-        bt_speak_talker.setVisibility(View.INVISIBLE);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

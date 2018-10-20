@@ -82,7 +82,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
         android:text="Instructions "
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@android:color/holo_red_dark"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
