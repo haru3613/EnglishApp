@@ -53,7 +53,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class PreExamActivity extends Activity {
     private ImageView bt_topic_speak,image_background,bt_next,bt_speak_start,bt_stop_speak,bt_speak_talker;
-    private TextView text_count,text_word,text_viewday;
+    private TextView text_count,text_word,text_viewday,text_mic_view;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
@@ -111,6 +111,8 @@ public class PreExamActivity extends Activity {
         bt_next = findViewById(R.id.bt_next);
         bt_next.setVisibility(View.INVISIBLE);
         bt_next.setEnabled(false);
+        text_mic_view= findViewById(R.id.text_mic_view);
+        text_mic_view.setVisibility(View.INVISIBLE);
         text_viewday = findViewById(R.id.text_viewday);
         if (day.equals("0")){
             text_viewday.setText("Pretest 前測");
