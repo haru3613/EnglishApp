@@ -28,19 +28,39 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import tw.edu.cyut.englishapp.Backgorundwork;
 import tw.edu.cyut.englishapp.R;
@@ -57,13 +77,15 @@ public class TopicCheckActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
     private TextView count;
-    private String qbank,uid, choice_ans,day,file_name,checked_file;
+    private String qbank,uid, choice_ans,day,file_name,checked_file,c;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
-    private boolean playPause;
+    private boolean playPause,emptyList;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
-    Boolean checked;
+    boolean getfile;
+    ArrayList<String> checked_topic=new ArrayList<String>();
+    ArrayList<String> total_topic=new ArrayList<String>();
     private String[][] audio_list=new String[16][105];
     private boolean initialStage = true;
     Timer timerExit = new Timer();
@@ -104,7 +126,7 @@ public class TopicCheckActivity extends Activity {
         setContentView(R.layout.activity_answer);
 
         initAnswerActivity();
-
+        progressDialog = new ProgressDialog(this);
         uid="";
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
@@ -121,33 +143,23 @@ public class TopicCheckActivity extends Activity {
                 audio_list[i]=(String[]) objectArray[i];
             }
         }
+        emptyList=false;
+        getfile=false;
 
-        checked=false;
+        total_topic=twoDArrayToList(audio_list);
+        total_topic.removeAll(Collections.singleton(null));//刪掉所有null
 
-        do {
-            Random ran = new Random();
-            int i=ran.nextInt(16);
-            int j=ran.nextInt(Integer.parseInt(audio_list[i][0]));
-            Log.d(TAG, "onCreate: "+i+":"+j);
-            file_name=audio_list[i][j];
-            audio_list[i][j]="";
-            Log.d(TAG, "onCreate: 音檔名稱:"+file_name);
-            LoadChecked(file_name);
-            //如果filename=""或等於資料庫有的音檔則重抓
-        }while (checked==true || file_name.equals(""));
+        total_topic=getStringsWithoutEqualLength(3,total_topic);//刪掉所有檔名長度為3的
 
+        progressDialog.show();
 
-
-        final String c=file_name.substring(file_name.length()-3,file_name.length()-2);
-        int index=file_name.indexOf(c);
-        Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
-
+        LoadChecked();
 
         choice_ans="";
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        progressDialog = new ProgressDialog(this);
+
 
 
 
@@ -158,45 +170,24 @@ public class TopicCheckActivity extends Activity {
                 ans2.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
             }
         });
         ans2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="2";
-                ans1.setVisibility(View.INVISIBLE);
-                ans3.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
+                ans3.setVisibility(View.INVISIBLE);
+                ans1.setVisibility(View.INVISIBLE);
             }
         });
         ans3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="3";
-                ans1.setVisibility(View.INVISIBLE);
                 ans2.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
+                ans1.setVisibility(View.INVISIBLE);
             }
         });
         ans4.setOnClickListener(new View.OnClickListener() {
@@ -206,19 +197,12 @@ public class TopicCheckActivity extends Activity {
                 ans2.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
                 ans1.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
             }
         });
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!playPause) {
+                if (!playPause && getfile==true) {
 
                     if (initialStage) {
                         new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+file_name+".wav");
@@ -260,13 +244,6 @@ public class TopicCheckActivity extends Activity {
 
 
     private void OpenSelf(){
-        Boolean emptyList=true;
-        for (int i=0;i<=15;i++){
-            for(int j=1;j<=Integer.parseInt(audio_list[i][0]);j++){
-                if (audio_list[i][j].equals(""))
-                    emptyList=false;
-            }
-        }
         if (emptyList){
             //如果是空陣列
             Intent ToFinish=new Intent(TopicCheckActivity.this,todayisfinish.class);
@@ -377,9 +354,9 @@ public class TopicCheckActivity extends Activity {
         }
     }
 
-    public void LoadChecked(final String filename){
+    public void LoadChecked(){
         String url = "http://140.122.63.99/app/load_checked_file.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -391,13 +368,42 @@ public class TopicCheckActivity extends Activity {
                             Log.d(ContentValues.TAG, "Response " + response);
                             GsonBuilder builder = new GsonBuilder();
                             Gson mGson = builder.create();
+                            Type listType = new TypeToken<ArrayList<ItemTopicCheck>>() {}.getType();
                             if (!response.contains("Undefined")){
-                                List<ItemTopicCheck> posts = new ArrayList<ItemTopicCheck>();
-                                posts = Arrays.asList(mGson.fromJson(response, ItemTopicCheck[].class));
-                                checked=true;
-                            }else{
-                                checked=false;
+                                ArrayList<ItemTopicCheck> posts = new ArrayList<ItemTopicCheck>();
+                                posts = mGson.fromJson(response, listType);
+                                Log.d(TAG, "onResponse: "+posts);
+                                for (int i = 0; i < posts.size(); i++) {
+                                    checked_topic.add(posts.get(i).getFilename());
+                                }
+                                Log.d(TAG, "ddddd: "+checked_topic);
+                                Log.d(TAG, "ddddd: "+total_topic);
+                                total_topic.removeAll(checked_topic);
+                                Log.d(TAG, "onResponse: "+total_topic.size());
+
                             }
+
+                            if (total_topic.size()!=0){
+                                Random ran = new Random();
+                                int i=ran.nextInt(total_topic.size());
+                                file_name=total_topic.get(i);
+                                Log.d(TAG, "onResponse: i=="+i);
+                                Log.d(TAG, "onResponse: "+file_name);
+                                c=file_name.substring(file_name.length()-3,file_name.length()-2);
+                                int index=file_name.indexOf(c);
+                                Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
+                                getfile=true;
+
+
+                            }else{
+                                emptyList=true;
+                                Toast.makeText(TopicCheckActivity.this,"Checked",Toast.LENGTH_LONG).show();
+                            }
+
+                            if (progressDialog.isShowing()){
+                                progressDialog.cancel();
+                            }
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
@@ -410,16 +416,30 @@ public class TopicCheckActivity extends Activity {
                         //do stuffs with response erro
                     }
                 }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("filename",filename);
-
-                return params;
-            }
 
         };
         RequestQueue requestQueue = Volley.newRequestQueue(TopicCheckActivity.this);
         requestQueue.add(stringRequest);
+    }
+
+
+
+
+    public <String> ArrayList<String> twoDArrayToList(String[][] twoDArray) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (String[] array : twoDArray) {
+            list.addAll(Arrays.asList(array));
+        }
+        return list;
+    }
+
+    public ArrayList<String> getStringsWithoutEqualLength(int len, ArrayList<String> lijst){
+        ArrayList<String> list = new ArrayList<String>();
+        for(String woord: lijst){
+            if(woord.length() != len){
+                list.add(woord);
+            }
+        }
+        return(list);
     }
 }
