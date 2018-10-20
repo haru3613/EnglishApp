@@ -55,7 +55,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class group_control extends AppCompatActivity  {
     private ImageView bt_topic_speak,image_background,bt_next,bt_speak_start,bt_stop_speak,bt_speak_talker;
-    private TextView text_count;
+    private TextView text_count,text_viewday ;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
@@ -107,6 +107,16 @@ public class group_control extends AppCompatActivity  {
         bt_speak_talker = findViewById(R.id.bt_speak_talker);
         bt_speak_start = findViewById(R.id.bt_speak_start);
         bt_stop_speak = findViewById(R.id.bt_stop_speak);
+        text_viewday = findViewById(R.id.text_viewday);
+        if (day.equals("0")){
+            text_viewday.setText("Pretest 前測");
+        }else if (Integer.parseInt(day)>0 && Integer.parseInt(day)<16){
+            text_viewday.setText("DAY "+day);
+        }else if (day.equals("16")){
+            text_viewday.setText("Post-test 後測");
+        }else if(day.equals("17")){
+            text_viewday.setText("Follow-up post-test\n延後測");
+        }
         bt_stop_speak.setVisibility(View.INVISIBLE);
         bt_stop_speak.setEnabled(false);
         bt_next = findViewById(R.id.bt_next);
@@ -152,7 +162,7 @@ public class group_control extends AppCompatActivity  {
             group_control.this.finish();
         }else{
             Backgorundwork backgorundwork = new Backgorundwork(this);
-            backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish);
+            backgorundwork.execute("Upload_record",mFileName,uid,index,fname,today_finish,day);
         }
 
 

@@ -46,28 +46,30 @@
 
     <ImageView
         android:id="@+id/bt_speak_start"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:onClick="bt_recode_start"
         android:src="@drawable/app_g_enable_record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+        app:layout_constraintVertical_bias="0.773" />
 
     <ImageView
         android:id="@+id/bt_stop_speak"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:onClick="bt_recode_stop"
         android:src="@drawable/app_g_disable_record"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
+        app:layout_constraintVertical_bias="0.773" />
 
     <TextView
         android:id="@+id/text_count"
@@ -84,8 +86,8 @@
 
     <ImageView
         android:id="@+id/bt_speak_talker"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
@@ -94,17 +96,18 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.966" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/text_word"
-        android:layout_width="180dp"
-        android:layout_height="46dp"
+        android:layout_width="177dp"
+        android:layout_height="67dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="21dp"
+        android:background="@xml/textview_style"
         android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -120,15 +123,29 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="310dp"
+        android:layout_width="384dp"
         android:layout_height="58dp"
-        android:text="“read and record” questions."
-        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:text="Read and record questions."
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.463" />
+        app:layout_constraintVertical_bias="0.516" />
 
+    <TextView
+        android:id="@+id/text_viewday"
+        android:layout_width="95dp"
+        android:layout_height="51dp"
+        android:text="DAY0"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.159"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
 </android.support.constraint.ConstraintLayout>

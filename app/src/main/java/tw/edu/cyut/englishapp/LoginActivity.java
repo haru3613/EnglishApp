@@ -94,9 +94,6 @@ public class LoginActivity extends AppCompatActivity {
 
         initLoginActivity();
 
-        AlertDialog("Instructions","You are about to start the Chinese tones training section.\n" +
-                "Please make sure your earphones are functioning properly and carefully follow the instructions listed below: \n");
-
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
