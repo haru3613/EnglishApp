@@ -197,9 +197,11 @@ public class AnswerActivity extends Activity {
                 if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/applause.mp3");
                 }else {
                     //open bad gif
                     AlertDialog(R.drawable.shaking_head);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/Loser.mp3");
                 }
             }
         });
@@ -213,9 +215,11 @@ public class AnswerActivity extends Activity {
                 if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/applause.mp3");
                 }else {
                     //open bad gif
                     AlertDialog(R.drawable.shaking_head);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/loser.mp3");
                 }
             }
         });
@@ -229,9 +233,11 @@ public class AnswerActivity extends Activity {
                 if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/applause.mp3");
                 }else {
                     //open bad gif
                     AlertDialog(R.drawable.shaking_head);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/loser.mp3");
                 }
             }
         });
@@ -245,9 +251,11 @@ public class AnswerActivity extends Activity {
                 if (c.equals(choice_ans)){
                     //open good gif
                     AlertDialog(R.drawable.applaud);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/applause.mp3");
                 }else {
                     //open bad gif
                     AlertDialog(R.drawable.shaking_head);
+                    SoundEffect("http://140.122.63.99/topic_audio/sound_effect/loser.mp3");
                 }
             }
         });
@@ -340,6 +348,28 @@ public class AnswerActivity extends Activity {
         test_day=findViewById(R.id.test_day);
     }
 
+    private void SoundEffect(String url){
+        if (!playPause) {
+
+            if (initialStage) {
+                new Player().execute(url);
+            } else {
+                if (!mediaPlayer.isPlaying())
+                    mediaPlayer.start();
+            }
+
+            playPause = true;
+
+        } else {
+            //btn.setText("Launch Streaming");
+
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+            }
+
+            playPause = false;
+        }
+    }
 
     private void AlertDialog(int draw){
         boolean wrapInScrollView = true;
