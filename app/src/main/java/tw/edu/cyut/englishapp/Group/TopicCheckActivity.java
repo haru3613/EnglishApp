@@ -147,9 +147,9 @@ public class TopicCheckActivity extends Activity {
         getfile=false;
 
         total_topic=twoDArrayToList(audio_list);
-        total_topic.removeAll(Collections.singleton(null));
+        total_topic.removeAll(Collections.singleton(null));//刪掉所有null
 
-        total_topic=getStringsWithoutEqualLength(3,total_topic);
+        total_topic=getStringsWithoutEqualLength(3,total_topic);//刪掉所有檔名長度為3的
 
         progressDialog.show();
 
@@ -170,45 +170,24 @@ public class TopicCheckActivity extends Activity {
                 ans2.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
             }
         });
         ans2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="2";
-                ans1.setVisibility(View.INVISIBLE);
-                ans3.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
+                ans3.setVisibility(View.INVISIBLE);
+                ans1.setVisibility(View.INVISIBLE);
             }
         });
         ans3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="3";
-                ans1.setVisibility(View.INVISIBLE);
                 ans2.setVisibility(View.INVISIBLE);
                 ans4.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
+                ans1.setVisibility(View.INVISIBLE);
             }
         });
         ans4.setOnClickListener(new View.OnClickListener() {
@@ -218,13 +197,6 @@ public class TopicCheckActivity extends Activity {
                 ans2.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
                 ans1.setVisibility(View.INVISIBLE);
-                if (c.equals(choice_ans)){
-                    //open good gif
-                    AlertDialog(R.drawable.applaud);
-                }else {
-                    //open bad gif
-                    AlertDialog(R.drawable.shaking_head);
-                }
             }
         });
         play.setOnClickListener(new View.OnClickListener() {
@@ -408,27 +380,29 @@ public class TopicCheckActivity extends Activity {
                                 Log.d(TAG, "ddddd: "+total_topic);
                                 total_topic.removeAll(checked_topic);
                                 Log.d(TAG, "onResponse: "+total_topic.size());
-                                if (total_topic.size()!=0){
-                                    Random ran = new Random();
-                                    int i=ran.nextInt(total_topic.size());
-                                    file_name=total_topic.get(i);
-                                    Log.d(TAG, "onResponse: i=="+i);
-                                    Log.d(TAG, "onResponse: "+file_name);
-                                    c=file_name.substring(file_name.length()-3,file_name.length()-2);
-                                    int index=file_name.indexOf(c);
-                                    Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
-                                    getfile=true;
-                                    if (progressDialog.isShowing()){
-                                        progressDialog.cancel();
-                                    }
-
-                                }else{
-                                    emptyList=true;
-                                    Toast.makeText(TopicCheckActivity.this,"Checked",Toast.LENGTH_LONG).show();
-                                }
 
                             }
 
+                            if (total_topic.size()!=0){
+                                Random ran = new Random();
+                                int i=ran.nextInt(total_topic.size());
+                                file_name=total_topic.get(i);
+                                Log.d(TAG, "onResponse: i=="+i);
+                                Log.d(TAG, "onResponse: "+file_name);
+                                c=file_name.substring(file_name.length()-3,file_name.length()-2);
+                                int index=file_name.indexOf(c);
+                                Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
+                                getfile=true;
+
+
+                            }else{
+                                emptyList=true;
+                                Toast.makeText(TopicCheckActivity.this,"Checked",Toast.LENGTH_LONG).show();
+                            }
+
+                            if (progressDialog.isShowing()){
+                                progressDialog.cancel();
+                            }
 
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
