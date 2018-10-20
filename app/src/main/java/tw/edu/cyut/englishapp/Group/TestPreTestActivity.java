@@ -51,7 +51,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class TestPreTestActivity extends Activity {
     private ImageButton play,ans1,ans2,ans3,ans4,next;
     private String choice_ans,file_name,uid,day;
-    private TextView count;
+    private TextView count,middle_tips;
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
@@ -67,11 +67,15 @@ public class TestPreTestActivity extends Activity {
 
         initTestPreTestActivity();
 
+        middle_tips.setText("Please test your headset by listening to the recording.");
+
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
         day=sharedPreferences.getString("day",null);
         play_count=0;
         Intent intent = this.getIntent();//取得傳遞過來的資料
+
+
 
         Bundle bundle =intent.getExtras();
         //接收array
@@ -209,7 +213,7 @@ public class TestPreTestActivity extends Activity {
         ans4=findViewById(R.id.ans4);
         next=findViewById(R.id.next);
         count=findViewById(R.id.text_count);
-
+        middle_tips=findViewById(R.id.middle_tips);
     }
 
     private void OpenSelf(String index){

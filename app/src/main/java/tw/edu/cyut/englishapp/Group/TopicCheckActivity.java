@@ -29,7 +29,18 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +52,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import tw.edu.cyut.englishapp.Backgorundwork;
 import tw.edu.cyut.englishapp.R;
@@ -63,7 +75,7 @@ public class TopicCheckActivity extends Activity {
     private boolean playPause;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
-    Boolean checked;
+    boolean checked;
     private String[][] audio_list=new String[16][105];
     private boolean initialStage = true;
     Timer timerExit = new Timer();
@@ -104,7 +116,7 @@ public class TopicCheckActivity extends Activity {
         setContentView(R.layout.activity_answer);
 
         initAnswerActivity();
-
+        progressDialog = new ProgressDialog(this);
         uid="";
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
@@ -122,19 +134,30 @@ public class TopicCheckActivity extends Activity {
             }
         }
 
+
         checked=false;
 
         do {
-            Random ran = new Random();
-            int i=ran.nextInt(16);
-            int j=ran.nextInt(Integer.parseInt(audio_list[i][0]));
-            Log.d(TAG, "onCreate: "+i+":"+j);
-            file_name=audio_list[i][j];
+            int i,j;
+            do{
+                Random ran = new Random();
+                i=ran.nextInt(16);
+                j=ran.nextInt(Integer.parseInt(audio_list[i][0]));
+                Log.d(TAG, "onCreate: "+i+":"+j);
+                file_name=audio_list[i][j];
+            }while(file_name.equals(""));
+
             audio_list[i][j]="";
             Log.d(TAG, "onCreate: 音檔名稱:"+file_name);
-            LoadChecked(file_name);
+            AsyncTask task = new CheckedTopic().execute(file_name);
+
+            //LoadChecked(file_name);
             //如果filename=""或等於資料庫有的音檔則重抓
-        }while (checked==true || file_name.equals(""));
+            while (task.getStatus()!=AsyncTask.Status.FINISHED){
+
+            }
+            Log.d(TAG, "onCreate: checked=="+checked);
+        }while (checked==true);
 
 
 
@@ -147,7 +170,7 @@ public class TopicCheckActivity extends Activity {
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        progressDialog = new ProgressDialog(this);
+
 
 
 
@@ -218,7 +241,7 @@ public class TopicCheckActivity extends Activity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!playPause) {
+                if (!playPause && !progressDialog.isShowing()) {
 
                     if (initialStage) {
                         new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+file_name+".wav");
@@ -391,13 +414,24 @@ public class TopicCheckActivity extends Activity {
                             Log.d(ContentValues.TAG, "Response " + response);
                             GsonBuilder builder = new GsonBuilder();
                             Gson mGson = builder.create();
+
                             if (!response.contains("Undefined")){
                                 List<ItemTopicCheck> posts = new ArrayList<ItemTopicCheck>();
                                 posts = Arrays.asList(mGson.fromJson(response, ItemTopicCheck[].class));
+
+                                if (progressDialog.isShowing()) {
+                                    progressDialog.cancel();
+                                }
                                 checked=true;
                             }else{
+                                if (progressDialog.isShowing()) {
+                                    progressDialog.cancel();
+
+                                }
                                 checked=false;
                             }
+
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
@@ -421,5 +455,89 @@ public class TopicCheckActivity extends Activity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(TopicCheckActivity.this);
         requestQueue.add(stringRequest);
+    }
+
+
+    private class CheckedTopic extends AsyncTask<String , Void , String>{
+        private ProgressDialog progressBar;
+
+        @Override
+        protected void onPreExecute() {
+            //執行前 設定可以在這邊設定
+
+            super.onPreExecute();
+            progressBar = new ProgressDialog(TopicCheckActivity.this);
+            progressBar.setMessage("Loading...");
+            progressBar.setCancelable(false);
+            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressBar.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            //執行中 在背景做事情
+
+            try {
+                String filename = params[0];
+
+                String connection_url ="http://140.122.63.99/app/load_checked_file.php";
+                URL url = new URL(connection_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("filename","UTF-8")+"="+URLEncoder.encode(filename,"UTF-8");
+                Log.d("POST_DATA", "doInBackground: "+post_data);
+
+
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+                String result="";
+                String line=null;
+                while((line = bufferedReader.readLine())!= null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            //執行中 可以在這邊告知使用者進度
+            super.onProgressUpdate(values);
+            progressBar.show();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //執行後 完成背景任務
+            super.onPostExecute(result);
+
+            if (result.contains("Undefined")){
+                checked=false;
+            }else{
+                checked=true;
+            }
+
+            if (progressDialog.isShowing()) {
+                progressDialog.cancel();
+            }
+        }
     }
 }
