@@ -357,7 +357,7 @@ public class TopicCheckActivity extends Activity {
 
     public void LoadChecked(){
         String url = "http://140.122.63.99/app/load_checked_file.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -418,6 +418,13 @@ public class TopicCheckActivity extends Activity {
                         //do stuffs with response erro
                     }
                 }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("uid",uid);
+
+                return params;
+            }
 
         };
         RequestQueue requestQueue = Volley.newRequestQueue(TopicCheckActivity.this);
