@@ -63,6 +63,7 @@ import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 import tw.edu.cyut.englishapp.Backgorundwork;
+import tw.edu.cyut.englishapp.LoginActivity;
 import tw.edu.cyut.englishapp.R;
 import tw.edu.cyut.englishapp.model.ItemTest;
 import tw.edu.cyut.englishapp.model.ItemTopicCheck;
@@ -246,7 +247,7 @@ public class TopicCheckActivity extends Activity {
     private void OpenSelf(){
         if (emptyList){
             //如果是空陣列
-            Intent ToFinish=new Intent(TopicCheckActivity.this,todayisfinish.class);
+            Intent ToFinish=new Intent(TopicCheckActivity.this,LoginActivity.class);
             startActivity(ToFinish);
             finish();
         }else{
@@ -398,6 +399,7 @@ public class TopicCheckActivity extends Activity {
                             }else{
                                 emptyList=true;
                                 Toast.makeText(TopicCheckActivity.this,"Checked",Toast.LENGTH_LONG).show();
+
                             }
 
                             if (progressDialog.isShowing()){
