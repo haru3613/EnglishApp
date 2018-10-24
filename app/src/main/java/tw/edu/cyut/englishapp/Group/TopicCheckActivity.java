@@ -144,12 +144,15 @@ public class TopicCheckActivity extends Activity {
                 audio_list[i]=(String[]) objectArray[i];
             }
         }
+
         emptyList=false;
         getfile=false;
 
         total_topic=twoDArrayToList(audio_list);
+        for (int i=0;i<=138;i++){
+            total_topic.set(i,null);
+        }
         total_topic.removeAll(Collections.singleton(null));//刪掉所有null
-
         total_topic=getStringsWithoutEqualLength(3,total_topic);//刪掉所有檔名長度為3的
 
         progressDialog.show();
@@ -377,11 +380,13 @@ public class TopicCheckActivity extends Activity {
                                 for (int i = 0; i < posts.size(); i++) {
                                     checked_topic.add(posts.get(i).getFilename());
                                 }
-                                Log.d(TAG, "ddddd: "+checked_topic);
-                                Log.d(TAG, "ddddd: "+total_topic);
+                                Log.d(TAG, "list: "+checked_topic);
+                                Log.d(TAG, "size: "+checked_topic);
+                                Log.d(TAG, "list: "+total_topic);
+                                Log.d(TAG, "size: "+total_topic.size());
                                 total_topic.removeAll(checked_topic);
-                                Log.d(TAG, "onResponse: "+total_topic.size());
-
+                                Log.d(TAG, "list: "+total_topic.size());
+                                Log.d(TAG, "size: "+total_topic);
                             }
 
                             if (total_topic.size()!=0){
@@ -398,7 +403,7 @@ public class TopicCheckActivity extends Activity {
 
                             }else{
                                 emptyList=true;
-                                Toast.makeText(TopicCheckActivity.this,"Checked",Toast.LENGTH_LONG).show();
+                                Toast.makeText(TopicCheckActivity.this,"Finish!!!",Toast.LENGTH_LONG).show();
 
                             }
 
