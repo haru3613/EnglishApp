@@ -52,6 +52,7 @@
 
 
     <string-array name="average">
+        <item>None</item>
         <item>1-2</item>
         <item>3-4</item>
         <item>5-6</item>
@@ -61,11 +62,13 @@
     </string-array>
 
     <string-array name="certificate">
+        <item>None</item>
         <item>HSK</item>
         <item>TOCFL</item>
         <item>other</item>
     </string-array>
     <string-array name="language_level">
+        <item>None</item>
         <item>CEFR A1</item>
         <item>CEFR A2</item>
         <item>CEFR B1</item>
@@ -74,12 +77,14 @@
         <item>CEFR C2</item>
     </string-array>
     <string-array name="background">
+        <item>None</item>
         <item>Chinese</item>
         <item>Taiwanese</item>
         <item>other</item>
     </string-array>
 
     <string-array name="study">
+        <item>None</item>
         <item>1-2</item>
         <item>3-4</item>
         <item>5-6</item>
@@ -180,6 +185,7 @@
     </string-array>
 
     <string-array name="learing">
+        <item>None</item>
         <item>Formal course</item>
         <item>Self study</item>
         <item>other</item>
