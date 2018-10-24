@@ -78,47 +78,4 @@ public class DemoExaminerGroup extends Activity {
     }
 
 
-    private void requestJsonObject(){
-        RequestQueue queue = Volley.newRequestQueue(DemoExaminerGroup.this);
-        String url ="http://163.17.5.182/SelectCase.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    byte[] u = fromHtml(response).toString().getBytes(
-                            "UTF-8");
-                    response = new String(u, "UTF-8");
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson mGson = builder.create();
-                    //Type listType = new TypeToken<ArrayList<ItemObject>>() {}.getType();
-                    //ArrayList<ItemObject> posts = new ArrayList<ItemObject>();
-                    if (!response.contains("Undefined")) {
-                        ///posts = mGson.fromJson(response, listType);
-
-                    }
-
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error " + error.getMessage());
-            }
-        });
-        queue.add(stringRequest);
-    }
-
-    public static Spanned fromHtml(String html) {
-        html = (html.replace("&lt;", "<").replace("&gt;", ">"));
-        Spanned result;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(html.trim(), Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            result = Html.fromHtml(html.trim());
-        }
-        return result;
-    }
 }
