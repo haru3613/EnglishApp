@@ -25,6 +25,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -150,24 +151,26 @@ public class LoginActivity extends AppCompatActivity {
                             GsonBuilder builder = new GsonBuilder();
                             Gson mGson = builder.create();
                             List<ItemAccount> posts = new ArrayList<ItemAccount>();
-                            posts = Arrays.asList(mGson.fromJson(response, ItemAccount[].class));
-                            String uid=posts.get(0).getUid();
-                            String day=posts.get(0).getDay();
-                            String level=posts.get(0).getLevel();
-                            int i=Integer.parseInt(posts.get(0).getQbank())+Integer.parseInt(day);
-                            String qbank;
-                            if (i>15)
-                                qbank=String.valueOf(i-15);
-                            else
-                                qbank=String.valueOf(i);
-                            Log.d(TAG, "onResponse uid: "+uid);
-                            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("uid",uid);
-                            editor.putString("day",day);
-                            editor.putString("level",level);
-                            editor.putString("qbank",qbank);
-                            editor.apply();
+                            if (!response.contains("Undefined")){
+                                posts = Arrays.asList(mGson.fromJson(response, ItemAccount[].class));
+                                String uid=posts.get(0).getUid();
+                                String day=posts.get(0).getDay();
+                                String level=posts.get(0).getLevel();
+                                int i=Integer.parseInt(posts.get(0).getQbank())+Integer.parseInt(day);
+                                String qbank;
+                                if (i>15)
+                                    qbank=String.valueOf(i-15);
+                                else
+                                    qbank=String.valueOf(i);
+                                Log.d(TAG, "onResponse uid: "+uid);
+                                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("uid",uid);
+                                editor.putString("day",day);
+                                editor.putString("level",level);
+                                editor.putString("qbank",qbank);
+                                editor.apply();
+                            }
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
 
