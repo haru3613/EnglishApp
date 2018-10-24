@@ -216,7 +216,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
-                if (position==2){
+                if (position==3){
                     teacher_other.setVisibility(View.VISIBLE);
                 }else
                     teacher_other.setVisibility(View.GONE);
@@ -232,7 +232,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
-                if (position==2){
+                if (position==3){
                     certificate_other.setVisibility(View.VISIBLE);
                 }else
                     certificate_other.setVisibility(View.GONE);
@@ -248,7 +248,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
-                if (position==2){
+                if (position==3){
                     method_other.setVisibility(View.VISIBLE);
                 }else
                     method_other.setVisibility(View.GONE);

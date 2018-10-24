@@ -154,6 +154,10 @@ public class TopicCheckActivity extends Activity {
         }
         total_topic.removeAll(Collections.singleton(null));//刪掉所有null
         total_topic=getStringsWithoutEqualLength(3,total_topic);//刪掉所有檔名長度為3的
+        addtopic();
+
+
+
 
         progressDialog.show();
 
@@ -245,6 +249,7 @@ public class TopicCheckActivity extends Activity {
 
 
     }
+
 
 
     private void OpenSelf(){
@@ -381,12 +386,12 @@ public class TopicCheckActivity extends Activity {
                                     checked_topic.add(posts.get(i).getFilename());
                                 }
                                 Log.d(TAG, "list: "+checked_topic);
-                                Log.d(TAG, "size: "+checked_topic);
+                                Log.d(TAG, "size: "+checked_topic.size());
                                 Log.d(TAG, "list: "+total_topic);
                                 Log.d(TAG, "size: "+total_topic.size());
                                 total_topic.removeAll(checked_topic);
-                                Log.d(TAG, "list: "+total_topic.size());
-                                Log.d(TAG, "size: "+total_topic);
+                                Log.d(TAG, "size: "+total_topic.size());
+                                Log.d(TAG, "list: "+total_topic);
                             }
 
                             if (total_topic.size()!=0){
@@ -437,7 +442,24 @@ public class TopicCheckActivity extends Activity {
     }
 
 
-
+    private void addtopic(){
+        total_topic.add("niang4JS");
+        total_topic.add("ma1JH");
+        total_topic.add("liu2CL");
+        total_topic.add("lvan2JS");
+        total_topic.add("nang4JH");
+        total_topic.add("miao2CL");total_topic.add("niu3JY");total_topic.add("men1JS");total_topic.add("neng3JY");total_topic.add("nuo2CL");total_topic.add("min1JY");
+        total_topic.add("nei2JH");total_topic.add("luan1CL");total_topic.add("mi3JY");total_topic.add("nu1JH");total_topic.add("le2JS");total_topic.add("lang3CL");
+        total_topic.add("nie2JS");total_topic.add("lai4JH");total_topic.add("lin3CL");total_topic.add("mao2JY");total_topic.add("long4JS");
+        total_topic.add("lan4JS");total_topic.add("ma3JH");total_topic.add("la1JS");total_topic.add("mo2JH");total_topic.add("nou3CL");total_topic.add("miu4JS");
+        total_topic.add("nian1JH");total_topic.add("luo3CL");total_topic.add("nin2JH");total_topic.add("lie3JS");total_topic.add("liang1CL");total_topic.add("ming2JY");
+        total_topic.add("mian3JH");total_topic.add("mu4JS");total_topic.add("ning3JH");total_topic.add("na4JS");total_topic.add("liao1CL");total_topic.add("me4JY");
+        total_topic.add("meng4CL");total_topic.add("leng1JY");total_topic.add("nong3CL");total_topic.add("lao1JY");total_topic.add("mang2JS");total_topic.add("nue2CL");
+        total_topic.add("lv3JY");total_topic.add("nan1JS");total_topic.add("lue1CL");total_topic.add("li2JS");total_topic.add("niao4JH");total_topic.add("nuan4JY");
+        total_topic.add("lei3JS");total_topic.add("nv1JS");total_topic.add("lun2JH");total_topic.add("ni1CL");total_topic.add("lou2JY");total_topic.add("mie1JS");
+        total_topic.add("lia4JH");total_topic.add("nai1JS");total_topic.add("lian4JS");total_topic.add("ling2CL");total_topic.add("ne3CL");total_topic.add("nao4JS");
+        total_topic.add("mei1JH");total_topic.add("nen2JY");total_topic.add("man3JH");total_topic.add("lu4CL");total_topic.add("mou4JS");
+    }
 
     public <String> ArrayList<String> twoDArrayToList(String[][] twoDArray) {
         ArrayList<String> list = new ArrayList<String>();
