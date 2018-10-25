@@ -734,6 +734,8 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             Intent toLogin=new Intent(context,LoginActivity.class);
             context.startActivity(toLogin);
             ((Activity)context).finish();
+            Toast.makeText(context, "Register Success!", Toast.LENGTH_SHORT).show();
+
         }
         else if (result.contains("DOCTYPE")){
             Log.d("Result", "onPostExecute: "+result);
