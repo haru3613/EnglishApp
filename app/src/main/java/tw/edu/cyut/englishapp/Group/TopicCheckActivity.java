@@ -212,6 +212,9 @@ public class TopicCheckActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (!playPause && getfile==true) {
+                    if (uid.equals("8")){
+                        file.setVisibility(View.VISIBLE);
+                    }
 
                     if (initialStage) {
                         new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+file_name+".wav");
