@@ -212,6 +212,9 @@ public class TopicCheckActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (!playPause && getfile==true) {
+                    if (uid.equals("8")){
+                        file.setVisibility(View.VISIBLE);
+                    }
 
                     if (initialStage) {
                         new Player().execute("http://140.122.63.99/topic_audio/all_audio/"+file_name+".wav");
@@ -406,7 +409,7 @@ public class TopicCheckActivity extends Activity {
                                 Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
                                 getfile=true;
 
-                                if (uid.equals("9")){
+                                if (uid.equals("8")){
                                     file.setText("檔名:"+file_name);
                                 }
                             }else{
