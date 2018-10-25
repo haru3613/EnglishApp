@@ -77,7 +77,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 public class TopicCheckActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
-    private TextView count;
+    private TextView count,file;
     private String qbank,uid, choice_ans,day,file_name,checked_file,c;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
@@ -132,6 +132,7 @@ public class TopicCheckActivity extends Activity {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(KEY, Context.MODE_PRIVATE);
         uid=sharedPreferences.getString("uid",null);
         Log.d("onCreate", "uid: "+uid);
+
 
 
 
@@ -276,7 +277,7 @@ public class TopicCheckActivity extends Activity {
         ans4=findViewById(R.id.ans4);
         next=findViewById(R.id.next);
         count=findViewById(R.id.text_count);
-
+        file=findViewById(R.id.file_name);
     }
 
 
@@ -405,7 +406,9 @@ public class TopicCheckActivity extends Activity {
                                 Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
                                 getfile=true;
 
-
+                                if (uid.equals("9")){
+                                    file.setText("檔名:"+file_name);
+                                }
                             }else{
                                 emptyList=true;
                                 Toast.makeText(TopicCheckActivity.this,"Finish!!!",Toast.LENGTH_LONG).show();
