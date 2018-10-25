@@ -78,7 +78,7 @@ public class TopicCheckActivity extends Activity {
 
     private ImageButton play,ans1,ans2,ans3,ans4,next;
     private TextView count,file;
-    private String qbank,uid, choice_ans,day,file_name,checked_file,c;
+    private String qbank,uid, choice_ans,day,file_name,checked_file,c,t_index;
     private  Boolean isExit = false;
     private  Boolean hasTask = false;
     private boolean playPause,emptyList;
@@ -134,8 +134,10 @@ public class TopicCheckActivity extends Activity {
         Log.d("onCreate", "uid: "+uid);
 
 
+        Intent intent = this.getIntent();//取得傳遞過來的資料
+        t_index = intent.getStringExtra("index");
 
-
+       count.setText(t_index+"/1616");
         //接收array
         audio_list=null;
         Object[] objectArray = (Object[]) getIntent().getExtras().getSerializable("audio_list");
@@ -267,6 +269,7 @@ public class TopicCheckActivity extends Activity {
             Bundle mBundle = new Bundle();
             mBundle.putSerializable("audio_list", audio_list);
             ToTopicCheck.putExtras(mBundle);
+            ToTopicCheck.putExtra("index", String.valueOf(Integer.parseInt(t_index)+1));
             startActivity(ToTopicCheck);
             finish();
         }
@@ -412,6 +415,7 @@ public class TopicCheckActivity extends Activity {
                                 if (uid.equals("8")){
                                     file.setText("檔名:"+file_name);
                                 }
+
                             }else{
                                 emptyList=true;
                                 Toast.makeText(TopicCheckActivity.this,"Finish!!!",Toast.LENGTH_LONG).show();
