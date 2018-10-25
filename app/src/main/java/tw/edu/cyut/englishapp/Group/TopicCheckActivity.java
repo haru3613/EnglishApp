@@ -406,7 +406,7 @@ public class TopicCheckActivity extends Activity {
                                 Log.d("TAG","題目名稱:"+file_name.substring(0,index)+"答案:"+c);
                                 getfile=true;
 
-                                if (uid.equals("9")){
+                                if (uid.equals("8")){
                                     file.setText("檔名:"+file_name);
                                 }
                             }else{
