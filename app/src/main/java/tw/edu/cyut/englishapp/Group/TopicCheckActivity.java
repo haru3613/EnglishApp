@@ -134,10 +134,9 @@ public class TopicCheckActivity extends Activity {
         Log.d("onCreate", "uid: "+uid);
 
 
-        Intent intent = this.getIntent();//取得傳遞過來的資料
-        t_index = intent.getStringExtra("index");
 
-       count.setText(t_index+"/1616");
+
+
         //接收array
         audio_list=null;
         Object[] objectArray = (Object[]) getIntent().getExtras().getSerializable("audio_list");
@@ -269,7 +268,6 @@ public class TopicCheckActivity extends Activity {
             Bundle mBundle = new Bundle();
             mBundle.putSerializable("audio_list", audio_list);
             ToTopicCheck.putExtras(mBundle);
-            ToTopicCheck.putExtra("index", String.valueOf(Integer.parseInt(t_index)+1));
             startActivity(ToTopicCheck);
             finish();
         }
@@ -399,7 +397,11 @@ public class TopicCheckActivity extends Activity {
                                 total_topic.removeAll(checked_topic);
                                 Log.d(TAG, "size: "+total_topic.size());
                                 Log.d(TAG, "list: "+total_topic);
+                                count.setText(String.valueOf(1616-total_topic.size()+1)+"/1616");
+                            }else{
+                                count.setText("1/1616");
                             }
+
 
                             if (total_topic.size()!=0){
                                 Random ran = new Random();

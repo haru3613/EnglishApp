@@ -73,7 +73,6 @@ public class DemoExaminerGroup extends Activity {
         Bundle mBundle = new Bundle();
         mBundle.putSerializable("audio_list", audio_list);
         ToCheck.putExtras(mBundle);
-        ToCheck.putExtra("index", "1");
         startActivity(ToCheck);
         finish();
     }
