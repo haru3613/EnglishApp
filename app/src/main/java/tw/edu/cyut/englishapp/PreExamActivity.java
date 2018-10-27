@@ -53,7 +53,7 @@ import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 public class PreExamActivity extends Activity {
     private ImageView bt_topic_speak,image_background,bt_next,bt_speak_start,bt_stop_speak,bt_speak_talker;
-    private TextView text_count,text_word,text_viewday;
+    private TextView text_count,text_word,text_viewday,text_mic_view;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
@@ -61,7 +61,7 @@ public class PreExamActivity extends Activity {
     private MediaPlayer mPlayer = null;
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private Integer count_topic=0,count_record=0;
+    private Integer count_topic=0,count_record=0,count_selfrecord=0;
     private String day,uid,level,index,username,fname,qbank,get_topic_day,today_finish;
     private ProgressDialog progressDialog;
     private boolean initialStage = true;
@@ -111,6 +111,8 @@ public class PreExamActivity extends Activity {
         bt_next = findViewById(R.id.bt_next);
         bt_next.setVisibility(View.INVISIBLE);
         bt_next.setEnabled(false);
+        text_mic_view= findViewById(R.id.text_mic_view);
+        text_mic_view.setVisibility(View.INVISIBLE);
         text_viewday = findViewById(R.id.text_viewday);
         if (day.equals("0")){
             text_viewday.setText("Pretest 前測");
@@ -168,11 +170,20 @@ public class PreExamActivity extends Activity {
     }
 
     public void bt_recode_playing(View view) {
-        startPlaying();
+        count_selfrecord+=1;
+        if(count_selfrecord<4){
+            startPlaying();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "You can't play your record more than three times,please click \"GO\" or record again.", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     public void bt_recode_start(View view) {
         count_record+=1;
+        count_selfrecord=0;
         if(count_record<4){
             bt_next.setVisibility(View.INVISIBLE);
             bt_next.setEnabled(false);

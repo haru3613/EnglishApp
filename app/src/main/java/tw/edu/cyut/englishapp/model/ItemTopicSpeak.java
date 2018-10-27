@@ -18,6 +18,10 @@ public class ItemTopicSpeak {
     private String created_at;
     @SerializedName("updated_at")
     private String updated_at;
+    @SerializedName("test_speak_filename")
+    private String test_speak_filename;
+    @SerializedName("test_speak_aid")
+    private String test_speak_aid;
 
     public ItemTopicSpeak(String tid, String uid , String topic_day, String topic_index, String title, String created_at, String updated_at){
         this.tid=tid;
@@ -57,5 +61,11 @@ public class ItemTopicSpeak {
 
     public String getTopic_index() {
         return topic_index;
+    }
+    public String gettest_speak_filename() {
+        return test_speak_filename;
+    }
+    public String gettest_speak_aid() {
+        return test_speak_aid;
     }
 }

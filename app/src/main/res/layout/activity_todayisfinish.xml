@@ -45,10 +45,10 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="336dp"
-        android:layout_height="wrap_content"
+        android:layout_width="332dp"
+        android:layout_height="151dp"
         android:gravity="center_horizontal"
-        android:text="After you have completed the pre-test, the researcher will need some time to analyze the data. Once the researcher have completed the analysis, you will receive a notice advising you to proceed with the 15-Day Tone Training section of the experiment.   "
+        android:text=""
         android:textColor="@color/secondaryTextColor"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
