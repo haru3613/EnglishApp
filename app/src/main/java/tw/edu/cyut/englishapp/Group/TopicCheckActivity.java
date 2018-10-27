@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -170,43 +171,47 @@ public class TopicCheckActivity extends Activity {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-
+        Drawable d = getResources().getDrawable(R.drawable.border_image);
 
 
         ans1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="1";
-                ans2.setVisibility(View.INVISIBLE);
-                ans3.setVisibility(View.INVISIBLE);
-                ans4.setVisibility(View.INVISIBLE);
+                ans1.setBackgroundDrawable(d);
+                ans4.setBackgroundDrawable(null);
+                ans2.setBackgroundDrawable(null);
+                ans3.setBackgroundDrawable(null);
             }
         });
         ans2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="2";
-                ans4.setVisibility(View.INVISIBLE);
-                ans3.setVisibility(View.INVISIBLE);
-                ans1.setVisibility(View.INVISIBLE);
+                ans2.setBackgroundDrawable(d);
+                ans1.setBackgroundDrawable(null);
+                ans4.setBackgroundDrawable(null);
+                ans3.setBackgroundDrawable(null);
             }
         });
         ans3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="3";
-                ans2.setVisibility(View.INVISIBLE);
-                ans4.setVisibility(View.INVISIBLE);
-                ans1.setVisibility(View.INVISIBLE);
+                ans3.setBackgroundDrawable(d);
+                ans1.setBackgroundDrawable(null);
+                ans2.setBackgroundDrawable(null);
+                ans4.setBackgroundDrawable(null);
             }
         });
         ans4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choice_ans="4";
-                ans2.setVisibility(View.INVISIBLE);
-                ans3.setVisibility(View.INVISIBLE);
-                ans1.setVisibility(View.INVISIBLE);
+                ans4.setBackgroundDrawable(d);
+                ans1.setBackgroundDrawable(null);
+                ans2.setBackgroundDrawable(null);
+                ans3.setBackgroundDrawable(null);
             }
         });
         play.setOnClickListener(new View.OnClickListener() {
