@@ -96,6 +96,10 @@ public class LoginActivity extends AppCompatActivity {
         initLoginActivity();
 
 
+        //處理更新檔
+        UpdateManager Umanager = new UpdateManager(LoginActivity.this);
+        Umanager.checkUpdate();
+
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
