@@ -3,6 +3,7 @@ package tw.edu.cyut.englishapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ import tw.edu.cyut.englishapp.Group.group_control;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.Group.controldetail;
 
+import static tw.edu.cyut.englishapp.LoginActivity.KEY;
+
 /**
  * Created by Haru on 2017/12/19.
  */
@@ -47,6 +50,7 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
     }
     @Override
     protected String doInBackground(String... params) {
+
         String type =params[0];
 
         if(type.equals("login")){
@@ -724,7 +728,12 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
             }
         }else if (result.contains("this is null")){
             Toast.makeText(context, "Not yet open for answer.", Toast.LENGTH_SHORT).show();
-        }else if (result.contains("Congratulations on completing today's pre-test")){
+        }else if (result.contains("this is pre_exam")){
+            Intent ToControl=new Intent(context,controldetail.class);
+            context.startActivity(ToControl);
+            ((Activity) context).finish();
+        }
+        else if (result.contains("Congratulations on completing today's pre-test")){
             Intent ToTestGroup=new Intent(context,TestGroupActivity.class);
             context.startActivity(ToTestGroup);
             ((Activity) context).finish();
