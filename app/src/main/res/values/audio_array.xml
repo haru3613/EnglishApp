@@ -211,7 +211,7 @@
         <item>ding4CL</item>
         <item>tuan1JY</item>
         <item>xin4JS</item>
-        <item>ca2JH</item>
+        <item>ca2JS</item>
         <item>zheng4CL</item>
         <item>mi1JY</item>
         <item>zan2JS</item>
@@ -321,7 +321,7 @@
         <item>xv4CL</item>
         <item>chen1JY</item>
         <item>e4JS</item>
-        <item>zhuan2JH</item>
+        <item>zhuan2JS</item>
         <item>xian3CL</item>
         <item>mie2JY</item>
         <item>ang1JS</item>
@@ -357,7 +357,7 @@
         <item>shuang3JS</item>
         <item>you3JH</item>
         <item>sang2CL</item>
-        <item>wu3JY</item>
+        <item>wu3CL</item>
         <item>you2JS</item>
         <item>ken3JH</item>
         <item>qing2CL</item>
@@ -438,7 +438,7 @@
         <item>lao2JH</item>
         <item>reng1CL</item>
         <item>zao3JY</item>
-        <item>dun3JS</item>
+        <item>dun3JH</item>
         <item>pen2JH</item>
         <item>er4CL</item>
         <item>guo1JY</item>
@@ -501,7 +501,7 @@
         <item>gui1CL</item>
         <item>kuang4JY</item>
         <item>piao4JS</item>
-        <item>lou1JH</item>
+        <item>lou1JY</item>
         <item>zhuan4CL</item>
         <item>bie1JY</item>
         <item>liao4JS</item>
@@ -517,7 +517,7 @@
         <item>ao1CL</item>
         <item>beng4JY</item>
         <item>sai1JS</item>
-        <item>ping4JH</item>
+        <item>ping4JY</item>
         <item>fang1CL</item>
         <item>sao4JY</item>
         <item>ji4JS</item>
@@ -546,14 +546,14 @@
         <item>jin4JY</item>
         <item>shi1JS</item>
         <item>sa4JH</item>
-        <item>shuai3CL</item>
+        <item>shuai3JS</item>
         <item>dun2JY</item>
         <item>jing1JS</item>
         <item>kan3JH</item>
         <item>lue2CL</item>
         <item>gong1JY</item>
         <item>qia2JS</item>
-        <item>ti3JH</item>
+        <item>ti3CL</item>
         <item>min4CL</item>
         <item>diu1JY</item>
         <item>me2JS</item>
@@ -575,7 +575,7 @@
         <item>xi2CL</item>
         <item>cai3JY</item>
         <item>gan2JS</item>
-        <item>za3JH</item>
+        <item>za3JY</item>
         <item>shi3CL</item>
         <item>eng2JY</item>
         <item>shou2JS</item>
@@ -599,7 +599,7 @@
         <item>chao3CL</item>
         <item>zhu2JY</item>
         <item>tui2JS</item>
-        <item>can3JH</item>
+        <item>can3JY</item>
         <item>bi1CL</item>
         <item>wai4JY</item>
         <item>zou1JS</item>
@@ -611,7 +611,7 @@
         <item>xi4CL</item>
         <item>lei1JY</item>
         <item>ka4JS</item>
-        <item>lu1JH</item>
+        <item>lu1JY</item>
         <item>men4CL</item>
         <item>a4JY</item>
         <item>ta4JS</item>
@@ -667,7 +667,7 @@
         <item>cha4CL</item>
         <item>qia4JY</item>
         <item>la2JS</item>
-        <item>shan2JH</item>
+        <item>shan2CL</item>
         <item>gai3CL</item>
     </array>
     <array name="day_6">
@@ -697,7 +697,7 @@
         <item>ren2CL</item>
         <item>jiao3JY</item>
         <item>tan2JS</item>
-        <item>la3JH</item>
+        <item>la3CL</item>
         <item>yong3CL</item>
         <item>chai3JY</item>
         <item>nao2JS</item>
@@ -740,7 +740,7 @@
         <item>jie4JH</item>
         <item>shuang4CL</item>
         <item>kuang1JY</item>
-        <item>nin3JS</item>
+        <item>nin3CL</item>
         <item>qiu1JH</item>
         <item>su4CL</item>
         <item>fan2JY</item>
@@ -784,7 +784,7 @@
         <item>chan2JY</item>
         <item>zhi2JS</item>
         <item>nv3JH</item>
-        <item>le3CL</item>
+        <item>le3JY</item>
         <item>dian3JY</item>
         <item>te3JS</item>
         <item>fen2JH</item>
@@ -804,7 +804,7 @@
         <item>cheng2JY</item>
         <item>zei3JS</item>
         <item>guo3JH</item>
-        <item>zhai3CL</item>
+        <item>zhai3JY</item>
         <item>shen2JY</item>
         <item>sui3JS</item>
         <item>lian3JH</item>
@@ -848,7 +848,7 @@
         <item>zhi4JY</item>
         <item>nei3JS</item>
         <item>beng1JH</item>
-        <item>ke2CL</item>
+        <item>ke2JH</item>
         <item>gao1JY</item>
         <item>gang3JS</item>
         <item>fo2JH</item>
@@ -891,7 +891,7 @@
         <item>pang2JS</item>
         <item>na2JH</item>
         <item>mao3CL</item>
-        <item>po3JY</item>
+        <item><po3JS></po3JS></item>
         <item>ran3JS</item>
         <item>zhou2JH</item>
         <item>kao2CL</item>
@@ -1015,11 +1015,11 @@
         <item>kao3CL</item>
         <item>xv3JY</item>
         <item>bing2JS</item>
-        <item>gao3JH</item>
+        <item>gao3JY</item>
         <item>ding2CL</item>
         <item>reng3JY</item>
         <item>rou2JS</item>
-        <item>ang3JH</item>
+        <item>ang3CL</item>
         <item>ta3CL</item>
         <item>dei2JY</item>
         <item>jian2JS</item>
@@ -1092,12 +1092,12 @@
         <item>na1JY</item>
         <item>bie4JS</item>
         <item>gen1JH</item>
-        <item>zhuan3CL</item>
+        <item>zhuan3JH</item>
     </array>
     <array name="day_10">
         <item>103</item>
         <item>ye2JS</item>
-        <item>zan3JH</item>
+        <item>zan3JY</item>
         <item>duan3CL</item>
         <item>ban2JY</item>
         <item>pian3JS</item>
@@ -1203,7 +1203,7 @@
     <array name="day_11">
         <item>103</item>
         <item>jin2JS</item>
-        <item>dang3JH</item>
+        <item>dang3CL</item>
         <item>jiang3CL</item>
         <item>ri2JY</item>
         <item>kang3JS</item>
@@ -1299,7 +1299,7 @@
         <item>ai3CL</item>
         <item>tu2JY</item>
         <item>wang1JS</item>
-        <item>kou2JH</item>
+        <item>kou2CL</item>
         <item>bang1CL</item>
         <item>lian1JY</item>
         <item>neng2JS</item>
@@ -1337,11 +1337,11 @@
         <item>shan3CL</item>
         <item>yin2JY</item>
         <item>cen3JS</item>
-        <item>zhi3JH</item>
+        <item>zhi3JS</item>
         <item>ying3CL</item>
         <item>zu2JY</item>
         <item>gai2JS</item>
-        <item>tong3JH</item>
+        <item>tong3CL</item>
         <item>chi4CL</item>
         <item>dou1JY</item>
         <item>zhao1JS</item>
@@ -1522,7 +1522,7 @@
         <item>104</item>
         <item>gan3JS</item>
         <item>chou2JH</item>
-        <item>zhan3CL</item>
+        <item>zhan3JS</item>
         <item>liu3JY</item>
         <item>gang2JS</item>
         <item>xuan2JH</item>
