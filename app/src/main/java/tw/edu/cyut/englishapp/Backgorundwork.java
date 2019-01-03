@@ -31,6 +31,7 @@ import tw.edu.cyut.englishapp.Group.group_control;
 import tw.edu.cyut.englishapp.Group.TestGroupActivity;
 import tw.edu.cyut.englishapp.Group.controldetail;
 
+import static com.android.volley.VolleyLog.TAG;
 import static tw.edu.cyut.englishapp.LoginActivity.KEY;
 
 /**
@@ -706,8 +707,6 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
         if(result==null){
             Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
         } else if (result.contains("login success")) {
-
-            ((Activity)context).finish();
             if (result.contains("control")){
                 //in control
                 Intent ToControl=new Intent(context,controldetail.class);
@@ -724,7 +723,9 @@ public class Backgorundwork extends AsyncTask<String,Void,String> {
                 context.startActivity(ToTeacher);
                 ((Activity) context).finish();
             }else if(result.contains("Test Examiner")){
-                //TODO 聽音人
+                Intent ToTeacher=new Intent(context,test_examiner_activity.class);
+                context.startActivity(ToTeacher);
+                ((Activity) context).finish();
             }
         }else if (result.contains("this is null")){
             Toast.makeText(context, "Not yet open for answer.", Toast.LENGTH_SHORT).show();
