@@ -59,7 +59,9 @@
             android:name="com.google.android.actions"
             android:resource="@xml/textview_style" />
 
-        <activity android:name=".test_examiner_activity"></activity>
+        <activity android:name=".test_examiner_activity" />
+        <activity android:name=".test_examinerGroup" />
+        <activity android:name=".TeacherPreTestActivity"></activity>
     </application>
 
 </manifest>
